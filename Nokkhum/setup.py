@@ -9,11 +9,10 @@ CHANGES = open(os.path.join(here, 'CHANGES.txt')).read()
 
 requires = [
     'pyramid',
-    'SQLAlchemy',
     'transaction',
-    'repoze.tm2>=1.0b1', # default_commit_veto
-    'zope.sqlalchemy',
-    'WebError',
+    'pyramid_tm',
+    'pyramid_debugtoolbar',
+    'mongoengine',
     ]
 
 if sys.version_info[:3] < (2,5,0):

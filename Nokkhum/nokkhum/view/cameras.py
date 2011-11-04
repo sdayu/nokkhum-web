@@ -11,7 +11,7 @@ from nokkhum.model.form import camera_form
 from nokkhum import model
 from nokkhum.model.cameras import Manufactory
 
-@view_config(route_name='camera_add', permission='signin', renderer='camera/add.mako')
+@view_config(route_name='camera_add', permission='signin', renderer='/camera/add.mako')
 def add(request):
     
     def form_renderer(form):
@@ -71,7 +71,7 @@ def delete(request):
     
     return HTTPFound(location='/home')
 
-@view_config(route_name='camera_setting', permission='signin', renderer='camera/setting.mako')
+@view_config(route_name='camera_setting', permission='signin', renderer='/camera/setting.mako')
 def setting(request):
     matchdict = request.matchdict
     camera_name = matchdict['name']
@@ -85,7 +85,7 @@ def setting(request):
                camera=camera 
                 )
     
-@view_config(route_name='camera_processor', permission='signin', renderer='camera/processor.mako')
+@view_config(route_name='camera_processor', permission='signin', renderer='/camera/processor.mako')
 def processor(request):
     matchdict = request.matchdict
     camera_name = matchdict['name']
@@ -111,4 +111,18 @@ def processor(request):
             image_processors=image_processors,
             renderer=FormRenderer(form),
             camera=camera 
+                )
+    
+@view_config(route_name='camera_view', permission='signin', renderer='/camera/view.mako')
+def view(request):
+    matchdict = request.matchdict
+    camera_name = matchdict['name']
+
+    camera = model.Camera.objects(user=request.user, name=camera_name).first()
+    
+    if not camera:
+        return Response('Camera not found')
+    
+    return dict(
+               camera=camera 
                 )

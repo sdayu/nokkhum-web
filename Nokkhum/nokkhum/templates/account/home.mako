@@ -24,7 +24,7 @@ Hello ${request.user.username}
 				<tr>
 					<th>Name</th>
 					<th>URL</th>
-					<th colspan="3">Operation</th>
+					<th colspan="4">Operation</th>
 				</tr>
 			</thead>
 			<tbody>
@@ -35,6 +35,7 @@ Hello ${request.user.username}
 					<td><a href='/cameras/${camera.name}/edit'>edit</a></td>
 					<td><a href='/cameras/${camera.name}/delete'>delete</td>
 					<td><a href='/cameras/${camera.name}/setting'>setting</td>
+					<td><a href='/cameras/${camera.name}/view'>view</td>
 				</tr>
 				% endfor
 			</tbody>

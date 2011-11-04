@@ -26,8 +26,6 @@ def main(global_config, **settings):
     db_url = settings['mongodb.url']
     conn = pymongo.Connection(db_url)
     config.registry.settings['db_conn'] = conn
-                
-    config.add_static_view('public', 'nokkhum:public')
     
     add_routes(config)
     config.scan('nokkhum.view')
