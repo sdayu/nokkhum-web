@@ -10,19 +10,23 @@ from gridfs import GridFS
 from mongoengine import connect
 import pymongo
 
+from nokkhum import model
+
 from nokkhum.routing import add_routes
 from nokkhum.security import groupfinder
 
 def main(global_config, **settings):
     """ This function returns a Pyramid WSGI application.
     """
-    
+
     authn_policy = AuthTktAuthenticationPolicy(settings.get('auth.secret'), callback=groupfinder)
     authz_policy = ACLAuthorizationPolicy()
     
-    config = Configurator(settings=settings, root_factory='nokkhum.model.RootFactory',
+    config = Configurator(settings=settings, root_factory='nokkhum.acl.RootFactory',
                           authentication_policy=authn_policy, authorization_policy=authz_policy)
 
+    model.initial(settings)
+    
     db_url = settings['mongodb.url']
     conn = pymongo.Connection(db_url)
     config.registry.settings['db_conn'] = conn
@@ -46,8 +50,6 @@ def add_mongo_db(event):
     db = settings['db_conn'][settings['mongodb.name']]
     event.request.db = db
     event.request.fs = GridFS(db)
-    
-    connect(settings['mongodb.name'], host=settings['mongodb.url'])
     
     from nokkhum.model import User, Group, CameraModel, Manufactory, ImageProcessor
     group = Group.objects(name='admin').first()

@@ -1,6 +1,5 @@
 import formencode
 from nokkhum import model
-from nokkhum import view
 import ast
 
 class ImageProcessor(formencode.FancyValidator):

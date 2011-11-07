@@ -1,7 +1,7 @@
 # -*- coding:utf-8 -*-
 import formencode
-from nokkhum.model.form import camera_form_validator
-from nokkhum.model.form import image_processor_form_validators
+from nokkhum.form import camera_form_validator
+from nokkhum.form import image_processor_form_validators
 
 class AddCameraForm(formencode.Schema):
     allow_extra_fields = True

@@ -7,7 +7,7 @@ from pyramid.security import authenticated_userid
 from pyramid_simpleform import Form
 from pyramid_simpleform.renderers import FormRenderer
 
-from nokkhum.model.form import camera_form
+from nokkhum.form import camera_form
 from nokkhum import model
 from nokkhum.model.cameras import Manufactory
 
