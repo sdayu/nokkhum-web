@@ -1,8 +1,8 @@
-from users import User, Group
-from cameras import Camera, CameraModel, Manufactory
-from image_processors import ImageProcessor
+'''
+Created on Nov 7, 2011
 
-
+@author: boatkrap
+'''
 from pyramid.security import Allow
 from pyramid.security import Everyone
 from pyramid.security import Authenticated
