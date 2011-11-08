@@ -80,8 +80,8 @@ def add_mongo_db(event):
         
     processor_count = ImageProcessor.objects().count()
     if processor_count == 0:
-        processor_name = ['Motion Detection', 'Face Detection', 
-                     'Video Record', 'Image Record']
+        processor_name = ['Motion Detector', 'Face Detector', 
+                     'Video Recorder', 'Image Recorder']
         
         for name in processor_name:
             pro = ImageProcessor()

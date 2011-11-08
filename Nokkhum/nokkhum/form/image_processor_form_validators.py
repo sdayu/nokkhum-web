@@ -7,7 +7,8 @@ class ImageProcessor(formencode.FancyValidator):
         'not_found': 'This image processor "%(processor)s" not fould',
         'syntax_error': 'Syntax Error',
     }
-    processor = ''
+    processor_name = []
+    processor_name_not_found = ""
 
     def _to_python(self, value, state):
         return value.strip()
@@ -19,31 +20,35 @@ class ImageProcessor(formencode.FancyValidator):
         except:
             raise formencode.Invalid(self.message("syntax_error", state),
                 value, state)
-            
+        
+        self.get_available_processors()
+#        print "available name:", self.processor_name
         check = self.check_avialable_processor(processors)
         if not check:
             raise formencode.Invalid(self.message("not_found", state,
-                processor=self.processor),
+                processor=self.processor_name_not_found),
                 value, state)
         
     def check_avialable_processor(self, processors):
-#        print 'processor: ', processors
         
-        if isinstance(processors, basestring):
-#            print 'processor->: ', processors
-            pro = model.ImageProcessor.objects(name=processors).first()
-            if not pro:
-                self.processor = processors
-                return False
-            else:
-                return True
-                
+        check = True
         for processor in processors:
-            if not processors[processor]:
-#                print 'processor-->: ', processor
-                return self.check_avialable_processor(processor)
-            else:
-#                print 'processor--x>: ', processor
-                return self.check_avialable_processor(processors[processor])
+#            print "\npricessor:", processor
+            if "processors" in processor:
+                check = self.check_avialable_processor(processor["processors"])
+                if not check:
+                    return check
+
+#            print "check name: ", processor["name"], "check status:",check
             
+            if not processor["name"] in self.processor_name:
+                self.processor_name_not_found = processor["name"] 
+                return False
             
+        return True
+            
+    def get_available_processors(self):
+        processors = model.ImageProcessor.objects().all()
+        
+        for processor in processors:
+            self.processor_name.append(processor.name)
