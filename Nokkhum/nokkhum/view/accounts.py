@@ -9,26 +9,26 @@ from pyramid.security import forget
 from pyramid.security import authenticated_userid
 from pyramid.url import route_url
 
-@view_config(route_name='signin', renderer='account/signin.mako')
-def signin(request):
+@view_config(route_name='login', renderer='account/login.mako')
+def login(request):
     
-    signin_url = route_url('signin', request)
+    signin_url = route_url('login', request)
     referrer = request.url
     if referrer == signin_url:
         referrer = '/' # never use the login form itself as came_from
     came_from = request.params.get('came_from', referrer)
     message = ''
-    username = ''
+    email = ''
     password = ''
     
     if 'form.submitted' in request.params:
-        username = request.params['username']
+        email = request.params['email']
         password = request.secret_manager.getHashPassword(request.params['password'])
 
-        user = model.User.objects(username=username, password=password).first()
+        user = model.User.objects(email=email, password=password).first()
         
         if user:
-            headers = remember(request, username)
+            headers = remember(request, email)
             if came_from == '/':
                 came_from = '/home'
             return HTTPFound(location = came_from,
@@ -37,19 +37,19 @@ def signin(request):
 
     return dict(
         message = message,
-        url = request.application_url + '/signin',
+        url = request.application_url + '/login',
         came_from = came_from,
-        username = username,
+        email = email,
         password = password,
         )
     
-@view_config(route_name='signout')
-def signout(request):
+@view_config(route_name='logout')
+def logout(request):
     headers = forget(request)
     return HTTPFound(location = route_url('index', request),
                      headers = headers)
 
-@view_config(route_name='home', permission='signin', renderer="account/home.mako")
+@view_config(route_name='home', permission='login', renderer="account/home.mako")
 def home(request):
     cameras = model.Camera.objects(user=request.user).all()
 

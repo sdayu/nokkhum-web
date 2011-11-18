@@ -19,7 +19,7 @@ def main(global_config, **settings):
     """ This function returns a Pyramid WSGI application.
     """
 
-    authn_policy = AuthTktAuthenticationPolicy(settings.get('auth.secret'), callback=groupfinder)
+    authn_policy = AuthTktAuthenticationPolicy(settings.get('nokkhum.auth.secret'), callback=groupfinder)
     authz_policy = ACLAuthorizationPolicy()
     
     config = Configurator(settings=settings, root_factory='nokkhum.acl.RootFactory',
@@ -37,7 +37,7 @@ def main(global_config, **settings):
     from security import SecretManager, RequestWithUserAttribute
     
     config.set_request_factory(RequestWithUserAttribute)
-    secret_manager = SecretManager(settings.get('auth.secret'))
+    secret_manager = SecretManager(settings.get('nokkhum.auth.secret'))
     config.registry.settings['secret_manager'] = secret_manager
     
     config.add_subscriber(add_secret_manager, NewRequest)
@@ -46,45 +46,49 @@ def main(global_config, **settings):
     return config.make_wsgi_app()
 
 def add_mongo_db(event):
+
     settings = event.request.registry.settings
     db = settings['db_conn'][settings['mongodb.name']]
     event.request.db = db
     event.request.fs = GridFS(db)
     
-    from nokkhum.model import User, Group, CameraModel, Manufactory, ImageProcessor
-    group = Group.objects(name='admin').first()
-    if not group:
-        group = Group()
-        group.name = 'admin'
-        group.save()
+    default_groups = ['admin', 'user']
+    
+    for gname in default_groups:
+        group = model.Group.objects(name=gname).first()
+        if not group:
+            group = model.Group()
+            group.name = gname
+            group.save()
         
-    user = User.objects(username='admin').first()
+    user = model.User.objects(email='admin@localhost').first()
     if not user:
-        user = User()
-        user.username = 'admin'
+        user = model.User()
+        user.first_name = 'admin'
+        user.last_name = ''
         user.password = event.request.secret_manager.getHashPassword('password')
         user.email = 'admin@localhost'
-        user.group = group
+        user.group = model.Group.objects(name='admin').first()
         user.save()
         
-    man_count = Manufactory.objects().count()
+    man_count = model.Manufactory.objects().count()
     if man_count == 0:
-        man = Manufactory()
+        man = model.Manufactory()
         man.name = 'Generic'
         man.save()
         
-        model = CameraModel()
-        model.name = 'OpenCV'
-        model.manufactory = man
-        model.save()
+        camera_model = model.CameraModel()
+        camera_model.name = 'OpenCV'
+        camera_model.manufactory = man
+        camera_model.save()
         
-    processor_count = ImageProcessor.objects().count()
+    processor_count = model.ImageProcessor.objects().count()
     if processor_count == 0:
         processor_name = ['Motion Detector', 'Face Detector', 
                      'Video Recorder', 'Image Recorder']
         
         for name in processor_name:
-            pro = ImageProcessor()
+            pro = model.ImageProcessor()
             pro.name = name
             pro.save()
     

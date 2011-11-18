@@ -13,10 +13,11 @@ requires = [
     'pyramid_tm',
     'pyramid_debugtoolbar',
     'mongoengine',
+    'pyramid_simpleform'
     ]
 
-if sys.version_info[:3] < (2,5,0):
-    requires.append('pysqlite')
+# if sys.version_info[:3] < (2,5,0):
+#    requires.append('pysqlite')
 
 setup(name='Nokkhum',
       version='0.0',

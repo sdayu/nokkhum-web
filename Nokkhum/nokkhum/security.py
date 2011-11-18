@@ -8,7 +8,7 @@ def groupfinder(userid, request):
     #if userid in USERS:
     #    return GROUPS.get(userid, [])
     # user = DBSession.query(model.User).filter(model.User.username == userid).first()
-    user = model.User.objects(username=userid).first()
+    user = model.User.objects(email=userid).first()
     
     if user:
         # return [group.name for group in user.group]
@@ -26,7 +26,7 @@ class RequestWithUserAttribute(Request):
             # in the database
             # return dbconn['users'].query({'id':userid})
             
-            return model.User.objects(username=userid).first()
+            return model.User.objects(email=userid).first()
 
 import hashlib
 from Crypto.Cipher import AES

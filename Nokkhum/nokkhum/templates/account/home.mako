@@ -1,7 +1,7 @@
 <%inherit file="../base/base.mako"/>
 
 <%def name="title()" >
-Hello ${request.user.username}
+Hello ${request.user.first_name} ${request.user.last_name}
 </%def>
 
 <%def name="body()">

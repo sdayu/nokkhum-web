@@ -29,6 +29,9 @@ class UniqueCameraName(formencode.FancyValidator):
             raise formencode.Invalid(
                 self.message("found", state, name=camera.name),
                           value, state)
+        
+        print "success unique name"
+        return value
 
 class ValidName(formencode.FancyValidator):
     messages = {
@@ -46,3 +49,6 @@ class ValidName(formencode.FancyValidator):
             raise formencode.Invalid(self.message("symbol", state,
                     symbol=symbol),
                     value, state)
+        
+        print "success valid name"
+        return value

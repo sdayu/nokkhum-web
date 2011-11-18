@@ -12,8 +12,10 @@
 	% endif
 
 	<p>
-		${tags.form('/signin', method='post')} <label for="username">Username:</label>
-		${tags.text('username')}<br /> <label for="password">Password:</label>
+		${tags.form('/login', method='post')} 
+		<label for="email">Email:</label>
+		${tags.text('email')}<br /> 
+		<label for="password">Password:</label>
 		${tags.password('password')}<br /> <input type="hidden"
 			name="came_from" value="${came_from}" />
 		${tags.submit('form.submitted', u'ลงชื่อเข้าใช้')} ${tags.end_form()}

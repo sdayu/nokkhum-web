@@ -65,18 +65,22 @@ ${renderer.begin('/cameras/add')}
     	<label for="password">Password: </label>
     	${renderer.text("password", size=30)}
     </div>
+    ${renderer.errorlist("fps")}
     <div class="block2">
     	<div class="label"><label for="fps">fps: </label></div>
     	<div class="field">${renderer.select('fps',fps)}</div>
     </div>
+    ${renderer.errorlist("image_size")}
     <div class="block2">
     	<div class="label"><label for="image_size">Image size: </label></div>
     	<div class="field">${renderer.select('image_size',imageSize)}</div>
     </div>
+    ${renderer.errorlist("camera_man")}
     <div class="block2">
     	<div class="label"><label for="camera_man">Manufactory: </label></div>
     	<div class="field">${renderer.select('camera_man',cameraMan)}</div>
     </div>
+    ${renderer.errorlist("camera_model")}
     <div class="block2">
     	<div class="label"><label for="camera_model">Model: </label></div>
     	<div class="field">${renderer.select('camera_model',modelOptions)}</div>
