@@ -152,7 +152,6 @@ def view(request):
     
     if not camera:
         return Response('Camera not found')
-    
     return dict(
-               camera=camera 
+               camera=camera,
                 )

@@ -4,7 +4,7 @@ var x = 0;
 var y = 0;
 
 // constance
-var grid_start_x = 10;
+var grid_start_x = 130;
 var grid_start_y = 10;
 var grid_width = 150;
 var grid_height = 90;
