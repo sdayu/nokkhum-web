@@ -7,11 +7,17 @@ def add_routes(config):
     config.add_route('login', '/login')
     config.add_route('logout', '/logout')
     
-    config.add_route('camera_add', '/cameras/add')
-    config.add_route('camera_delete', '/cameras/{name}/delete')
-    config.add_route('camera_setting', '/cameras/{name}/setting')
-    config.add_route('camera_processor', '/cameras/{name}/processor')
-    config.add_route('camera_view', '/cameras/{name}/view')
+    # manager part
+    # camera manager
+    config.add_route('camera_add', '/manager/cameras/add')
+    config.add_route('camera_edit', '/manager/cameras/{name}/edit')
+    config.add_route('camera_delete', '/manager/cameras/{name}/delete')
+    config.add_route('camera_setting', '/manager/cameras/{name}/setting')
+    config.add_route('camera_processor', '/manager/cameras/{name}/processor')
+    config.add_route('camera_view', '/manager/cameras/{name}/view')
+    
+    # camera operating
+    config.add_route('camera_operating', '/manager/cameras/{name}/{operating}')
     
     config.add_view('nokkhum.view.accounts.login',
                     context='pyramid.exceptions.Forbidden',

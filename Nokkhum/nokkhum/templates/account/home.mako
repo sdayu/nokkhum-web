@@ -1,16 +1,11 @@
 <%inherit file="../base/base.mako"/>
-
-<%def name="title()" >
-Hello ${request.user.first_name} ${request.user.last_name}
-</%def>
-
-<%def name="body()">
+<%block name='title'>Hello ${request.user.first_name} ${request.user.last_name}</%block>
 <nav style="text-align: right;">
 <a href="/signout">Sign out</a>
 </nav>
 <aside style="float:left; width:200px; background-color:#ffffdc">
 	<ul>
-		<li><a href="/cameras/add">Add camera</a></li>
+		<li><a href="${request.route_path('camera_add')}">Add camera</a></li>
 	</ul>
 </aside>
 <article style="float:left; background-color:#ffffbd; width:70%">
@@ -24,7 +19,8 @@ Hello ${request.user.first_name} ${request.user.last_name}
 				<tr>
 					<th>Name</th>
 					<th>URL</th>
-					<th colspan="4">Operation</th>
+					<th colspan="4">Manager</th>
+					<th>Operation</th>
 				</tr>
 			</thead>
 			<tbody>
@@ -32,10 +28,17 @@ Hello ${request.user.first_name} ${request.user.last_name}
 				<tr>
 					<td>${camera.name}</td>
 					<td>${camera.url}</td>
-					<td><a href='/cameras/${camera.name}/edit'>edit</a></td>
-					<td><a href='/cameras/${camera.name}/delete'>delete</td>
-					<td><a href='/cameras/${camera.name}/setting'>setting</td>
-					<td><a href='/cameras/${camera.name}/view'>view</td>
+					<td><a href="${request.route_path('camera_edit', name=camera.name)}">edit</a></td>
+					<td><a href="${request.route_path('camera_delete', name=camera.name)}">delete</td>
+					<td><a href="${request.route_path('camera_setting', name=camera.name)}">setting</td>
+					<td><a href="${request.route_path('camera_view', name=camera.name)}">view</td>
+					% if camera.operating.status == "Stop":
+					<td><a href="${request.route_path('camera_operating', name=camera.name, operating='start')}">start</td>
+					% elif camera.operating.status == "Start":
+					<td><a href="${request.route_path('camera_operating', name=camera.name, operating='stop')}">stop</td>
+					% else:
+					<td>${camera.operating.status}</td>
+					% endif
 				</tr>
 				% endfor
 			</tbody>
@@ -43,7 +46,3 @@ Hello ${request.user.first_name} ${request.user.last_name}
 	% endif
 	</section>
 </article>
-
-<footer style="clear: both;">This is footer
-</footer>
-</%def>

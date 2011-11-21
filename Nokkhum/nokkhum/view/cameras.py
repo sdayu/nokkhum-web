@@ -61,6 +61,8 @@ def add(request):
     camera.status = 'Active'
     camera.ip_address =  request.environ['REMOTE_ADDR']
     
+    camera.camera_model = camera_model
+    
     camera.operating = model.CameraOperating()
     camera.operating.status = "Stop"
     camera.operating.update_date = datetime.datetime.now()
@@ -71,6 +73,69 @@ def add(request):
         return Response("Exception in add camera: %s"%e)
 
     return HTTPFound(location = '/home')
+
+@view_config(route_name='camera_edit', permission='login', renderer='/camera/edit.mako')
+def edit(request):
+    
+    matchdict = request.matchdict
+    camera_name = matchdict['name']
+    
+    camera = model.Camera.objects(name=camera_name, user=request.user).first()
+
+    def form_renderer(form):
+        camera_models = model.CameraModel.objects().all()
+        manufactories = model.Manufactory.objects().all()
+    
+        return dict(
+                renderer=FormRenderer(form),
+                camera_models=camera_models,
+                manufactories=manufactories,
+                camera=camera
+                )
+    
+    form = Form(request,
+#                defaults={"name" : "..."},
+                schema=camera_form.EditCameraForm)
+    
+    camera_man = None
+    camera_model = None
+    if form.validate():
+        camera_man = model.Manufactory.objects(name=form.data['camera_man']).first()
+        camera_model = model.CameraModel.objects(name=form.data['camera_model'],
+                                                 manufactory=camera_man)\
+                                                 .first()
+        
+        name        = form.data['name']
+        username    = form.data['username']
+        password    = form.data['password']
+        url         = form.data['url']
+        fps         = form.data['fps']
+        image_size  = form.data['image_size']
+        camera_status = form.data['camera_status']
+    else:
+        return form_renderer(form)
+    
+    if not camera_model:
+        return form_renderer(form)
+      
+    camera.name =  name
+    camera.username =  username
+    camera.password =  password
+    camera.url =  url
+    camera.fps = fps
+    camera.image_size = image_size
+    camera.status = camera_status
+    camera.ip_address =  request.environ['REMOTE_ADDR']
+    camera.update_date = datetime.datetime.now()
+    
+    camera.camera_model = camera_model
+    
+    try:
+        camera.save()
+    except Exception as e:
+        return Response("Exception in edit camera: %s"%e)
+
+    return HTTPFound(location = request.route_path('camera_view', name=camera.name))
     
 
 @view_config(route_name='camera_delete', permission='login')
@@ -141,7 +206,7 @@ def processor(request):
     camera.processors = processors
     camera.save()
     
-    return HTTPFound(location='/cameras/'+camera.name+'/setting')
+    return HTTPFound(location=request.route_path('camera_view', name=camera.name))
     
 @view_config(route_name='camera_view', permission='login', renderer='/camera/view.mako')
 def view(request):
@@ -155,3 +220,37 @@ def view(request):
     return dict(
                camera=camera,
                 )
+    
+@view_config(route_name='camera_operating', permission='login')
+def operating(request):
+    matchdict   = request.matchdict
+    camera_name = matchdict['name']
+    operating   = matchdict['operating']
+
+    camera = model.Camera.objects(user=request.user, name=camera_name).first()
+    
+    if not camera:
+        return Response('Camera not found')
+    
+    command_action = 'On-command'
+    if operating == 'start':
+        command_action = 'Start'
+    elif operating == 'stop':
+        command_action = 'Stop'
+    
+    ccq = model.CameraCommandQueue.objects(user=request.user, camera=camera, action=command_action).first()
+    if ccq is not None:
+        return Response('Camera name %s on operation' % camera.name)
+    
+    camera.operating.status = "Waiting Start"
+    camera.update_date = datetime.datetime.now()
+    camera.save()
+    
+    ccq         = model.CameraCommandQueue()
+    ccq.action  = command_action
+    ccq.status  = 'Waiting'
+    ccq.camera  = camera
+    ccq.user    = request.user
+    ccq.save()
+
+    return HTTPFound(location='/home')

@@ -1,16 +1,11 @@
 <%inherit file="../base/base.mako"/>
-
-<%def name="title()" >
-Setting camera of ${camera.name}
-</%def>
-
-<%def name="body()">
+<%block name='title'>Setting camera of ${camera.name}</%block>
 <h2>Camera infomation</h2>
 <ul>
 	<li><strong>Camera: </strong>${camera.name}</li>
 	<li><strong>Create Date: </strong>${camera.create_date}</li>
 	<li><strong>Setting: </strong>
-		<a href="/cameras/${camera.name}/processor">Image Processor Setting</a>
+		<a href="${request.route_path('camera_processor', name=camera.name)}">Image Processor Setting</a>
 	</li>
 </ul>
 <p>
@@ -19,4 +14,3 @@ Setting camera of ${camera.name}
 <p>
 	${camera.processors}
 </p>
-</%def>

@@ -21,16 +21,22 @@ class UniqueCameraName(formencode.FancyValidator):
             raise formencode.Invalid(
                 self.message('bad_request', state),
                           value, state)
+        
+        request = get_current_request()
             
-        camera = model.Camera.objects(name=value, user=get_current_request().user)\
+        camera = model.Camera.objects(name=value, user=request.user)\
                 .first()
         
-        if camera:
+        if camera is not None:
+            matchdict = request.matchdict
+            camera_name = matchdict['name']
+            
+            if camera.name == camera_name:
+                return value
+             
             raise formencode.Invalid(
                 self.message("found", state, name=camera.name),
                           value, state)
-        
-        print "success unique name"
         return value
 
 class ValidName(formencode.FancyValidator):
@@ -50,5 +56,4 @@ class ValidName(formencode.FancyValidator):
                     symbol=symbol),
                     value, state)
         
-        print "success valid name"
         return value

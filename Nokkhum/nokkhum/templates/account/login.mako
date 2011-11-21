@@ -1,9 +1,5 @@
-<html>
-<head>
-<title>User signin</title>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-</head>
-<body>
+<%inherit file="../base/base.mako"/>
+<%block name='title'>User signin</%block>
 	<%! from webhelpers.html import tags %>
 	<p>This is login page for Nokkhum</p>
 
@@ -20,4 +16,3 @@
 			name="came_from" value="${came_from}" />
 		${tags.submit('form.submitted', u'ลงชื่อเข้าใช้')} ${tags.end_form()}
 	</p>
-</body>
