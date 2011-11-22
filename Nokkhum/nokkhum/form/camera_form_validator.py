@@ -24,7 +24,7 @@ class UniqueCameraName(formencode.FancyValidator):
         
         request = get_current_request()
             
-        camera = model.Camera.objects(name=value, user=request.user)\
+        camera = model.Camera.objects(name=value, owner=request.user)\
                 .first()
         
         if camera is not None:

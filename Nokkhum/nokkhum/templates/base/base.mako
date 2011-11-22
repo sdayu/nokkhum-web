@@ -18,6 +18,9 @@
 				% if request.user is None: 
 				<li><a href="/login">Login</a></li>
 				% else:
+				% if request.user.group.name == "admin":
+				<li><a href="/admin">Admin</a></li>
+				% endif
 				<li><a href="/logout">Logout</a></li>
 				% endif
 			</ul>

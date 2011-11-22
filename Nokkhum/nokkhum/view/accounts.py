@@ -51,7 +51,7 @@ def logout(request):
 
 @view_config(route_name='home', permission='login', renderer="account/home.mako")
 def home(request):
-    cameras = model.Camera.objects(user=request.user).all()
+    cameras = model.Camera.objects(owner=request.user).all()
 
     return dict(
               cameras = cameras  

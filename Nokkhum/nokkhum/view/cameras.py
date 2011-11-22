@@ -51,7 +51,7 @@ def add(request):
         return form_renderer(form)
       
     camera = model.Camera()
-    camera.user = request.user
+    camera.owner = request.user
     camera.name =  name
     camera.username =  username
     camera.password =  password
@@ -80,7 +80,7 @@ def edit(request):
     matchdict = request.matchdict
     camera_name = matchdict['name']
     
-    camera = model.Camera.objects(name=camera_name, user=request.user).first()
+    camera = model.Camera.objects(name=camera_name, owner=request.user).first()
 
     def form_renderer(form):
         camera_models = model.CameraModel.objects().all()
@@ -143,7 +143,7 @@ def delete(request):
     matchdict = request.matchdict
     camera_name = matchdict['name']
 
-    camera = model.Camera.objects(user=request.user, name=camera_name).first()
+    camera = model.Camera.objects(owner=request.user, name=camera_name).first()
     
     if camera:
         camera.delete()
@@ -157,7 +157,7 @@ def setting(request):
     matchdict = request.matchdict
     camera_name = matchdict['name']
 
-    camera = model.Camera.objects(user=request.user, name=camera_name).first()
+    camera = model.Camera.objects(owner=request.user, name=camera_name).first()
     
     if not camera:
         return Response('Camera not found')
@@ -171,7 +171,7 @@ def processor(request):
     matchdict = request.matchdict
     camera_name = matchdict['name']
 
-    camera = model.Camera.objects(user=request.user, name=camera_name).first()
+    camera = model.Camera.objects(owner=request.user, name=camera_name).first()
     
     if not camera:
         return Response('Camera not found')
@@ -213,7 +213,7 @@ def view(request):
     matchdict = request.matchdict
     camera_name = matchdict['name']
 
-    camera = model.Camera.objects(user=request.user, name=camera_name).first()
+    camera = model.Camera.objects(owner=request.user, name=camera_name).first()
     
     if not camera:
         return Response('Camera not found')
@@ -227,7 +227,7 @@ def operating(request):
     camera_name = matchdict['name']
     operating   = matchdict['operating']
 
-    camera = model.Camera.objects(user=request.user, name=camera_name).first()
+    camera = model.Camera.objects(owner=request.user, name=camera_name).first()
     
     if not camera:
         return Response('Camera not found')
@@ -238,7 +238,7 @@ def operating(request):
     elif operating == 'stop':
         command_action = 'Stop'
     
-    ccq = model.CameraCommandQueue.objects(user=request.user, camera=camera, action=command_action).first()
+    ccq = model.CameraCommandQueue.objects(owner=request.user, camera=camera, action=command_action).first()
     if ccq is not None:
         return Response('Camera name %s on operation' % camera.name)
     
@@ -250,7 +250,7 @@ def operating(request):
     ccq.action  = command_action
     ccq.status  = 'Waiting'
     ccq.camera  = camera
-    ccq.user    = request.user
+    ccq.owner   = request.user
     ccq.save()
 
     return HTTPFound(location='/home')

@@ -7,6 +7,8 @@
 	<li><strong>URL: </strong>${camera.url}</li>
 	<li><strong>FPS: </strong>${camera.fps}</li>
 	<li><strong>Image Size: </strong>${camera.image_size}</li>
+	<li><strong>Camera Model: </strong>${camera.camera_model.name}</li>
+	<li><strong>Manufatory: </strong>${camera.camera_model.manufactory.name}</li>
 	<li><strong>Create Date: </strong>${camera.create_date}</li>
 	<li><strong>Last Update: </strong>${camera.update_date}</li>
 	<li><strong>Operating:</strong>

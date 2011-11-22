@@ -19,6 +19,11 @@ def add_routes(config):
     # camera operating
     config.add_route('camera_operating', '/manager/cameras/{name}/{operating}')
     
+    # administration part
+    config.add_route('admin_home', '/admin')
+    config.add_route('admin_list_command_queue', '/admin/list_command_queue')
+    config.add_route('admin_list_command_log', '/admin/list_command_log')
+    
     config.add_view('nokkhum.view.accounts.login',
                     context='pyramid.exceptions.Forbidden',
                     renderer='nokkhum:templates/account/login.mako')
