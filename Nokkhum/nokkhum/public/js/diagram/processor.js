@@ -1,7 +1,8 @@
 var canvas;
 var ctx;
-var x = 0;
-var y = 0;
+var arow_begin_x = 0;
+var arow_begin_y = 0;
+var max_index_y = 0;
 
 // constance
 var grid_start_x = 130;
@@ -121,4 +122,55 @@ function myUp(){
 function myOut(){
  	dragok = false;
  	canvas.onmousemove = null;
+}
+
+function drawProcessors(processor, index_x, index_y){
+	ctx.save(); 
+	var x = grid_width*index_x + grid_start_x;
+	var y = grid_height*index_y + grid_start_y;
+ 	ctx.translate(x, y);
+ 	drawProcessor(processor["name"], 0, 0, "#ccffff");
+ 	ctx.restore();
+ 	if( arow_begin_x!=0 && arow_begin_y!=0 ){
+ 		drawArrow(arow_begin_x, arow_begin_y,
+ 	 			x, y+30);
+ 		arow_begin_x = 0;
+ 		arow_begin_y = 0;
+ 	}
+ 	
+ 	index_x++;
+ 	for( var index in processor.processors){
+ 		arow_begin_x =x + 100;
+ 		arow_begin_y = y + 30;
+ 		drawProcessors(processor.processors[index], index_x, index_y);
+ 		if(index_y > max_index_y){
+ 			max_index_y = index_y;
+ 		}
+ 		index_y++;
+ 	 	//arow_begin_x = 10+80;
+ 	 	//arow_begin_y = grid_start_y+20;
+ 	}
+
+}
+
+function drawCameraAttribute(camera_name, processors){
+	drawBackground();
+	ctx.save();
+ 	ctx.translate(10, grid_start_y+10);
+ 	drawCamera(camera_name, 0, 0, "#3333ff");
+ 	ctx.restore();
+ 	
+ 	var index_x = 0;
+ 	var index_y = 0;
+ 	
+ 	arow_begin_x = 10+80;
+ 	arow_begin_y = grid_start_y+30;
+ 	
+ 	for( var index in processors){
+ 		drawProcessors(processors[index], index_x, index_y);
+ 	 	index_x = 0;
+ 	 	index_y = ++max_index_y;
+ 	 	arow_begin_x = 10+80;
+ 	 	arow_begin_y = grid_start_y+30;
+ 	}
 }

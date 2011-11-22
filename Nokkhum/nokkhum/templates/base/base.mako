@@ -3,6 +3,8 @@
 	<head>
 		<meta charset="utf-8"/>
 		<title><%block name='title'>Nokkhum Web Front-end</%block></title>
+		<link rel="icon" type="image/png" href="/public/nokkhum.png">
+		<%block name='addition_header'></%block>
 	</head>
 	<body>
 		${next.body()}

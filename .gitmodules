@@ -1,3 +1,6 @@
 [submodule "Nokkhum/nokkhum/model"]
 	path = Nokkhum/nokkhum/model
 	url = git@github.com:sdayu/nokkhum-model.git
+[submodule "Nokkhum/nokkhum/public/js/syntax_highlighter"]
+	path = Nokkhum/nokkhum/public/js/syntax_highlighter
+	url = https://github.com/alexgorbatchev/SyntaxHighlighter.git

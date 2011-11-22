@@ -242,7 +242,7 @@ def operating(request):
     if ccq is not None:
         return Response('Camera name %s on operation' % camera.name)
     
-    camera.operating.status = "Waiting Start"
+    camera.operating.status = "Start"
     camera.update_date = datetime.datetime.now()
     camera.save()
     
