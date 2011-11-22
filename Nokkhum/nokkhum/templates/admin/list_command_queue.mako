@@ -8,8 +8,8 @@
 		<li>
 			<strong>Command id: <span style="color: red;">${command.id}</span></strong>
 			<ul>
-				<li><strong>camera name: </strong> ${command.camera.name} (${command.camera.id})</li>
-				<li><strong>owner: </strong> ${command.owner.email} (${command.owner.id})</li>
+				<li><strong>camera name: </strong> ${command.camera.name} <strong>id:</strong> ${command.camera.id}</li>
+				<li><strong>owner: </strong> ${command.owner.email} <strong>id:</strong> ${command.owner.id}</li>
 				<li><strong>action: </strong> ${command.action}</li>
 				<li><strong>status: </strong> ${command.status}</li>
 				<li><strong>date: </strong> ${command.date} / 

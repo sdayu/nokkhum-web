@@ -5,6 +5,8 @@
 <ul>
 	<li><strong>Camera: </strong>${camera.name}</li>
 	<li><strong>URL: </strong>${camera.url}</li>
+	<li><strong>Username: </strong>${camera.username}</li>
+	<li><strong>Password: </strong>${camera.password}</li>
 	<li><strong>FPS: </strong>${camera.fps}</li>
 	<li><strong>Image Size: </strong>${camera.image_size}</li>
 	<li><strong>Camera Model: </strong>${camera.camera_model.name}</li>

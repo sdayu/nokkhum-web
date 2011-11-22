@@ -20,3 +20,15 @@ def list_command_log(request):
     return dict(
                 command_log = model.CommandLog.objects().all()
                 )
+    
+@view_config(route_name='admin_list_compute_node', permission='admin', renderer='/admin/list_compute_node.mako')
+def list_compute_node(request):
+    return dict(
+                compute_nodes = model.ComputeNode.objects().all()
+                )
+    
+@view_config(route_name='admin_list_camera', permission='admin', renderer='/admin/list_camera.mako')
+def list_camera(request):
+    return dict(
+                cameras= model.Camera.objects().all()
+                )
