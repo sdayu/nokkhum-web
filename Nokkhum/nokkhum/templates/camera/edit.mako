@@ -1,4 +1,4 @@
-<%inherit file="../base/base.mako"/>
+<%inherit file="/base/base.mako"/>
 <%block name='title'>Edit Camera</%block>
 <style type="text/css">
 	div.block {

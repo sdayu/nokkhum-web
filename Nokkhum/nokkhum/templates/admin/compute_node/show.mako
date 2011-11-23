@@ -1,12 +1,9 @@
-<%inherit file="../base/base.mako"/>
+<%inherit file="/base/base.mako"/>
 <%block name='title'>List Compute Node</%block>
 <%! import datetime %>
 <h1>List Compute Node</h1>
 <section>
-	<ul>
-	% for compute_node in compute_nodes:
-		<li>
-			<strong>Compute Node id: <span style="color: red;">${compute_node._id}</span></strong>
+	<h2>Compute Node id: <span style="color: red;">${compute_node._id}</span></h2>
 			<ul>
 				<li><strong>name: </strong> ${compute_node.name}</li>
 				<li><strong>system: </strong> ${compute_node.system}</li>
@@ -35,7 +32,4 @@
 					</ul>
 				</li>
 			</ul>
-		</li>
-	% endfor
-	</ul>
 </section>

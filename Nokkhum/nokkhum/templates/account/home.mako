@@ -1,4 +1,4 @@
-<%inherit file="../base/base.mako"/>
+<%inherit file="/base/base.mako"/>
 <%block name='title'>Hello ${request.user.first_name} ${request.user.last_name}</%block>
 <nav style="text-align: right;">
 <a href="/signout">Sign out</a>

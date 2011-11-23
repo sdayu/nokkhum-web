@@ -1,4 +1,4 @@
-<%inherit file="../base/base.mako"/>
+<%inherit file="/base/base.mako"/>
 <%block name='title'>Processor camera setting</%block>
 <%block name='addition_header'>
 <link href="/js/syntax_highlighter/styles/shThemeDefault.css" rel="stylesheet" type="text/css" />

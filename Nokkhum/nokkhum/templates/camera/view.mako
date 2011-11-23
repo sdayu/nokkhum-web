@@ -1,4 +1,4 @@
-<%inherit file="../base/base.mako"/>
+<%inherit file="/base/base.mako"/>
 <%! import json, datetime %>
 <%block name='title'>Setting camera of ${camera.name}</%block>
 <h2>Camera infomation</h2>

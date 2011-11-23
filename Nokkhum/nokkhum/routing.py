@@ -21,10 +21,14 @@ def add_routes(config):
     
     # administration part
     config.add_route('admin_home', '/admin')
-    config.add_route('admin_list_command_queue', '/admin/list_command_queue')
-    config.add_route('admin_list_command_log', '/admin/list_command_log')
-    config.add_route('admin_list_compute_node', '/admin/list_compute_node')
-    config.add_route('admin_list_camera', '/admin/list_camera')
+    config.add_route('admin_command_queue_list', '/admin/command_queue/list')
+    config.add_route('admin_command_log_list', '/admin/command_log/list')
+    
+    config.add_route('admin_compute_node_list', '/admin/compute_node/list')
+    config.add_route('admin_compute_node_show', '/admin/compute_node/show/{id}')
+    
+    config.add_route('admin_camera_list', '/admin/camera/list')
+    config.add_route('admin_camera_show', '/admin/camera/show/{id}')
     
     config.add_view('nokkhum.view.accounts.login',
                     context='pyramid.exceptions.Forbidden',

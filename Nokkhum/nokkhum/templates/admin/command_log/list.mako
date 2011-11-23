@@ -1,4 +1,4 @@
-<%inherit file="../base/base.mako"/>
+<%inherit file="/base/base.mako"/>
 <%block name='title'>List Command Log</%block>
 <%! import datetime %>
 <h1>List Command Log</h1>

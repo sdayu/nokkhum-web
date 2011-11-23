@@ -1,4 +1,4 @@
-<%inherit file="../base/base.mako"/>
+<%inherit file="/base/base.mako"/>
 <%block name='title'>List Camera Command Queue</%block>
 <%! import datetime %>
 <h1>List Camera Command Queue</h1>

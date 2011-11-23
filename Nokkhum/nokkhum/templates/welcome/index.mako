@@ -1,4 +1,4 @@
-<%inherit file="../base/base.mako"/>
+<%inherit file="/base/base.mako"/>
 <%block name='title'>Nokkhum - Video Surveillance Testing System</%block>
 <p>
 	<img alt="นกคุ่ม" src="/public/nokkhum.png" width="100px" />

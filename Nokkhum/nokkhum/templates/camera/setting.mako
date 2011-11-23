@@ -1,4 +1,4 @@
-<%inherit file="../base/base.mako"/>
+<%inherit file="/base/base.mako"/>
 <%! import pprint %>
 <%block name='title'>Setting camera of ${camera.name}</%block>
 <%block name='addition_header'>

@@ -1,4 +1,4 @@
-<%inherit file="../base/base.mako"/>
+<%inherit file="/base/base.mako"/>
 <%block name='title'>User signin</%block>
 	<%! from webhelpers.html import tags %>
 	<p>This is login page for Nokkhum</p>

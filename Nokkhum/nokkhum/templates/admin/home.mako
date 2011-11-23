@@ -16,7 +16,7 @@
 			<a href="${request.route_path('admin_list_compute_node')}">Display compute node</a>
 		</li>
 		<li>
-			<a href="${request.route_path('admin_list_camera')}">Display camera</a>
+			<a href="${request.route_path('admin_camera_list')}">Display camera</a>
 		</li>
 	</ul>
 </nav>
