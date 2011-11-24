@@ -41,6 +41,9 @@
 				<li>
 					<a href="${request.route_path('admin_camera_list')}">Display camera</a>
 				</li>
+				<li>
+					<a href="${request.route_path('admin_user_list')}">Display user</a>
+				</li>
 			</ul>
 		</div>
 		% endif

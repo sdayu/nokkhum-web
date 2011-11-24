@@ -1,7 +1,7 @@
 <%inherit file="/base/base.mako"/>
 <%block name='title'>List Compute Node</%block>
 <%! import datetime %>
-<h1>List Compute Node</h1>
+<h1>Show Compute Node</h1>
 <section>
 	<h2>Compute Node id: <span style="color: red;">${compute_node._id}</span></h2>
 			<ul>

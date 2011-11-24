@@ -21,8 +21,15 @@ def add_routes(config):
     
     # administration part
     config.add_route('admin_home', '/admin')
+    
     config.add_route('admin_command_queue_list', '/admin/command_queue/list')
+    config.add_route('admin_command_queue_show', '/admin/command_queue/show/{id}')
+    
+    config.add_route('admin_user_list', '/admin/user/list')
+    config.add_route('admin_user_show', '/admin/user/show/{id}')
+    
     config.add_route('admin_command_log_list', '/admin/command_log/list')
+    config.add_route('admin_command_log_show', '/admin/command_log/show/{id}')
     
     config.add_route('admin_compute_node_list', '/admin/compute_node/list')
     config.add_route('admin_compute_node_show', '/admin/compute_node/show/{id}')

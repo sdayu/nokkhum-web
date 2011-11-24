@@ -8,5 +8,15 @@ from nokkhum import model
 @view_config(route_name='admin_command_queue_list', permission='admin', renderer='/admin/command_queue/list.mako')
 def list(request):
     return dict(
-                camera_command_queue = model.CameraCommandQueue.objects().all()
+                camera_command_queue=model.CameraCommandQueue.objects().all()
+                )
+    
+    
+@view_config(route_name='admin_command_queue_show', permission='admin', renderer='/admin/command_queue/show.mako')
+def show(request):
+    matchdict = request.matchdict
+    command_id = matchdict['id']
+    command = model.CameraCommandQueue.objects().with_id(command_id)
+    return dict(
+                command=command
                 )

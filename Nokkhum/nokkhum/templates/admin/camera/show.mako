@@ -1,7 +1,7 @@
 <%inherit file="/base/base.mako"/>
 <%block name='title'>List Compute Node</%block>
 <%! import datetime %>
-<h1>List Compute Node</h1>
+<h1>Show Camera</h1>
 <section>
 		<h2>Camera id: ${camera.id}</h2>
 			<ul>
