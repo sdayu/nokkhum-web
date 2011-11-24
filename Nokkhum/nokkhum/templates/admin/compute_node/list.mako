@@ -35,7 +35,7 @@
 		<tbody>
 		% for compute_node in compute_nodes:
 			<tr>
-				<td>${compute_node.name}</td>
+				<td><a href="${request.route_path('admin_compute_node_show', id=compute_node._id)}">${compute_node.name}</a></td>
 				<td>${compute_node.host}</td>
 				<td>${compute_node.port}</td>
 				<td>

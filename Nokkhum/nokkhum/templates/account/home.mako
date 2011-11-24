@@ -21,6 +21,7 @@
 					<th>URL</th>
 					<th colspan="4">Manager</th>
 					<th>Operation</th>
+					<th>Status</th>
 				</tr>
 			</thead>
 			<tbody>
@@ -34,11 +35,10 @@
 					<td><a href="${request.route_path('camera_view', name=camera.name)}">view</td>
 					% if camera.operating.status == "Stop":
 					<td><a href="${request.route_path('camera_operating', name=camera.name, operating='start')}">start</td>
-					% elif camera.operating.status == "Start":
-					<td><a href="${request.route_path('camera_operating', name=camera.name, operating='stop')}">stop</td>
 					% else:
-					<td>${camera.operating.status}</td>
+					<td><a href="${request.route_path('camera_operating', name=camera.name, operating='stop')}">stop</td>
 					% endif
+					<td>${camera.operating.status}</td>
 				</tr>
 				% endfor
 			</tbody>

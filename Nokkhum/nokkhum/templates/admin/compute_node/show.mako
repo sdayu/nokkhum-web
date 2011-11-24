@@ -12,6 +12,7 @@
 				<li><strong>port: </strong> ${compute_node.port}</li>
 				<li><strong>create date: </strong> ${compute_node.create_date}</li>
 				<li><strong>update date: </strong> ${compute_node.update_date}</li>
+				<li><strong>diff time: </strong> ${(datetime.datetime.now() - compute_node.update_date).seconds} s</li>
 				% if (datetime.datetime.now() - compute_node.update_date) < datetime.timedelta(minutes=1):
 				<li><strong>status: </strong> <span style="color: red;">Ready</span></li>
 				% else:

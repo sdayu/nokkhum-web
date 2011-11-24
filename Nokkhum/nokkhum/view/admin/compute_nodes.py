@@ -11,11 +11,11 @@ def list(request):
                 compute_nodes = model.ComputeNode.objects().all()
                 )
     
-@view_config(route_name='admin_compute_node_show', permission='admin', renderer='/admin/compute_node/list.mako')
+@view_config(route_name='admin_compute_node_show', permission='admin', renderer='/admin/compute_node/show.mako')
 def show(request):
     matchdict = request.matchdict
     compute_node_id = matchdict['id']
-    compute_node = model.ComputeNode.objects(_id=compute_node_id).first()
+    compute_node = model.ComputeNode.objects().with_id(compute_node_id)
     return dict(
                compute_node=compute_node
                 )

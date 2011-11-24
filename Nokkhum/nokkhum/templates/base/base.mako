@@ -25,7 +25,7 @@
 				% endif
 			</ul>
 		</div>
-		% if request.user.group.name == "admin":
+		% if request.user is not None and request.user.group.name == "admin":
 		<div style="float: left; width: 300px">
 			<strong>Administrator</strong>
 			<ul>
