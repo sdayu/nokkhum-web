@@ -232,11 +232,14 @@ def operating(request):
     if not camera:
         return Response('Camera not found')
     
-    command_action = 'On-command'
+    command_action  = 'No-command'
+    user_command    = 'Undefine'
     if operating == 'start':
         command_action = 'Start'
+        user_command = 'Run'
     elif operating == 'stop':
         command_action = 'Stop'
+        user_command = 'Suspend'
     
     ccq = model.CameraCommandQueue.objects(owner=request.user, camera=camera, action=command_action).first()
     if ccq is not None:
@@ -244,6 +247,7 @@ def operating(request):
     
     
     camera.operating.status = command_action
+    camera.operating.user_command = user_command
     camera.update_date = datetime.datetime.now()
     camera.save()
     
