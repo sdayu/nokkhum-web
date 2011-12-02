@@ -14,7 +14,7 @@ def list(request):
 @view_config(route_name='admin_camera_show', permission='admin', renderer='/admin/camera/show.mako')
 def show(request):
     matchdict = request.matchdict
-    camera_id = matchdict['id']
+    camera_id = int(matchdict['id'])
     camera= model.Camera.objects(id=camera_id).first()
     
     return dict(
