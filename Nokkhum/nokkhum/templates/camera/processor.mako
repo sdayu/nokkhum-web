@@ -53,16 +53,16 @@ ${renderer.end()}
 	{
 		'name': 'Video Recorder',
 		'width': 640,
-		'height': 480
+		'height': 480,
 		'maximum_wait_motion': 1, 
 		'fps': 10,
-		'directory': u'/tmp/1/1', 
+		'directory': '', 
 		'record_motion': True, 
 	}, 
 		
 	{
 		'name': 'Video Recorder',
-		'directory': '/tmp/1/1', 
+		'directory': '', 
 		'width': 640,
 		'height': 420,
 		'fps': 1
@@ -70,7 +70,7 @@ ${renderer.end()}
 		
 	{
 		'name': 'Image Recorder', 
-		'directory': '/tmp/1/1', 
+		'directory': '', 
 		'width': 640, 
 		'height': 480
 	}

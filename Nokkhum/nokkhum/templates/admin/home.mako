@@ -7,13 +7,13 @@
 	</h2>
 	<ul>
 		<li>
-			<a href="${request.route_path('admin_list_command_queue')}">Display camera command queue</a>
+			<a href="${request.route_path('admin_command_queue_list')}">Display camera command queue</a>
 		</li>
 		<li>
-			<a href="${request.route_path('admin_list_command_log')}">Display command log</a>
+			<a href="${request.route_path('admin_command_log_list')}">Display command log</a>
 		</li>
 		<li>
-			<a href="${request.route_path('admin_list_compute_node')}">Display compute node</a>
+			<a href="${request.route_path('admin_compute_node_list')}">Display compute node</a>
 		</li>
 		<li>
 			<a href="${request.route_path('admin_camera_list')}">Display camera</a>

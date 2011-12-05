@@ -5,7 +5,7 @@ import ast
 class ImageProcessor(formencode.FancyValidator):
     messages = {
         'not_found': 'This image processor "%(processor)s" not fould',
-        'syntax_error': 'Syntax Error',
+        'syntax_error': '',
     }
     processor_name = []
     processor_name_not_found = ""
@@ -17,7 +17,8 @@ class ImageProcessor(formencode.FancyValidator):
 #    	print 'value:\n ', value,'\n==='
         try:
             processors = ast.literal_eval(value)
-        except:
+        except Exception as e:
+            self.messages['syntax_error'] += e
             raise formencode.Invalid(self.message("syntax_error", state),
                 value, state)
         

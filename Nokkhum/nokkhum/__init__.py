@@ -61,13 +61,13 @@ def add_mongo_db(event):
             group.name = gname
             group.save()
         
-    user = model.User.objects(email='admin@localhost').first()
+    user = model.User.objects(email='admin@nokkhum.com').first()
     if not user:
         user = model.User()
         user.first_name = 'admin'
         user.last_name = ''
         user.password = event.request.secret_manager.getHashPassword('password')
-        user.email = 'admin@localhost'
+        user.email = 'admin@nokkhum.com'
         user.group = model.Group.objects(name='admin').first()
         user.save()
         
