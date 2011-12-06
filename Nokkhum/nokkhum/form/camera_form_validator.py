@@ -29,9 +29,9 @@ class UniqueCameraName(formencode.FancyValidator):
         
         if camera is not None:
             matchdict = request.matchdict
-            camera_name = matchdict['name']
+            camera_name = matchdict.get('name', None)
             
-            if camera.name == camera_name:
+            if camera_name is not None and camera.name == camera_name:
                 return value
              
             raise formencode.Invalid(

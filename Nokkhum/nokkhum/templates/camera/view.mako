@@ -15,6 +15,7 @@
 	<li><strong>Last Update: </strong>${camera.update_date}</li>
 	<li><strong>Operating:</strong>
 		<ul>
+			<li><strong>user status: <span style="color: red;">${camera.operating.user_command}</span></strong></li>
 			<li><strong>status: <span style="color: red;">${camera.operating.status}</span></strong></li>
 			<li><strong>last update:</strong> ${camera.operating.update_date}</li>
 			<li><strong>diff time:</strong> <span style="color: red;">${(datetime.datetime.now()-camera.operating.update_date).seconds}</span> seconds ago</li>

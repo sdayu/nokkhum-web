@@ -18,6 +18,7 @@
 				<li><strong>Owner: </strong> ${camera.owner.email} <strong>id:</strong> ${camera.owner.id} <strong>status:</strong> ${camera.owner.status}</li>
 				<li><strong>Operating:</strong>
 				<ul>
+					<li><strong>user status: <span style="color: red;">${camera.operating.user_command}</span></strong></li>
 					<li><strong>Status: <span style="color: red;">${camera.operating.status}</span></strong></li>
 					<li><strong>Last update:</strong> ${camera.operating.update_date}</li>
 					<li><strong>Diff time:</strong> <span style="color: red;">${(datetime.datetime.now()-camera.operating.update_date).seconds}</span> seconds ago</li>
