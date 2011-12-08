@@ -1,7 +1,7 @@
 <%inherit file="/base/base.mako"/>
 <%block name='title'>Nokkhum - Video Surveillance Testing System</%block>
 <p>
-	<img alt="นกคุ่ม" src="/public/nokkhum.png" width="100px" />
+	<img alt="นกคุ่ม" src="/public/images/nokkhum.png" width="50px" />
 	<span><strong>Nokhum</strong></span>
 </p>
 <h2>What is Nokkhum ?</h2>

@@ -27,6 +27,10 @@ class RequestWithUserAttribute(Request):
             # return dbconn['users'].query({'id':userid})
             
             return model.User.objects(email=userid).first()
+        
+    @reify
+    def userid(self):
+        return unauthenticated_userid(self)
 
 import hashlib
 from Crypto.Cipher import AES

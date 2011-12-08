@@ -1,14 +1,7 @@
 <%inherit file="/base/base.mako"/>
 <%block name='title'>Hello ${request.user.first_name} ${request.user.last_name}</%block>
-<nav style="text-align: right;">
-<a href="/signout">Sign out</a>
-</nav>
-<aside style="float:left; width:200px; background-color:#ffffdc">
-	<ul>
-		<li><a href="${request.route_path('camera_add')}">Add camera</a></li>
-	</ul>
-</aside>
-<article style="float:left; background-color:#ffffbd; width:70%">
+
+<article style="background-color:#ffffbd;">
 	<section style="text-align: center;">
 		<strong>Camera area</strong>
 	</section>
@@ -46,3 +39,6 @@
 	% endif
 	</section>
 </article>
+<section>
+<a href="${request.route_path('camera_add')}">Add camera</a>
+</section>

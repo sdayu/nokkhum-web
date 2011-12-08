@@ -44,4 +44,5 @@ def add_routes(config):
     # static view
     config.add_static_view('public', 'nokkhum:public')
     config.add_static_view('js', 'nokkhum:public/js')
+    config.add_static_view('theme', 'nokkhum:public/theme')
     
