@@ -41,7 +41,8 @@ ${renderer.end()}
 		'name': 'Motion Detector', 
 		'interval': 3, 
 		'resolution': 98, 
-		'processors': []
+		'processors': [],
+		'drop_motion': 5
 	},
 	
 	{
@@ -54,7 +55,7 @@ ${renderer.end()}
 		'name': 'Video Recorder',
 		'width': 640,
 		'height': 480,
-		'maximum_wait_motion': 1, 
+		'maximum_wait_motion': 5, 
 		'fps': 10,
 		'directory': '', 
 		'record_motion': True, 
