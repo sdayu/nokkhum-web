@@ -8,7 +8,7 @@ from nokkhum import model
 @view_config(route_name='admin_command_queue_list', permission='admin', renderer='/admin/command_queue/list.mako')
 def list(request):
     return dict(
-                camera_command_queue=model.CameraCommandQueue.objects().all()
+                camera_command_queue=model.CameraCommandQueue.objects().order_by("+id").all()
                 )
     
     
