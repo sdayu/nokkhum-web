@@ -14,6 +14,7 @@ requires = [
     'pyramid_debugtoolbar',
     'mongoengine',
     'pyramid_simpleform'
+    'pycrypto',
     ]
 
 # if sys.version_info[:3] < (2,5,0):

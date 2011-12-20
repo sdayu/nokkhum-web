@@ -59,6 +59,7 @@ aside{
 	border-right:1px solid #22A7BD;
 	font:normal 16px/20px Tahoma, Geneva, sans-serif;
 	color:#999;
+	white-space: nowrap;
 }
 aside a{
 	font:normal 16px/20px Tahoma, Geneva, sans-serif;
@@ -91,7 +92,7 @@ footer{
 	width:97.1%;
 	height:auto;
 	padding:10px 20px;
-	margin:0;
+	margin:20px 0 0 0;
 	clear:both;
 	border-top:3px double #22A7BD;
 	border-bottom:3px double #22A7BD;

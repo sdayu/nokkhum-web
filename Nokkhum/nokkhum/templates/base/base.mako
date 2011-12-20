@@ -23,7 +23,7 @@
 				% if request.user.group.name == "admin":
 				<li><a href="/admin" title="Administrator">Administrator</a></li>
 				% endif
-				<li><a href="/logout" title="logout">Log out</a></li>
+				<li><a href="/logout" title="log out">Log out</a></li>
 				% endif
 			</ul>
 		</aside>

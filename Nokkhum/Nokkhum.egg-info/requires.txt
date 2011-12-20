@@ -3,3 +3,4 @@ transaction
 pyramid_tm
 pyramid_debugtoolbar
 mongoengine
+pyramid_simpleform

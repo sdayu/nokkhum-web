@@ -3,7 +3,7 @@
 <%! import datetime %>
 <h1>List Command Log</h1>
 <section>
-	<table border="1" width="800px" style="text-align: center;">
+	<table border="1" width="95%" style="text-align: center;">
 		<thead>
   			<tr>
     			<th>ID</th>
@@ -13,6 +13,8 @@
     			<th>Date</th>
     			<th>Complete Date</th>
     			<th>Compute Node</th>
+    			<th>Status</th>
+    			<th>Message</th>
   			</tr>
 		</thead>
 		<tbody>
@@ -25,6 +27,8 @@
 				<td>${command.command_date}</td>
 				<td>${command.complete_date}</td>
 				<td><a href="${request.route_path('admin_compute_node_show', id=command.compute_node._id)}">${command.compute_node.name}</a></td>
+				<td>${command.status}</td>
+				<td>${command.message.replace("\n", "<br/>") | n}</td>
 			</tr>
 			% endfor
 		</tbody>
