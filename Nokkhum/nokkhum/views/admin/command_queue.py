@@ -3,12 +3,12 @@ from pyramid.view import view_config
 from pyramid.response import Response
 from pyramid.security import authenticated_userid
 
-from nokkhum import model
+from nokkhum.common import models
 
 @view_config(route_name='admin_command_queue_list', permission='admin', renderer='/admin/command_queue/list.mako')
-def list(request):
+def list_command(request):
     return dict(
-                camera_command_queue=model.CameraCommandQueue.objects().order_by("+id").all()
+                camera_command_queue=models.CameraCommandQueue.objects().order_by("+id").all()
                 )
     
     
@@ -16,7 +16,7 @@ def list(request):
 def show(request):
     matchdict = request.matchdict
     command_id = matchdict['id']
-    command = model.CameraCommandQueue.objects().with_id(command_id)
+    command = models.CameraCommandQueue.objects().with_id(command_id)
     return dict(
                 command=command
                 )

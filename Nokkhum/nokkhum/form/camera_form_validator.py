@@ -1,6 +1,5 @@
 import formencode
-from nokkhum import model
-from nokkhum import view
+from nokkhum.common import models
 from pyramid.threadlocal import get_current_request
 import re
 
@@ -24,7 +23,7 @@ class UniqueCameraName(formencode.FancyValidator):
         
         request = get_current_request()
             
-        camera = model.Camera.objects(name=value, owner=request.user)\
+        camera = models.Camera.objects(name=value, owner=request.user)\
                 .first()
         
         if camera is not None:

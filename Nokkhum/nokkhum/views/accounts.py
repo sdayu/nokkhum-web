@@ -1,7 +1,7 @@
 from pyramid.view import view_config
 from pyramid.response import Response
 
-from nokkhum import model
+from nokkhum.common import models
 
 from pyramid.httpexceptions import HTTPFound
 from pyramid.security import remember
@@ -25,7 +25,7 @@ def login(request):
         email = request.params['email']
         password = request.secret_manager.getHashPassword(request.params['password'])
 
-        user = model.User.objects(email=email, password=password).first()
+        user = models.User.objects(email=email, password=password).first()
         
         if user:
             headers = remember(request, email)
@@ -51,7 +51,7 @@ def logout(request):
 
 @view_config(route_name='home', permission='login', renderer="account/home.mako")
 def home(request):
-    cameras = model.Camera.objects(owner=request.user).all()
+    cameras = models.Camera.objects(owner=request.user).all()
 
     return dict(
               cameras = cameras  

@@ -8,8 +8,7 @@ from pyramid_simpleform import Form
 from pyramid_simpleform.renderers import FormRenderer
 
 from nokkhum.form import camera_form
-from nokkhum import model
-from nokkhum.model.cameras import Manufactory
+from nokkhum.common import models
 
 import datetime
 
@@ -17,8 +16,8 @@ import datetime
 def add(request):
     
     def form_renderer(form):
-        camera_models = model.CameraModel.objects().all()
-        manufactories = model.Manufactory.objects().all()
+        camera_models = models.CameraModel.objects().all()
+        manufactories = models.Manufactory.objects().all()
     
         return dict(
                 renderer=FormRenderer(form),
@@ -33,8 +32,8 @@ def add(request):
     camera_man = None
     camera_model = None
     if form.validate():
-        camera_man = model.Manufactory.objects(name=form.data['camera_man']).first()
-        camera_model = model.CameraModel.objects(name=form.data['camera_model'],
+        camera_man = models.Manufactory.objects(name=form.data['camera_man']).first()
+        camera_model = models.CameraModel.objects(name=form.data['camera_model'],
                                                  manufactory=camera_man)\
                                                  .first()
         
@@ -50,7 +49,7 @@ def add(request):
     if not camera_model:
         return form_renderer(form)
       
-    camera = model.Camera()
+    camera = models.Camera()
     camera.owner = request.user
     camera.name =  name
     camera.username =  username
@@ -63,7 +62,7 @@ def add(request):
     
     camera.camera_model = camera_model
     
-    camera.operating = model.CameraOperating()
+    camera.operating = models.CameraOperating()
     camera.operating.status = "Stop"
     camera.operating.update_date = datetime.datetime.now()
     
@@ -80,11 +79,11 @@ def edit(request):
     matchdict = request.matchdict
     camera_name = matchdict['name']
     
-    camera = model.Camera.objects(name=camera_name, owner=request.user).first()
+    camera = models.Camera.objects(name=camera_name, owner=request.user).first()
 
     def form_renderer(form):
-        camera_models = model.CameraModel.objects().all()
-        manufactories = model.Manufactory.objects().all()
+        camera_models = models.CameraModel.objects().all()
+        manufactories = models.Manufactory.objects().all()
     
         return dict(
                 renderer=FormRenderer(form),
@@ -100,8 +99,8 @@ def edit(request):
     camera_man = None
     camera_model = None
     if form.validate():
-        camera_man = model.Manufactory.objects(name=form.data['camera_man']).first()
-        camera_model = model.CameraModel.objects(name=form.data['camera_model'],
+        camera_man = models.Manufactory.objects(name=form.data['camera_man']).first()
+        camera_model = models.CameraModel.objects(name=form.data['camera_model'],
                                                  manufactory=camera_man)\
                                                  .first()
         
@@ -143,7 +142,7 @@ def delete(request):
     matchdict = request.matchdict
     camera_name = matchdict['name']
 
-    camera = model.Camera.objects(owner=request.user, name=camera_name).first()
+    camera = models.Camera.objects(owner=request.user, name=camera_name).first()
     
     if camera:
         camera.delete()
@@ -157,7 +156,7 @@ def setting(request):
     matchdict = request.matchdict
     camera_name = matchdict['name']
 
-    camera = model.Camera.objects(owner=request.user, name=camera_name).first()
+    camera = models.Camera.objects(owner=request.user, name=camera_name).first()
     
     if not camera:
         return Response('Camera not found')
@@ -171,7 +170,7 @@ def processor(request):
     matchdict = request.matchdict
     camera_name = matchdict['name']
 
-    camera = model.Camera.objects(owner=request.user, name=camera_name).first()
+    camera = models.Camera.objects(owner=request.user, name=camera_name).first()
     
     if not camera:
         return Response('Camera not found')
@@ -184,7 +183,7 @@ def processor(request):
         import ast
         processors = ast.literal_eval(form.data['processors'])
     else:
-        image_processors = model.ImageProcessor.objects().all()
+        image_processors = models.ImageProcessor.objects().all()
         return dict(
                 image_processors=image_processors,
                 renderer=FormRenderer(form),
@@ -213,7 +212,7 @@ def view(request):
     matchdict = request.matchdict
     camera_name = matchdict['name']
 
-    camera = model.Camera.objects(owner=request.user, name=camera_name).first()
+    camera = models.Camera.objects(owner=request.user, name=camera_name).first()
     
     if not camera:
         return Response('Camera not found')
@@ -227,7 +226,7 @@ def operating(request):
     camera_name = matchdict['name']
     operating   = matchdict['operating']
 
-    camera = model.Camera.objects(owner=request.user, name=camera_name).first()
+    camera = models.Camera.objects(owner=request.user, name=camera_name).first()
     
     if not camera:
         return Response('Camera not found')
@@ -241,7 +240,7 @@ def operating(request):
         command_action = 'Stop'
         user_command = 'Suspend'
     
-    ccq = model.CameraCommandQueue.objects(owner=request.user, camera=camera, action=command_action).first()
+    ccq = models.CameraCommandQueue.objects(owner=request.user, camera=camera, action=command_action).first()
     if ccq is not None:
         return Response('Camera name %s on operation' % camera.name)
     
@@ -251,7 +250,7 @@ def operating(request):
     camera.update_date = datetime.datetime.now()
     camera.save()
     
-    ccq         = model.CameraCommandQueue()
+    ccq         = models.CameraCommandQueue()
     ccq.action  = command_action
     ccq.status  = 'Waiting'
     ccq.camera  = camera

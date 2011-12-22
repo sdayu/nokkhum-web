@@ -13,7 +13,7 @@ requires = [
     'pyramid_tm',
     'pyramid_debugtoolbar',
     'mongoengine',
-    'pyramid_simpleform'
+    'pyramid_simpleform',
     'pycrypto',
     ]
 

@@ -37,7 +37,7 @@ def add_routes(config):
     config.add_route('admin_camera_list', '/admin/camera/list')
     config.add_route('admin_camera_show', '/admin/camera/show/{id}')
     
-    config.add_view('nokkhum.view.accounts.login',
+    config.add_view('nokkhum.views.accounts.login',
                     context='pyramid.exceptions.Forbidden',
                     renderer='nokkhum:templates/account/login.mako')
     

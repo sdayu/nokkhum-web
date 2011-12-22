@@ -1,5 +1,5 @@
 import formencode
-from nokkhum import model
+from nokkhum.common import models
 import ast
 
 class ImageProcessor(formencode.FancyValidator):
@@ -49,7 +49,7 @@ class ImageProcessor(formencode.FancyValidator):
         return True
             
     def get_available_processors(self):
-        processors = model.ImageProcessor.objects().all()
+        processors = models.ImageProcessor.objects().all()
         
         for processor in processors:
             self.processor_name.append(processor.name)

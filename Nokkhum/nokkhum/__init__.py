@@ -10,7 +10,7 @@ from gridfs import GridFS
 from mongoengine import connect
 import pymongo
 
-from nokkhum import model
+from nokkhum.common import models
 
 from nokkhum.routing import add_routes
 from nokkhum.security import groupfinder
@@ -25,14 +25,14 @@ def main(global_config, **settings):
     config = Configurator(settings=settings, root_factory='nokkhum.acl.RootFactory',
                           authentication_policy=authn_policy, authorization_policy=authz_policy)
 
-    model.initial(settings)
+    models.initial(settings)
     
     db_url = settings['mongodb.url']
     conn = pymongo.Connection(db_url)
     config.registry.settings['db_conn'] = conn
     
     add_routes(config)
-    config.scan('nokkhum.view')
+    config.scan('nokkhum.views')
     
     from security import SecretManager, RequestWithUserAttribute
     
@@ -55,13 +55,13 @@ def add_mongo_db(event):
     default_groups = ['admin', 'user']
     
     for gname in default_groups:
-        group = model.Group.objects(name=gname).first()
+        group = models.Group.objects(name=gname).first()
         if not group:
             group = model.Group()
             group.name = gname
             group.save()
         
-    user = model.User.objects(email='admin@nokkhum.com').first()
+    user = models.User.objects(email='admin@nokkhum.com').first()
     if not user:
         user = model.User()
         user.first_name = 'admin'
@@ -71,24 +71,24 @@ def add_mongo_db(event):
         user.group = model.Group.objects(name='admin').first()
         user.save()
         
-    man_count = model.Manufactory.objects().count()
+    man_count = models.Manufactory.objects().count()
     if man_count == 0:
-        man = model.Manufactory()
+        man = models.Manufactory()
         man.name = 'Generic'
         man.save()
         
-        camera_model = model.CameraModel()
+        camera_model = models.CameraModel()
         camera_model.name = 'OpenCV'
         camera_model.manufactory = man
         camera_model.save()
         
-    processor_count = model.ImageProcessor.objects().count()
+    processor_count = models.ImageProcessor.objects().count()
     if processor_count == 0:
         processor_name = ['Motion Detector', 'Face Detector', 
                      'Video Recorder', 'Image Recorder']
         
         for name in processor_name:
-            pro = model.ImageProcessor()
+            pro = models.ImageProcessor()
             pro.name = name
             pro.save()
     

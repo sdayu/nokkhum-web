@@ -1,4 +1,4 @@
-from nokkhum import model
+from nokkhum.common import models
 
 from pyramid.decorator import reify
 from pyramid.request import Request
@@ -8,7 +8,7 @@ def groupfinder(userid, request):
     #if userid in USERS:
     #    return GROUPS.get(userid, [])
     # user = DBSession.query(model.User).filter(model.User.username == userid).first()
-    user = model.User.objects(email=userid).first()
+    user = models.User.objects(email=userid).first()
     
     if user:
         # return [group.name for group in user.group]
@@ -26,7 +26,7 @@ class RequestWithUserAttribute(Request):
             # in the database
             # return dbconn['users'].query({'id':userid})
             
-            return model.User.objects(email=userid).first()
+            return models.User.objects(email=userid).first()
         
     @reify
     def userid(self):
