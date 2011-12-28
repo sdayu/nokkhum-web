@@ -57,18 +57,18 @@ def add_mongo_db(event):
     for gname in default_groups:
         group = models.Group.objects(name=gname).first()
         if not group:
-            group = model.Group()
+            group = models.Group()
             group.name = gname
             group.save()
         
     user = models.User.objects(email='admin@nokkhum.com').first()
     if not user:
-        user = model.User()
+        user = models.User()
         user.first_name = 'admin'
         user.last_name = ''
         user.password = event.request.secret_manager.getHashPassword('password')
         user.email = 'admin@nokkhum.com'
-        user.group = model.Group.objects(name='admin').first()
+        user.group = models.Group.objects(name='admin').first()
         user.save()
         
     man_count = models.Manufactory.objects().count()
