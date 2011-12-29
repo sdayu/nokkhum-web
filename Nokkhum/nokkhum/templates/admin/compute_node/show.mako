@@ -9,7 +9,6 @@
 				<li><strong>system: </strong> ${compute_node.system}</li>
 				<li><strong>host: </strong> ${compute_node.host}</li>
 				<li><strong>machine: </strong> ${compute_node.machine}</li>
-				<li><strong>port: </strong> ${compute_node.port}</li>
 				<li><strong>create date: </strong> ${compute_node.create_date}</li>
 				<li><strong>update date: </strong> ${compute_node.update_date}</li>
 				<li><strong>diff time: </strong> ${(datetime.datetime.now() - compute_node.update_date).seconds} s</li>

@@ -18,7 +18,6 @@
 		<thead>
   			<tr>
     			<th rowspan="2">Name</th>
-    			<th rowspan="2">Host</th>
     			<th rowspan="2">Port</th>
     			<th rowspan="2">Status</th>
     			<th colspan="2">CPU</th>
@@ -37,7 +36,6 @@
 			<tr>
 				<td><a href="${request.route_path('admin_compute_node_show', id=compute_node._id)}">${compute_node.name}</a></td>
 				<td>${compute_node.host}</td>
-				<td>${compute_node.port}</td>
 				<td>
 				% if (datetime.datetime.now() - compute_node.update_date) < datetime.timedelta(minutes=1):
 					<span style="color: red;">Ready</span>
