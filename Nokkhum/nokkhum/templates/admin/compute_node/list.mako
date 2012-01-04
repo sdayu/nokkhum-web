@@ -6,11 +6,10 @@
 	<table border="1" width="800px" style="text-align: center;">
 		<colgroup>
       		<col style="width: 10%"/>
+      		<col style="width: 20%"/>
       		<col style="width: 10%"/>
-      		<col style="width: 10%"/>
-      		<col style="width: 10%"/>
-      		<col style="width: 10%"/>
-      		<col style="width: 10%"/>
+      		<col style="width: 5%"/>
+      		<col style="width: 5%"/>
       		<col style="width: 5%"/>
       		<col style="width: 5%"/>
       		<col style="width: 5%"/>
@@ -18,7 +17,7 @@
 		<thead>
   			<tr>
     			<th rowspan="2">Name</th>
-    			<th rowspan="2">Port</th>
+    			<th rowspan="2">Host</th>
     			<th rowspan="2">Status</th>
     			<th colspan="2">CPU</th>
     			<th colspan="3">RAM(M)</th>
