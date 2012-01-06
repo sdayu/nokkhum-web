@@ -3,7 +3,7 @@
 <%! import datetime %>
 <h1>List Compute Node</h1>
 <section>
-	<table border="1" width="800px" style="text-align: center;">
+	<table border="1" width="90%" style="text-align: center;">
 		<colgroup>
       		<col style="width: 10%"/>
       		<col style="width: 20%"/>
@@ -13,6 +13,7 @@
       		<col style="width: 5%"/>
       		<col style="width: 5%"/>
       		<col style="width: 5%"/>
+      		<col style="width: 15%"/>
    		</colgroup>
 		<thead>
   			<tr>
@@ -21,6 +22,7 @@
     			<th rowspan="2">Status</th>
     			<th colspan="2">CPU</th>
     			<th colspan="3">RAM(M)</th>
+    			<th rowspan="2">Last update</th>
   			</tr>
   			<tr style="vertical-align: bottom">
          		<th>count</th>
@@ -32,11 +34,12 @@
 		</thead>
 		<tbody>
 		% for compute_node in compute_nodes:
+			<% td = datetime.datetime.now() - compute_node.update_date %>
 			<tr>
 				<td><a href="${request.route_path('admin_compute_node_show', id=compute_node._id)}">${compute_node.name}</a></td>
 				<td>${compute_node.host}</td>
 				<td>
-				% if (datetime.datetime.now() - compute_node.update_date) < datetime.timedelta(minutes=1):
+				% if td < datetime.timedelta(minutes=1):
 					<span style="color: red;">Ready</span>
 				% else:
 					<span style="color: red;">Disconnect</span>
@@ -47,6 +50,7 @@
 				<td>${compute_node.memory.total/1000000}</td>
 				<td>${compute_node.memory.used/1000000}</td>
 				<td>${compute_node.memory.free/1000000}</td>
+				<td>${"%.2f"%td.total_seconds()} s</td>
 			</tr>
 		% endfor
 		</tbody>
