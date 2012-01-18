@@ -1,6 +1,6 @@
 import formencode
 from nokkhum.common import models
-import ast
+import json
 
 class ImageProcessor(formencode.FancyValidator):
     messages = {
@@ -16,7 +16,7 @@ class ImageProcessor(formencode.FancyValidator):
     def validate_python(self, value, state):
 #    	print 'value:\n ', value,'\n==='
         try:
-            processors = ast.literal_eval(value)
+            processors = json.loads(value)
         except Exception as e:
             self.messages['syntax_error'] += e
             raise formencode.Invalid(self.message("syntax_error", state),

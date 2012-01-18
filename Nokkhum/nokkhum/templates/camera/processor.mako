@@ -58,7 +58,7 @@ ${renderer.end()}
 		'maximum_wait_motion': 5, 
 		'fps': 10,
 		'directory': '', 
-		'record_motion': True, 
+		'record_motion': true, 
 	}, 
 		
 	{

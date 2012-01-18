@@ -1,16 +1,6 @@
 <%inherit file="/base/base.mako"/>
 <%! import json, datetime %>
 <%block name='title'>Setting camera of ${camera.name}</%block>
-<%block name='addition_header'>
-<link href="/js/syntax_highlighter/styles/shThemeDefault.css" rel="stylesheet" type="text/css" />
-<script src="/js/syntax_highlighter/scripts/XRegExp.js" type="text/javascript"></script>
-<script src="/js/syntax_highlighter/scripts/shCore.js" type="text/javascript"></script>
-<script src="/js/syntax_highlighter/scripts/shBrushJScript.js" type="text/javascript"></script>
-<script language="javascript">
-SyntaxHighlighter.defaults['smart-tabs'] = false;
-SyntaxHighlighter.all();
-</script>
-</%block>
 <h2>Camera infomation</h2>
 <ul>
 	<li><strong>Camera: </strong>${camera.name}</li>
@@ -38,6 +28,10 @@ SyntaxHighlighter.all();
 <p>
 <strong>Current Image Processor:</strong>
 </p>
+<p>
+	${camera.processors}
+</p>
+
 <section>
 	<div>
 	<canvas id="display_processor" width="800" height="600" style="border:1px solid #c3c3c3;">
@@ -67,7 +61,3 @@ $(document).ready(init());
 </section>
 
 <div id="test1"></div>
-<p>JSON Description</p>
-<pre name="code" class="brush: js; toolbar: false;">
-	${json.dumps(camera.processors, indent=4)}
-</pre>

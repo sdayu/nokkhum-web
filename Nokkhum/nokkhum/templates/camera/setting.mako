@@ -1,5 +1,5 @@
 <%inherit file="/base/base.mako"/>
-<%! import pprint %>
+<%! import json %>
 <%block name='title'>Setting camera of ${camera.name}</%block>
 <%block name='addition_header'>
 <link href="/js/syntax_highlighter/styles/shThemeDefault.css" rel="stylesheet" type="text/css" />
@@ -22,9 +22,6 @@ SyntaxHighlighter.all();
 <p>
 <strong>Current Image Processor:</strong>
 </p>
-<% 
-	pp = pprint.PrettyPrinter(indent=4) 
-%>
 <pre name="code" class="brush: js; toolbar: false;">
-	${pp.pformat(camera.processors)}
+	${json.dumps(camera.processors, indent=4)}
 </pre>
