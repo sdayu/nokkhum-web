@@ -191,18 +191,6 @@ def processor(request):
                 camera=camera 
                     )
         
-    default_path = "%s/%d/%d" % (request.registry.settings['nokkhum.default.record_path'], request.user.id, camera.id)
-        
-    def change_default_record(processors):
-        for processor in processors:
-            if 'Recorder' in processor["name"]:
-                processor["directory"] = default_path
-                
-            if "processors" in processor and len(processor["processors"]) > 0:
-                change_default_record(processor["processors"])
-            
-    change_default_record(processors)
-    
     camera.processors = processors
     camera.save()
     

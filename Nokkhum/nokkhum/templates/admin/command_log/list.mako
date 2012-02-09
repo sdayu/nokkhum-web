@@ -21,7 +21,7 @@
 			% for command in command_log:
 			<tr>
 				<td>${command.id}</td>
-				<td><a href="${request.route_path('admin_camera_show', id=command.camera.id)}">${command.camera.name}</a></td>
+				<td>${command.attributes["camera"]["id"]}: ${command.attributes["camera"]["name"]}</td>
 				<td><a href="${request.route_path('admin_user_show', id=command.owner.id)}">${command.owner.email}</a></td>
 				<td>${command.action}</td>
 				<td>${command.command_date}</td>
