@@ -31,6 +31,26 @@ class RequestWithUserAttribute(Request):
     @reify
     def userid(self):
         return unauthenticated_userid(self)
+    
+    @reify
+    def s3_storage(self):
+        userid = unauthenticated_userid(self)
+        if userid is None:
+            return userid
+        
+        user = models.User.objects(email=userid).first()
+        from libs import s3
+        from pyramid.threadlocal import get_current_registry
+        setting = get_current_registry().settings
+        
+        access_key_id = setting.get('nokkhum.s3.access_key_id')
+        secret_access_key = setting.get('nokkhum.s3.secret_access_key')
+        host = setting.get('nokkhum.s3.host') 
+        port = int(setting.get('nokkhum.s3.port'))
+        secure = bool(setting.get('nokkhum.s3.secure_connection'))
+        s3_storage = s3.S3Storage(access_key_id, secret_access_key, host, port, secure, user.id)
+        
+        return s3_storage
 
 import hashlib
 from Crypto.Cipher import AES

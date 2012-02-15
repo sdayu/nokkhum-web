@@ -1,0 +1,176 @@
+from pyramid.httpexceptions import HTTPFound
+
+from pyramid.view import view_config
+from pyramid.response import Response
+from pyramid.security import authenticated_userid
+
+from pyramid_simpleform import Form
+from pyramid_simpleform.renderers import FormRenderer
+
+from nokkhum.form import camera_form
+from nokkhum.common import models
+
+import os
+
+
+@view_config(route_name='storage_list', permission="login", renderer='/storage/list_file.mako')
+def storage_list(request):
+    s3_storage = request.s3_storage
+    file_list = []
+    matchdict = request.matchdict
+    fizzle = matchdict['fizzle']
+#    print ("fizzle: '%s'" % fizzle)
+#    for cam_id in s3_storage.list_file():
+#        camera = models.Camera.objects(id=int(cam_id)).first()
+#        print "cam id: ", cam_id
+#        if camera is not None:
+#            result.append(camera.name)
+#            print "name: ", camera.name
+    if len(fizzle) == 0 or fizzle == "/":
+        cameras = models.Camera.objects(owner=request.user).all()
+        for camera in cameras:
+            file_list.append((camera.name, request.route_path('storage_list', fizzle="/%s"%camera.name)))
+    else:
+        uri = fizzle[1:]
+        end_pos = uri.find("/")
+        if end_pos > 0:
+            camera_name = uri[:end_pos]
+        else:
+            camera_name = uri
+#        print "camera name: ", camera_name
+        camera = models.Camera.objects(owner=request.user, name=camera_name).first()
+#        print "ex --> : %s --> %s"%(fizzle, uri[end_pos+1:])
+        prefix = "%d/"%camera.id
+        
+        if len(uri[end_pos+1:]) > 0 and uri[end_pos+1:] != camera_name:
+            prefix = "%s%s/" % (prefix,uri[end_pos+1:])
+#        print "prefix: ", prefix
+        for item in s3_storage.list_file(prefix):
+            start_pos = item.rfind("/")
+            if uri[end_pos+1:] != camera_name:
+                path = uri[end_pos:]+item[start_pos:]
+            else:
+                path = item[start_pos:]
+            
+            extension = ""
+            pos = path.rfind(".")
+            if pos > 0:
+                extension = path[pos:]
+                if extension not in [".jpg", ".png", ".avi", ".webm", ".webp", ".oog"]:
+                    extension = ""
+            if len(extension) > 0:
+                view_link = request.route_path('storage_view', fizzle="/%s%s"%(camera.name, path))
+            else:
+                view_link = request.route_path('storage_list', fizzle="/%s%s"%(camera.name, path))
+                
+            delete_link = request.route_path('storage_delete', fizzle="/%s%s"%(camera.name, path))
+                
+            file_list.append((item[start_pos+1:], view_link, delete_link))
+    return dict(
+                file_list=file_list,
+                )
+    
+def cache_file(request):
+    cache_dir = request.registry.settings['nokkhum.temp_dir']
+    matchdict = request.matchdict
+    fizzle = matchdict['fizzle']
+    
+    user = request.user
+    
+    camera_name = ""
+    
+    uri = fizzle[1:]
+    end_pos = uri.find("/")
+    if end_pos > 0:
+        camera_name = uri[:end_pos]
+    else:
+        camera_name = uri
+    
+    camera = models.Camera.objects(owner=request.user, name=camera_name).first()
+    if camera is None:
+        return None
+    
+    key_name = "%d%s"%(camera.id, uri[end_pos:])
+    container_dir = "%s/%d/%s"%(cache_dir, user.id, key_name[:key_name.rfind("/")])
+    file_name = "%s/%d/%s"%(cache_dir, user.id, key_name)
+    
+    if os.path.exists(file_name):
+        return file_name
+    
+    if not os.path.exists(container_dir):
+        os.makedirs(container_dir)
+    
+    s3_storage = request.s3_storage
+
+#    print "key_name: ", key_name
+#    print "file_name: ", file_name
+    s3_storage.get_file(key_name, file_name)
+    
+    return file_name
+                        
+
+@view_config(route_name='storage_download', permission="login")
+def download(request):
+    
+    file_name = cache_file(request)
+    if file_name is None:
+        return None
+    
+    matchdict = request.matchdict
+    fizzle = matchdict['fizzle']
+    
+    extension = fizzle[fizzle.rfind("."):]
+    if extension == ".png":
+        response = Response(content_type='image/png')
+    elif extension == ".jpg":
+        response = Response(content_type='image/jpeg')
+    elif extension in [".mpg", ".mpeg", ".avi"]:
+        response = Response(content_type='video/mpeg')
+    elif extension in ".avi":
+        response = Response(content_type='video/msvideo')
+    
+    response.app_iter = open(file_name, 'rb')
+    return response
+
+@view_config(route_name='storage_delete', permission="login")
+def delete(request):
+    matchdict = request.matchdict
+    fizzle = matchdict['fizzle']
+    
+    uri = fizzle[1:]
+    end_pos = uri.find("/")
+    if end_pos > 0:
+        camera_name = uri[:end_pos]
+    else:
+        camera_name = uri
+    
+    camera = models.Camera.objects(owner=request.user, name=camera_name).first()
+    if camera is None:
+        return None
+    
+    key_name = "%d%s"%(camera.id, uri[end_pos:])
+    
+    s3_storage = request.s3_storage
+    s3_storage.delete(key_name)
+
+    return HTTPFound(request.referer)
+
+@view_config(route_name='storage_view', permission="login", renderer='/storage/view.mako')
+def view(request):
+    matchdict = request.matchdict
+    fizzle = matchdict['fizzle']
+    
+    file_type="unknow"
+    extension = fizzle[fizzle.rfind("."):]
+    if extension in [".png", ".jpg", ".jpeg"]:
+        file_type="image"
+    elif extension in [".avi", ".ogg", ".mpg", ".webm"]:
+        file_type="video"
+
+    url = request.route_path("storage_download", fizzle=fizzle)
+    import urllib
+
+    return dict (
+                 file_type=file_type,
+                 url=urllib.url2pathname(url),
+                 )

@@ -20,6 +20,12 @@ def add_routes(config):
     # camera operating
     config.add_route('camera_operating', '/manager/cameras/{name}/{operating}')
     
+    # storage
+    config.add_route('storage_list', '/home/storage/list{fizzle:.*}')
+    config.add_route('storage_download', '/home/storage/download{fizzle:.*}')
+    config.add_route('storage_view', '/home/storage/view{fizzle:.*}')
+    config.add_route('storage_delete', '/home/storage/delete{fizzle:.*}')
+    
     # administration part
     config.add_route('admin_home', '/admin')
     

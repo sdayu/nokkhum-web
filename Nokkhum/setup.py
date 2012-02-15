@@ -15,6 +15,7 @@ requires = [
     'mongoengine',
     'pyramid_simpleform',
     'pycrypto',
+    'boto'
     ]
 
 # if sys.version_info[:3] < (2,5,0):

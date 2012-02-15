@@ -15,6 +15,7 @@
 					<th colspan="4">Manager</th>
 					<th>Operation</th>
 					<th>Status</th>
+					<th>Storage</th>
 				</tr>
 			</thead>
 			<tbody>
@@ -32,6 +33,7 @@
 					<td><a href="${request.route_path('camera_operating', name=camera.name, operating='stop')}">stop</td>
 					% endif
 					<td>${camera.operating.status}</td>
+					<td><a href="${request.route_path("storage_list", fizzle="/%s"%camera.name)}">storage</a></td>
 				</tr>
 				% endfor
 			</tbody>
