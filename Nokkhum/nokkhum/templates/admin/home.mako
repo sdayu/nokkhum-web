@@ -21,5 +21,8 @@
 		<li>
 			<a href="${request.route_path('admin_user_list')}">Display user</a>
 		</li>
+		<li>
+			<a href="${request.route_path('admin_cache_stat')}">Cache Statistic</a>
+		</li>
 	</ul>
 </nav>

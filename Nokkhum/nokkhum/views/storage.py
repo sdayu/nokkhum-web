@@ -11,7 +11,7 @@ from nokkhum.form import camera_form
 from nokkhum.common import models
 
 import os
-
+import urllib
 
 @view_config(route_name='storage_list', permission="login", renderer='/storage/list_file.mako')
 def storage_list(request):
@@ -94,13 +94,18 @@ def cache_file(request):
     container_dir = "%s/%d/%s"%(cache_dir, user.id, key_name[:key_name.rfind("/")])
     file_name = "%s/%d/%s"%(cache_dir, user.id, key_name)
     
+    s3_storage = request.s3_storage
+
+    if not s3_storage.is_avialabel(key_name):
+        return None
+
     if os.path.exists(file_name):
         return file_name
     
     if not os.path.exists(container_dir):
         os.makedirs(container_dir)
     
-    s3_storage = request.s3_storage
+    
 
 #    print "key_name: ", key_name
 #    print "file_name: ", file_name
@@ -111,10 +116,12 @@ def cache_file(request):
 
 @view_config(route_name='storage_download', permission="login")
 def download(request):
-    
+
     file_name = cache_file(request)
+
     if file_name is None:
-        return None
+        request.response.status = '404 Not Found'
+        return request.response
     
     matchdict = request.matchdict
     fizzle = matchdict['fizzle']
@@ -130,6 +137,7 @@ def download(request):
         response = Response(content_type='video/msvideo')
     
     response.app_iter = open(file_name, 'rb')
+#    response.body = open(file_name).read()
     return response
 
 @view_config(route_name='storage_delete', permission="login")
@@ -152,8 +160,14 @@ def delete(request):
     
     s3_storage = request.s3_storage
     s3_storage.delete(key_name)
+    
+    url = request.referer
+    extension = url[url.rfind("."):]
+    if len(extension) < 5:
+        fizzle = fizzle[:fizzle.rfind("/")]
+        url = request.route_path("storage_list", fizzle=fizzle)
 
-    return HTTPFound(request.referer)
+    return HTTPFound(url)
 
 @view_config(route_name='storage_view', permission="login", renderer='/storage/view.mako')
 def view(request):
@@ -167,10 +181,12 @@ def view(request):
     elif extension in [".avi", ".ogg", ".mpg", ".webm"]:
         file_type="video"
 
-    url = request.route_path("storage_download", fizzle=fizzle)
-    import urllib
+    url         = request.route_path("storage_download", fizzle=fizzle)
+    delete_url  = request.route_path("storage_delete", fizzle=fizzle)
+    
 
     return dict (
                  file_type=file_type,
                  url=urllib.url2pathname(url),
+                 delete_url=urllib.url2pathname(delete_url),
                  )

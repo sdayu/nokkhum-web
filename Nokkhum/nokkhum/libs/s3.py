@@ -41,6 +41,15 @@ class S3Storage:
                 
         return results
     
+    def is_avialabel(self, key_name):
+        bucket = self.connection.get_bucket(self.bucket_name)
+        key = bucket.get_key(key_name)
+        
+        if key is None:
+            return False
+        else:
+            return True
+        
     def get_file(self, key_name, file_name):
         bucket = self.connection.get_bucket(self.bucket_name)
     
