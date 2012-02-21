@@ -43,6 +43,7 @@ def add(request):
         url =  form.data['url']
         fps = form.data['fps']
         image_size = form.data['image_size']
+        storage_periods = form.data['storage_periods']
     else:
         return form_renderer(form)
     
@@ -59,6 +60,9 @@ def add(request):
     camera.image_size = image_size
     camera.status = 'Active'
     camera.ip_address =  request.environ['REMOTE_ADDR']
+
+    camera.storage_periods = int(storage_periods)
+
     
     camera.camera_model = camera_model
     
@@ -111,6 +115,7 @@ def edit(request):
         fps         = form.data['fps']
         image_size  = form.data['image_size']
         camera_status = form.data['camera_status']
+        storage_periods = form.data['storage_periods']
     else:
         return form_renderer(form)
     
@@ -126,6 +131,8 @@ def edit(request):
     camera.status = camera_status
     camera.ip_address =  request.environ['REMOTE_ADDR']
     camera.update_date = datetime.datetime.now()
+    camera.storage_periods = storage_periods
+
     
     camera.camera_model = camera_model
     

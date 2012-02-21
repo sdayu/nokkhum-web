@@ -86,6 +86,11 @@ ${renderer.begin(request.route_path('camera_edit', name=camera.name))}
     	<div class="label"><label for="camera_model">Status: </label></div>
     	<div class="field">${renderer.select('camera_status', camera_status_list, camera.status)}</div>
     </div>
+    ${renderer.errorlist("storage_periods")}
+    <div class="block2">
+    	<div class="label"><label for="keep_record">Record Store: </label></div>
+    	<div class="field">${renderer.text('storage_periods', value=camera.storage_periods)} day</div>
+    </div>
 </div>
 
 <div style="width: 100px; text-align: right; padding-top: 50px">

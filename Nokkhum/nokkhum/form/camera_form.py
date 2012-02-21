@@ -16,6 +16,7 @@ class AddCameraForm(formencode.Schema):
     image_size  = formencode.validators.String(not_empty=True)
     camera_model = formencode.validators.String(not_empty=True)
     camera_man  = formencode.validators.String(not_empty=True)
+    storage_periods = formencode.validators.Int(not_empty=False, min=0)
     
 class EditCameraForm(AddCameraForm):
     camera_status = formencode.validators.String(not_empty=True)

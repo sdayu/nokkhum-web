@@ -23,6 +23,7 @@ SyntaxHighlighter.all();
 	<li><strong>Manufatory: </strong>${camera.camera_model.manufactory.name}</li>
 	<li><strong>Create Date: </strong>${camera.create_date}</li>
 	<li><strong>Last Update: </strong>${camera.update_date}</li>
+	<li><strong>Keep Record: </strong>${camera.storage_periods} day</li>
 	<li><strong>Operating:</strong>
 		<ul>
 			<li><strong>user status: <span style="color: red;">${camera.operating.user_command}</span></strong></li>
