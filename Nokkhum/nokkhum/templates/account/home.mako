@@ -22,7 +22,7 @@
 				% for camera in cameras:
 				<tr>
 					<td>${camera.name}</td>
-					<td>${camera.url}</td>
+					<td><a href="${camera.url}">${camera.url}</a></td>
 					<td><a href="${request.route_path('camera_edit', name=camera.name)}">edit</a></td>
 					<td><a href="${request.route_path('camera_delete', name=camera.name)}">delete</td>
 					<td><a href="${request.route_path('camera_setting', name=camera.name)}">setting</td>

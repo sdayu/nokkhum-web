@@ -16,6 +16,7 @@ def add_routes(config):
     config.add_route('camera_processor', '/manager/cameras/{name}/processor')
     config.add_route('camera_view', '/manager/cameras/{name}/view')
     config.add_route('camera_test_view', '/manager/cameras/{name}/test_view')
+    config.add_route('camera_live_view', '/manager/cameras/{name}/live_view')
     
     # camera operating
     config.add_route('camera_operating', '/manager/cameras/{name}/{operating}')

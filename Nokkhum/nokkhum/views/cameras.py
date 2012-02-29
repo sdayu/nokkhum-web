@@ -255,6 +255,18 @@ def operating(request):
 
     return HTTPFound(location='/home')
 
+@view_config(route_name='camera_live_view', permission='login', renderer='/camera/live_view.mako')
+def live_view(request):
+    matchdict = request.matchdict
+    camera_name = matchdict['name']
+
+    camera = models.Camera.objects(owner=request.user, name=camera_name).first()
+    
+    if not camera:
+        return Response('Camera not found')
+    return dict(
+               camera=camera,
+                )
 
 @view_config(route_name='camera_test_view', permission='login', renderer='/camera/test_view.mako')
 def test_view(request):
