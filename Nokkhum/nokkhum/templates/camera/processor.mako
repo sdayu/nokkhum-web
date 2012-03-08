@@ -57,21 +57,18 @@ ${renderer.end()}
 		'height': 480,
 		'maximum_wait_motion': 5, 
 		'fps': 10,
-		'directory': '', 
 		'record_motion': true, 
 	}, 
 		
 	{
 		'name': 'Video Recorder',
-		'directory': '', 
 		'width': 640,
-		'height': 420,
-		'fps': 1
+		'height': 480,
+		'fps': 10
 	},
 		
 	{
 		'name': 'Image Recorder', 
-		'directory': '', 
 		'width': 640, 
 		'height': 480
 	}

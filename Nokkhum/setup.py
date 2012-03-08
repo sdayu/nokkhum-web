@@ -1,5 +1,4 @@
 import os
-import sys
 
 from setuptools import setup, find_packages
 
@@ -12,17 +11,16 @@ requires = [
     'transaction',
     'pyramid_tm',
     'pyramid_debugtoolbar',
+    'waitress',
     'mongoengine',
     'pyramid_simpleform',
+    'deform',
     'pycrypto',
     'boto'
     ]
 
-# if sys.version_info[:3] < (2,5,0):
-#    requires.append('pysqlite')
-
 setup(name='Nokkhum',
-      version='0.1',
+      version='0.0',
       description='Nokkhum',
       long_description=README + '\n\n' +  CHANGES,
       classifiers=[
@@ -39,11 +37,12 @@ setup(name='Nokkhum',
       include_package_data=True,
       zip_safe=False,
       test_suite='nokkhum',
-      install_requires = requires,
-      entry_points = """\
+      install_requires=requires,
+      entry_points="""\
       [paste.app_factory]
       main = nokkhum:main
+      [console_scripts]
+      populate_Nokkhum = nokkhum.scripts.populate:main
       """,
-      paster_plugins=['pyramid'],
       )
 

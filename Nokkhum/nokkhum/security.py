@@ -42,7 +42,7 @@ class RequestWithUserAttribute(Request):
         from .common.storage import s3
         from pyramid.threadlocal import get_current_registry
         setting = get_current_registry().settings
-        
+
         access_key_id = setting.get('nokkhum.s3.access_key_id')
         secret_access_key = setting.get('nokkhum.s3.secret_access_key')
         host = setting.get('nokkhum.s3.host') 

@@ -6,7 +6,7 @@
 <img src="${url}" />
 % elif file_type == "video":
 <video width="640" controls="controls" autoplay="autoplay">
-  <source src="${url}"/>
+  <source src="${url}" type="video/mp4"/>
   Your browser does not support the HTML 5 video tag.
 </video>
 <article>
