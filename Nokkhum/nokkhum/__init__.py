@@ -27,8 +27,8 @@ def main(global_config, **settings):
 
     models.initial(settings)
     
-    db_url = settings['mongodb.url']
-    conn = pymongo.Connection(db_url)
+    db_host = settings['mongodb.host']
+    conn = pymongo.Connection(db_host)
     config.registry.settings['db_conn'] = conn
     
     add_routes(config)
@@ -48,7 +48,7 @@ def main(global_config, **settings):
 def add_mongo_db(event):
 
     settings = event.request.registry.settings
-    db = settings['db_conn'][settings['mongodb.name']]
+    db = settings['db_conn'][settings['mongodb.db_name']]
     event.request.db = db
     event.request.fs = GridFS(db)
     

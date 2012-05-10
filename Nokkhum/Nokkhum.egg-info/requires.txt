@@ -2,6 +2,9 @@ pyramid
 transaction
 pyramid_tm
 pyramid_debugtoolbar
+waitress
 mongoengine
 pyramid_simpleform
+deform
 pycrypto
+boto

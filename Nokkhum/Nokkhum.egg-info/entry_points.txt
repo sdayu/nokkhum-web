@@ -1,3 +1,5 @@
       [paste.app_factory]
       main = nokkhum:main
+      [console_scripts]
+      populate_Nokkhum = nokkhum.scripts.populate:main
       
