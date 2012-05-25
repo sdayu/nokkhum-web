@@ -38,39 +38,39 @@ ${renderer.end()}
 <pre name="code" class="brush: js; toolbar: false;">
 [
 	{
-		'name': 'Motion Detector', 
-		'interval': 3, 
-		'resolution': 98, 
-		'processors': [],
-		'drop_motion': 5
+		"name": "Motion Detector", 
+		"interval": 3, 
+		"resolution": 98, 
+		"processors": [],
+		"drop_motion": 5
 	},
 	
 	{
-		'name': 'Face Detector', 
-		'interval': 5, 
-		'processors': []
+		"name": "Face Detector", 
+		"interval": 5, 
+		"processors": []
 	}, 
 			
 	{
-		'name': 'Video Recorder',
-		'width': 640,
-		'height': 480,
-		'maximum_wait_motion': 5, 
-		'fps': 10,
-		'record_motion': true, 
+		"name": "Video Recorder",
+		"width": 640,
+		"height": 480,
+		"maximum_wait_motion": 5, 
+		"fps": 10,
+		"record_motion": true 
 	}, 
 		
 	{
-		'name': 'Video Recorder',
-		'width': 640,
-		'height': 480,
-		'fps': 10
+		"name": "Video Recorder",
+		"width": 640,
+		"height": 480,
+		"fps": 10
 	},
 		
 	{
-		'name': 'Image Recorder', 
-		'width': 640, 
-		'height': 480
+		"name": "Image Recorder", 
+		"width": 640, 
+		"height": 480
 	}
 ]
 </pre>

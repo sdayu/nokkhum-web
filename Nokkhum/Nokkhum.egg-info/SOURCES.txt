@@ -42,12 +42,10 @@ nokkhum/public/images/nokkhum.png
 nokkhum/public/js/jquery-1.6.4.min.js
 nokkhum/public/js/diagram/processor.js
 nokkhum/public/js/syntax_highlighter/build/README.txt
-nokkhum/public/js/syntax_highlighter/build/build.xml
-nokkhum/public/js/syntax_highlighter/build/ext/packer/readme.txt
-nokkhum/public/js/syntax_highlighter/build/includes/LGPLv3.txt
+nokkhum/public/js/syntax_highlighter/build/build.js
+nokkhum/public/js/syntax_highlighter/build/index.html
 nokkhum/public/js/syntax_highlighter/build/includes/about.html
 nokkhum/public/js/syntax_highlighter/build/includes/header.txt
-nokkhum/public/js/syntax_highlighter/build/includes/index.html
 nokkhum/public/js/syntax_highlighter/demos/autoloader.html
 nokkhum/public/js/syntax_highlighter/demos/big_file.html
 nokkhum/public/js/syntax_highlighter/demos/node.js
@@ -104,6 +102,7 @@ nokkhum/public/js/syntax_highlighter/tests/commonjs_tests.js
 nokkhum/public/js/syntax_highlighter/tests/syntaxhighlighter_tests.html
 nokkhum/public/js/syntax_highlighter/tests/theme_tests.html
 nokkhum/public/js/syntax_highlighter/tests/brushes/diff.html
+nokkhum/public/js/syntax_highlighter/tests/brushes/perl.html
 nokkhum/public/js/syntax_highlighter/tests/brushes/sass.html
 nokkhum/public/js/syntax_highlighter/tests/cases/001_basic.html
 nokkhum/public/js/syntax_highlighter/tests/cases/002_brushes.html
