@@ -1,7 +1,7 @@
 from pyramid.view import view_config
 from pyramid.response import Response
 
-from nokkhum.common import models
+from nokkhum import models
 
 from pyramid.httpexceptions import HTTPFound
 from pyramid.security import remember

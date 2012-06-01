@@ -8,15 +8,12 @@ CHANGES = open(os.path.join(here, 'CHANGES.txt')).read()
 
 requires = [
     'pyramid',
-    'transaction',
     'pyramid_tm',
     'pyramid_debugtoolbar',
     'waitress',
     'mongoengine',
-    'pyramid_simpleform',
     'deform',
-    'pycrypto',
-    'boto'
+    'colander'
     ]
 
 setup(name='Nokkhum',
@@ -42,7 +39,7 @@ setup(name='Nokkhum',
       [paste.app_factory]
       main = nokkhum:main
       [console_scripts]
-      populate_Nokkhum = nokkhum.scripts.populate:main
+      initialize_Nokkhum_db = nokkhum.scripts.initializedb:main
       """,
       )
 

@@ -4,3 +4,6 @@
 [submodule "Nokkhum/nokkhum/common"]
 	path = Nokkhum/nokkhum/common
 	url = git://github.com/sdayu/nokkhum-common.git
+[submodule "nokkhum/models"]
+	path = nokkhum/models
+	url = git://github.com/sdayu/nokkhum-models.git

@@ -1,11 +1,11 @@
 import formencode
-from nokkhum.common import models
+from nokkhum import models
 import json
 
 class ImageProcessor(formencode.FancyValidator):
     messages = {
         'not_found': 'This image processor "%(processor)s" not fould',
-        'syntax_error': '',
+        'syntax_error': '%(syntax_error)s',
     }
     processor_name = []
     processor_name_not_found = ""
@@ -18,8 +18,7 @@ class ImageProcessor(formencode.FancyValidator):
         try:
             processors = json.loads(value)
         except Exception as e:
-            self.messages['syntax_error'] += e
-            raise formencode.Invalid(self.message("syntax_error", state),
+            raise formencode.Invalid(self.message("syntax_error", state, syntax_error=e),
                 value, state)
         
         self.get_available_processors()

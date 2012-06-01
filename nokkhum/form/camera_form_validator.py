@@ -1,5 +1,5 @@
 import formencode
-from nokkhum.common import models
+from nokkhum import models
 from pyramid.threadlocal import get_current_request
 import re
 

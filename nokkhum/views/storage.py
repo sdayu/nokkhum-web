@@ -8,7 +8,7 @@ from pyramid_simpleform import Form
 from pyramid_simpleform.renderers import FormRenderer
 
 from nokkhum.form import camera_form
-from nokkhum.common import models
+from nokkhum import models
 
 import os
 import urllib

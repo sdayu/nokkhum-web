@@ -10,7 +10,7 @@ from gridfs import GridFS
 from mongoengine import connect
 import pymongo
 
-from nokkhum.common import models
+from nokkhum import models
 
 from nokkhum.routing import add_routes
 from nokkhum.security import groupfinder

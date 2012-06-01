@@ -1,4 +1,4 @@
-from nokkhum.common import models
+from nokkhum import models
 
 from pyramid.decorator import reify
 from pyramid.request import Request

@@ -3,7 +3,7 @@ from pyramid.view import view_config
 from pyramid.response import Response
 from pyramid.security import authenticated_userid
 
-from nokkhum.common import models
+from nokkhum import models
 
 @view_config(route_name='admin_compute_node_list', permission='admin', renderer='/admin/compute_node/list.mako')
 def list_compute_node(request):
