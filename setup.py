@@ -39,7 +39,7 @@ setup(name='Nokkhum',
       [paste.app_factory]
       main = nokkhum:main
       [console_scripts]
-      initialize_Nokkhum_db = nokkhum.scripts.initializedb:main
+      initialize_nokkhum_db = nokkhum.scripts.initializedb:main
       """,
       )
 

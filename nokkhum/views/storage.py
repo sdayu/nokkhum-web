@@ -4,9 +4,6 @@ from pyramid.view import view_config
 from pyramid.response import Response
 from pyramid.security import authenticated_userid
 
-from pyramid_simpleform import Form
-from pyramid_simpleform.renderers import FormRenderer
-
 from nokkhum.form import camera_form
 from nokkhum import models
 

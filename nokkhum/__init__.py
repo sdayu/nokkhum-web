@@ -52,45 +52,6 @@ def add_mongo_db(event):
     event.request.db = db
     event.request.fs = GridFS(db)
     
-    default_groups = ['admin', 'user']
-    
-    for gname in default_groups:
-        group = models.Group.objects(name=gname).first()
-        if not group:
-            group = models.Group()
-            group.name = gname
-            group.save()
-        
-    user = models.User.objects(email='admin@nokkhum.com').first()
-    if not user:
-        user = models.User()
-        user.first_name = 'admin'
-        user.last_name = ''
-        user.password = event.request.secret_manager.getHashPassword('password')
-        user.email = 'admin@nokkhum.com'
-        user.group = models.Group.objects(name='admin').first()
-        user.save()
-        
-    man_count = models.Manufactory.objects().count()
-    if man_count == 0:
-        man = models.Manufactory()
-        man.name = 'Generic'
-        man.save()
-        
-        camera_model = models.CameraModel()
-        camera_model.name = 'OpenCV'
-        camera_model.manufactory = man
-        camera_model.save()
-        
-    processor_count = models.ImageProcessor.objects().count()
-    if processor_count == 0:
-        processor_name = ['Motion Detector', 'Face Detector', 
-                     'Video Recorder', 'Image Recorder']
-        
-        for name in processor_name:
-            pro = models.ImageProcessor()
-            pro.name = name
-            pro.save()
     
 def add_secret_manager(event):
     settings = event.request.registry.settings

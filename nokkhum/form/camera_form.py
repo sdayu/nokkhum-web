@@ -1,29 +1,40 @@
 # -*- coding:utf-8 -*-
-import formencode
-from nokkhum.form import camera_form_validator
+from nokkhum.form import camera_form_validator as c_validators
 from nokkhum.form import image_processor_form_validators
 
-class AddCameraForm(formencode.Schema):
-    allow_extra_fields = True
-    filter_extra_fields = True
+import colander
+from .deform_wrapper import validators
 
-    name        = formencode.All(camera_form_validator.ValidName(), 
-                          camera_form_validator.UniqueCameraName())
-    url         = formencode.validators.String(not_empty=True)
-    username    = formencode.validators.String()
-    password    = formencode.validators.String()
-    fps         = formencode.validators.Int(not_empty=True)
-    image_size  = formencode.validators.String(not_empty=True)
-    camera_model = formencode.validators.String(not_empty=True)
-    camera_man  = formencode.validators.String(not_empty=True)
-    storage_periods = formencode.validators.Int(not_empty=False, min=0)
+class AddCameraForm(colander.MappingSchema):
+
+
+    name        = colander.SchemaNode(colander.String(), 
+                        validator=colander.All(c_validators.valid_name, c_validators.unique_camera_name))
+    url         = colander.SchemaNode(colander.String(), validator=validators.URL())
+    username    = colander.SchemaNode(colander.String(), missing='')
+    password    = colander.SchemaNode(colander.String(), missing='')
+    fps         = colander.SchemaNode(colander.Integer())
+    image_size  = colander.SchemaNode(colander.String())
+    camera_model = colander.SchemaNode(colander.String())
+    camera_man  = colander.SchemaNode(colander.String())
+    storage_periods = colander.SchemaNode(colander.Integer(), validator=colander.Range(min=0), missing=0)
     
 class EditCameraForm(AddCameraForm):
-    camera_status = formencode.validators.String(not_empty=True)
+    name        = colander.SchemaNode(colander.String(), 
+                        validator=colander.All(c_validators.valid_name, c_validators.unique_camera_name))
+    url         = colander.SchemaNode(colander.String(), validator=validators.URL())
+    username    = colander.SchemaNode(colander.String(), missing='')
+    password    = colander.SchemaNode(colander.String(), missing='')
+    fps         = colander.SchemaNode(colander.Integer())
+    image_size  = colander.SchemaNode(colander.String())
+    camera_model = colander.SchemaNode(colander.String())
+    camera_man  = colander.SchemaNode(colander.String())
+    storage_periods = colander.SchemaNode(colander.Integer(), validator=colander.Range(min=0), missing=0)
     
-class CameraProcessorForm(formencode.Schema):
+    camera_status = colander.SchemaNode(colander.String())
+    
+class CameraProcessorForm(colander.MappingSchema):
     allow_extra_fields = True
     filter_extra_fields = True
     
-    processors=formencode.All(formencode.validators.String(), 
-                          image_processor_form_validators.ImageProcessor())
+    processors=colander.SchemaNode(colander.String(), validator= image_processor_form_validators.image_processor)

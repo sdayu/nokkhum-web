@@ -39,61 +39,61 @@
 	camera_status_list = ["Active", "Suspend"]
 %>
 
-${renderer.begin(request.route_path('camera_edit', name=camera.name))}
+${form_renderer.begin(request.route_path('camera_edit', name=camera.name))}
 <div class="field">
-    ${renderer.errorlist("name")}
+    ${form_renderer.get_error("name")}
     <div class="block">
     	<label for="name">Name: </label>
-    	${renderer.text("name", size=30, value=camera.name)}
+    	${form_renderer.text("name", size=30, value=camera.name)}
     </div>
-    ${renderer.errorlist("url")}
+    ${form_renderer.get_error("url")}
     <div class="block">
     	<label for="url">URL: </label>
-    	${renderer.text("url", size=30, value=camera.url)}
+    	${form_renderer.text("url", size=30, value=camera.url)}
     </div>
-    ${renderer.errorlist("username")}
+    ${form_renderer.get_error("username")}
     <div class="block">
     	<label for="username">Username: </label>
-    	${renderer.text("username", size=30, value=camera.username)}
+    	${form_renderer.text("username", size=30, value=camera.username)}
     </div>
-    ${renderer.errorlist("password")}
+    ${form_renderer.get_error("password")}
     <div class="block">
     	<label for="password">Password: </label>
-    	${renderer.text("password", size=30, value=camera.password)}
+    	${form_renderer.text("password", size=30, value=camera.password)}
     </div>
-    ${renderer.errorlist("fps")}
+    ${form_renderer.get_error("fps")}
     <div class="block2">
     	<div class="label"><label for="fps">fps: </label></div>
-    	<div class="field">${renderer.select('fps', fps, camera.fps)}</div>
+    	<div class="field">${form_renderer.select('fps', fps, camera.fps)}</div>
     </div>
-    ${renderer.errorlist("image_size")}
+    ${form_renderer.get_error("image_size")}
     <div class="block2">
     	<div class="label"><label for="image_size">Image size: </label></div>
-    	<div class="field">${renderer.select('image_size', image_size, camera.image_size)}</div>
+    	<div class="field">${form_renderer.select('image_size', image_size, camera.image_size)}</div>
     </div>
-    ${renderer.errorlist("camera_man")}
+    ${form_renderer.get_error("camera_man")}
     <div class="block2">
     	<div class="label"><label for="camera_man">Manufactory: </label></div>
-    	<div class="field">${renderer.select('camera_man', camera_man, )}</div>
+    	<div class="field">${form_renderer.select('camera_man', camera_man, )}</div>
     </div>
-    ${renderer.errorlist("camera_model")}
+    ${form_renderer.get_error("camera_model")}
     <div class="block2">
     	<div class="label"><label for="camera_model">Model: </label></div>
-    	<div class="field">${renderer.select('camera_model', model_options, camera.camera_model.name)}</div>
+    	<div class="field">${form_renderer.select('camera_model', model_options, camera.camera_model.name)}</div>
     </div>
-    ${renderer.errorlist("camera_status")}
+    ${form_renderer.get_error("camera_status")}
     <div class="block2">
     	<div class="label"><label for="camera_model">Status: </label></div>
-    	<div class="field">${renderer.select('camera_status', camera_status_list, camera.status)}</div>
+    	<div class="field">${form_renderer.select('camera_status', camera_status_list, camera.status)}</div>
     </div>
-    ${renderer.errorlist("storage_periods")}
+    ${form_renderer.get_error("storage_periods")}
     <div class="block2">
     	<div class="label"><label for="keep_record">Record Store: </label></div>
-    	<div class="field">${renderer.text('storage_periods', value=camera.storage_periods)} day</div>
+    	<div class="field">${form_renderer.text('storage_periods', value=camera.storage_periods)} day</div>
     </div>
 </div>
 
 <div style="width: 100px; text-align: right; padding-top: 50px">
-    ${renderer.submit("submit", "Edit")}
+    ${form_renderer.submit("submit", "Edit")}
 </div>
-${renderer.end()}
+${form_renderer.end()}

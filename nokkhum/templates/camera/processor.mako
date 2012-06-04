@@ -5,10 +5,21 @@
 <script src="/js/syntax_highlighter/scripts/XRegExp.js" type="text/javascript"></script>
 <script src="/js/syntax_highlighter/scripts/shCore.js" type="text/javascript"></script>
 <script src="/js/syntax_highlighter/scripts/shBrushJScript.js" type="text/javascript"></script>
+
 <script language="javascript">
 SyntaxHighlighter.defaults['smart-tabs'] = false;
 SyntaxHighlighter.all();
 </script>
+
+## codemirror2 for html editor
+<link rel="stylesheet" href="/libs/codemirror2/lib/codemirror.css">
+<script src="/libs/codemirror2/lib/codemirror.js"></script>
+<script src="/libs/codemirror2/mode/xml/xml.js"></script>
+<script src="/libs/codemirror2/mode/javascript/javascript.js"></script>
+<script src="/libs/codemirror2/mode/css/css.js"></script>
+<script src="/libs/codemirror2/mode/htmlmixed/htmlmixed.js"></script>
+<link rel="stylesheet" href="/libs/codemirror2/doc/docs.css">
+<style>.CodeMirror {border-top: 1px solid black; border-bottom: 1px solid black;}</style>
 </%block>
 <h2>Processor Setting</h2>
 <p><strong>Available Processor:</strong></p>
@@ -24,7 +35,8 @@ ${renderer.begin(request.route_path('camera_processor', name=camera.name))}
 <label for="name">processors: </label>
     ${renderer.errorlist("processors")}
     <div>
-    	${renderer.textarea("processors", cols="70", rows="30")}
+    	
+    	${renderer.textarea("processors", cols="70", rows="30", id="processors")}
     </div>
 </div>
 
@@ -33,6 +45,10 @@ ${renderer.begin(request.route_path('camera_processor', name=camera.name))}
 </div>
 ${renderer.end()}
 </div>
+## codemirror2 render
+<script>
+      var editor = CodeMirror.fromTextArea(document.getElementById("processors"), {mode: "javascript", tabMode: "indent", lineNumbers: true});
+</script>
 <div style="float: left; width: 400px; background-color: #ffffcc; padding: 10px;">
 
 <pre name="code" class="brush: js; toolbar: false;">

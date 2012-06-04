@@ -4,8 +4,7 @@ from pyramid.view import view_config
 from pyramid.response import Response
 from pyramid.security import authenticated_userid
 
-from pyramid_simpleform import Form
-from pyramid_simpleform.renderers import FormRenderer
+from nokkhum.form.deform_wrapper import Form, FormRenderer
 
 from nokkhum.form import camera_form
 from nokkhum import models
@@ -20,14 +19,13 @@ def add(request):
         manufactories = models.Manufactory.objects().all()
     
         return dict(
-                renderer=FormRenderer(form),
+                form_renderer=FormRenderer(form),
                 camera_models=camera_models,
                 manufactories=manufactories
                 )
     
     form = Form(request,
-#                defaults={"name" : "..."},
-                schema=camera_form.AddCameraForm)
+                schema=camera_form.AddCameraForm())
     
     camera_man = None
     camera_model = None
@@ -90,15 +88,13 @@ def edit(request):
         manufactories = models.Manufactory.objects().all()
     
         return dict(
-                renderer=FormRenderer(form),
                 camera_models=camera_models,
                 manufactories=manufactories,
                 camera=camera
                 )
     
     form = Form(request,
-#                defaults={"name" : "..."},
-                schema=camera_form.EditCameraForm)
+                schema=camera_form.EditCameraForm())
     
     camera_man = None
     camera_model = None
@@ -185,7 +181,7 @@ def processor(request):
     import json
     form = Form(request,
                 defaults={"processors" : json.dumps(camera.processors, indent=4)},
-                schema=camera_form.CameraProcessorForm)
+                schema=camera_form.CameraProcessorForm())
     
     if form.validate():
         import json

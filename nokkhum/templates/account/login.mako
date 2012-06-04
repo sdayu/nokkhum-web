@@ -15,7 +15,6 @@
 }
 </style>
 </%block>
-	<%! from webhelpers.html import tags %>
 	<h1>This is login page for Nokkhum</h1>
 
 	% if len(message) > 0:
@@ -23,15 +22,16 @@
 	% endif
 
 	<div>
-		${tags.form('/login', method='post')} 
+		<form action="/login" method="POST">
 		<label for="email" class='input-label'>
 			<strong>Email:</strong><br/> 
-			${tags.text('email', spellcheck="false", class_="input-text")}<br/>
+			<input name='email' type='text' spellcheck="false" /><br/>
 		</label>
 		<label for="password" class='input-label'>
 			<strong>Password:</strong><br/> 
-			${tags.password('password', spellcheck="false", class_="input-text")}<br/>
+			<input name='password' type='password' spellcheck="false" /><br/>
 		</label>
 		<input type="hidden" name="came_from" value="${came_from}"/>
-		${tags.submit('form.submitted', u'Login')} ${tags.end_form()}
+		<input name='form.submitted' type="submit" value='Login' />
+		</form>
 	</div>
