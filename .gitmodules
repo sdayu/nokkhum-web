@@ -10,3 +10,6 @@
 [submodule "nokkhum/public/libs/codemirror2"]
 	path = nokkhum/public/libs/codemirror2
 	url = http://marijnhaverbeke.nl/git/codemirror2
+[submodule "nokkhum/cloud"]
+	path = nokkhum/cloud
+	url = git://github.com/sdayu/nokkhum-cloud.git

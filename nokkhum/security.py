@@ -39,7 +39,7 @@ class RequestWithUserAttribute(Request):
             return userid
         
         user = models.User.objects(email=userid).first()
-        from .common.storage import s3
+        from .cloud.storage import s3
         from pyramid.threadlocal import get_current_registry
         setting = get_current_registry().settings
 
