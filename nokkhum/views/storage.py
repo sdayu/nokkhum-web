@@ -131,8 +131,12 @@ def download(request):
         response = Response(content_type='image/jpeg')
     elif extension in [".mpg", ".mpeg", ".avi"]:
         response = Response(content_type='video/mpeg')
+    elif extension in [".mp4"]:
+        response = Response(content_type='video/mp4')
     elif extension in ".avi":
         response = Response(content_type='video/msvideo')
+    elif extension in [".ogv", ".ogg"]:
+        response = Response(content_type='video/ogg')
     
     response.app_iter = open(file_name, 'rb')
 #    response.body = open(file_name).read()
@@ -176,7 +180,7 @@ def view(request):
     extension = fizzle[fizzle.rfind("."):]
     if extension in [".png", ".jpg", ".jpeg"]:
         file_type="image"
-    elif extension in [".avi", ".ogg", ".mpg", ".webm"]:
+    elif extension in [".avi", ".ogg", ".ogv", ".mpg", ".webm"]:
         file_type="video"
 
     url         = request.route_path("storage_download", fizzle=fizzle)
