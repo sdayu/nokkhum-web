@@ -53,7 +53,7 @@ def storage_list(request):
             pos = path.rfind(".")
             if pos > 0:
                 extension = path[pos:]
-                if extension not in [".jpg", ".png", ".avi", ".webm", ".webp", ".oog"]:
+                if extension not in [".jpg", ".png", ".avi", ".webm", ".webp", ".ogg", ".ogv"]:
                     extension = ""
             if len(extension) > 0:
                 view_link = request.route_path('storage_view', fizzle="/%s%s"%(camera.name, path))
