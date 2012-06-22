@@ -38,7 +38,7 @@
 		]
 %>
 
-${form_renderer.begin(request.route_path('camera_add'))}
+${form_renderer.begin(request.current_route_path())}
 <div class="field">
     ${form_renderer.get_error("name")}
     <div class="block">

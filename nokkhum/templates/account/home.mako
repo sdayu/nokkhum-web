@@ -18,7 +18,7 @@
 			<tbody>
 				% for project in projects:
 				<tr>
-					<td>${project.name}</td>
+					<td><a href="${request.route_path('project_index', name=project.name)}">${project.name}</a></td>
 					<td>${project.get_camera_number()}</td>
 				</tr>
 				% endfor

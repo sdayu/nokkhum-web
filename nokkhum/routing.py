@@ -10,11 +10,12 @@ def add_routes(config):
     # manager part
     # project manager
     config.add_route('project_add', '/manager/projects/add')
+    config.add_route('project_index', '/manager/projects/{name}')
     config.add_route('project_edit', '/manager/projects/{name}/edit')
     config.add_route('project_delete', '/manager/projects/{name}/delete')
     
     # camera manager
-    config.add_route('camera_add', '/manager/cameras/add')
+    config.add_route('camera_add', '/manager/{project_name}/cameras/add')
     config.add_route('camera_edit', '/manager/cameras/{name}/edit')
     config.add_route('camera_delete', '/manager/cameras/{name}/delete')
     config.add_route('camera_setting', '/manager/cameras/{name}/setting')

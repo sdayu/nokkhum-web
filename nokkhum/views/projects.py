@@ -16,6 +16,19 @@ from nokkhum import models
 
 import datetime
 
+@view_config(route_name='project_index', permission='login', renderer='/project/index.mako')
+def index(request):
+    matchdict = request.matchdict
+    name = matchdict['name']
+    
+    project = models.Project.objects(name=name).first()
+    cameras = models.Camera.objects(project=project).first()
+    
+    return dict(
+                project=project,
+                cameras=cameras
+                )
+
 @view_config(route_name='project_add', permission='login', renderer='/project/add.mako')
 def add(request):
     form = project_form.Project(request.POST)
@@ -26,7 +39,7 @@ def add(request):
     else:
         return dict(form=form)
     
-    project = models.Projects()
+    project = models.Project()
     project.name = name
     project.description = description
     project.ip_address = request.environ['REMOTE_ADDR']

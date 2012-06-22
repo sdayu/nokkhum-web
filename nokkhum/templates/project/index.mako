@@ -43,5 +43,5 @@
 	</section>
 </article>
 <section>
-<a href="${request.route_path('camera_add')}">Add camera</a>
+<a href="${request.route_path('camera_add', project_name=project.name)}">Add camera</a>
 </section>

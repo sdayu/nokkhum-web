@@ -13,7 +13,10 @@ import datetime
 
 @view_config(route_name='camera_add', permission='login', renderer='/camera/add.mako')
 def add(request):
+    matchdict = request.matchdict
+    project_name = matchdict['project_name']
     
+    project = models.Project.objects(name=project_name).first()
     def form_renderer(form):
         camera_models = models.CameraModel.objects().all()
         manufactories = models.Manufactory.objects().all()
@@ -21,7 +24,7 @@ def add(request):
         return dict(
                 form_renderer=FormRenderer(form),
                 camera_models=camera_models,
-                manufactories=manufactories
+                manufactories=manufactories,
                 )
     
     form = Form(request,
@@ -62,6 +65,7 @@ def add(request):
     camera.storage_periods = int(storage_periods)
 
     camera.camera_model = camera_model
+    camera.project = project
     
     camera.operating = models.CameraOperating()
     camera.operating.status = "Stop"
