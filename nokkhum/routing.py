@@ -8,6 +8,11 @@ def add_routes(config):
     config.add_route('logout', '/logout')
     
     # manager part
+    # project manager
+    config.add_route('project_add', '/manager/projects/add')
+    config.add_route('project_edit', '/manager/projects/{name}/edit')
+    config.add_route('project_delete', '/manager/projects/{name}/delete')
+    
     # camera manager
     config.add_route('camera_add', '/manager/cameras/add')
     config.add_route('camera_edit', '/manager/cameras/{name}/edit')

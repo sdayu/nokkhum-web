@@ -51,8 +51,8 @@ def logout(request):
 
 @view_config(route_name='home', permission='login', renderer="account/home.mako")
 def home(request):
-    cameras = models.Camera.objects(owner=request.user).all()
-
+    projects = models.Projects.objects(owner=request.user).all()
+    print "project len: ",len(projects) 
     return dict(
-              cameras = cameras  
+              projects = projects
                 )

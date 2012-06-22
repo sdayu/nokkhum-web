@@ -1,5 +1,5 @@
 <%inherit file="/base/base.mako"/>
-<%block name='title'>Show</%block>
+<%block name='title'>Show: ${url[url.rfind("/")+1:]}</%block>
 
 <h2>Show: ${url[url.rfind("/")+1:]}</h2>
 % if file_type == "image":

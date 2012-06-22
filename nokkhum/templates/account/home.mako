@@ -7,34 +7,19 @@
 		<strong>Camera area</strong>
 	</section>
 	<section>
-	% if cameras:
+	% if projects:
 		<table border="1" width="100%">
 			<thead>
 				<tr>
 					<th>Name</th>
-					<th>URL</th>
-					<th colspan="4">Manager</th>
-					<th>Operation</th>
-					<th>Status</th>
-					<th>Storage</th>
+					<th>camera</th>
 				</tr>
 			</thead>
 			<tbody>
-				% for camera in cameras:
+				% for project in projects:
 				<tr>
-					<td>${camera.name}</td>
-					<td><a href="${camera.url}">${camera.url}</a></td>
-					<td><a href="${request.route_path('camera_edit', name=camera.name)}">edit</a></td>
-					<td><a href="${request.route_path('camera_delete', name=camera.name)}">delete</td>
-					<td><a href="${request.route_path('camera_setting', name=camera.name)}">setting</td>
-					<td><a href="${request.route_path('camera_view', name=camera.name)}">view</td>
-					% if camera.operating.status == "Stop":
-					<td><a href="${request.route_path('camera_operating', name=camera.name, operating='start')}">start</td>
-					% else:
-					<td><a href="${request.route_path('camera_operating', name=camera.name, operating='stop')}">stop</td>
-					% endif
-					<td>${camera.operating.status}</td>
-					<td><a href="${urllib.unquote(request.route_path("storage_list", fizzle="/%s"%camera.name))}">storage</a></td>
+					<td>${project.name}</td>
+					<td>${project.get_camera_number()}</td>
 				</tr>
 				% endfor
 			</tbody>
@@ -43,5 +28,5 @@
 	</section>
 </article>
 <section>
-<a href="${request.route_path('camera_add')}">Add camera</a>
+<a href="${request.route_path('project_add')}">Add Project</a>
 </section>

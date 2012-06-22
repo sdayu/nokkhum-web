@@ -61,7 +61,6 @@ def add(request):
 
     camera.storage_periods = int(storage_periods)
 
-    
     camera.camera_model = camera_model
     
     camera.operating = models.CameraOperating()
