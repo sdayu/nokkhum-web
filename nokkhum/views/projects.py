@@ -22,8 +22,8 @@ def index(request):
     name = matchdict['name']
     
     project = models.Project.objects(name=name).first()
-    cameras = models.Camera.objects(project=project).first()
-    
+    cameras = models.Camera.objects(project=project).order_by('name').all()
+
     return dict(
                 project=project,
                 cameras=cameras

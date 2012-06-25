@@ -77,8 +77,10 @@ aside ul{
 	height:auto;
 	padding:0 0 20px 20px;
 	margin:0;
+	/*
 	list-style:lower-alpha;
 	float:left;
+	*/
 }
 #content{
 	width:80%;

@@ -76,7 +76,7 @@ def add(request):
     except Exception as e:
         return Response("Exception in add camera: %s"%e)
 
-    return HTTPFound(location = '/home')
+    return HTTPFound(location=request.route_path('project_index', name=project_name))
 
 @view_config(route_name='camera_edit', permission='login', renderer='/camera/edit.mako')
 def edit(request):
@@ -149,13 +149,14 @@ def delete(request):
     camera_name = matchdict['name']
 
     camera = models.Camera.objects(owner=request.user, name=camera_name).first()
+    project_name = camera.project.name
     
     if camera:
         camera.delete()
     else:
         return Response('Can not delete camera')
     
-    return HTTPFound(location='/home')
+    return HTTPFound(location=request.route_path('project_index', name=project_name))
 
 @view_config(route_name='camera_setting', permission='login', renderer='/camera/setting.mako')
 def setting(request):

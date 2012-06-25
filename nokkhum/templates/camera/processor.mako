@@ -29,14 +29,14 @@ SyntaxHighlighter.all();
 % endfor
 </ul>
 
-<div style="float: left; width: 600px">
+<div style="float: left; width: 400px">
 ${renderer.begin(request.route_path('camera_processor', name=camera.name))}
 <div class="field">
 <label for="name">processors: </label>
     ${renderer.errorlist("processors")}
     <div>
     	
-    	${renderer.textarea("processors", cols="70", rows="30", id="processors")}
+    	${renderer.textarea("processors", cols="40", rows="50", id="processors")}
     </div>
 </div>
 
@@ -44,12 +44,13 @@ ${renderer.begin(request.route_path('camera_processor', name=camera.name))}
     ${renderer.submit("submit", "Submit")}
 </div>
 ${renderer.end()}
-</div>
 ## codemirror2 render
 <script>
       var editor = CodeMirror.fromTextArea(document.getElementById("processors"), {mode: "javascript", tabMode: "indent", lineNumbers: true});
 </script>
-<div style="float: left; width: 400px; background-color: #ffffcc; padding: 10px;">
+</div>
+
+<div style="float: left; width: 300px; background-color: #ffffcc; padding: 10px;">
 
 <pre name="code" class="brush: js; toolbar: false;">
 [

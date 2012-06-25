@@ -101,9 +101,10 @@ def cache_file(request):
         return file_name
     
     if not os.path.exists(container_dir):
-        os.makedirs(container_dir)
-    
-    
+        try:
+            os.makedirs(container_dir)
+        except:
+            pass
 
 #    print "key_name: ", key_name
 #    print "file_name: ", file_name

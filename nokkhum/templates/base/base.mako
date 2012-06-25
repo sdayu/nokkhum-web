@@ -23,6 +23,19 @@
 				% if request.user.group.name == "admin":
 				<li><a href="/admin" title="Administrator">Administrator</a></li>
 				% endif
+				<%
+					from nokkhum import models
+					projects = models.Project.objects(owner=request.user).all()
+				%>
+				% if projects:
+				<li style="height: auto;"><a href="/home" title="Home">Projects</a>
+					<ul style="padding-bottom: 0px;">
+						% for project in projects:
+						<li><a href="${request.route_path('project_index', name=project.name)}">${project.name}</a></li>
+						% endfor
+					</ul>
+				</li>
+				% endif
 				<li><a href="/logout" title="log out">Log out</a></li>
 				% endif
 			</ul>
