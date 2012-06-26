@@ -1,8 +1,9 @@
-import colander
+from wtforms import validators
+
 from nokkhum import models
 import json
             
-def image_processor(node, value):
+def image_processor(form, field):
     processor_name = []
     processor_name_not_found = ""
     
@@ -31,14 +32,14 @@ def image_processor(node, value):
             processor_name.append(processor.name)
     
     try:
-        processors = json.loads(value)
+        processors = json.loads(field.data)
     except Exception as e:
-        raise colander.Invalid(node,
+        raise validators.ValidationError(
                       '%s' % e)
     
     get_available_processors()
 #        print "available name:", self.processor_name
     check = check_avialable_processor(processors)
     if not check:
-        raise colander.Invalid(node,
-                'This image processor "%s" not fould'%processor_name_not_found)
+        raise validators.ValidationError(
+                'This image processor "%s" not fould' % processor_name_not_found)

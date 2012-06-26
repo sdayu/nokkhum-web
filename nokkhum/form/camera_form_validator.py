@@ -1,34 +1,32 @@
-import colander
+from wtforms import validators
+
 from nokkhum import models
 from pyramid.threadlocal import get_current_request
 import re
 
 
-def unique_camera_name(node, value):
-    
-    if not get_current_request():
-        raise  colander.Invalid(node,
-                      'Bad request')
-    
-    request = get_current_request()
+def unique_camera_name(form, field):
         
-    camera = models.Camera.objects(name=value, owner=request.user)\
+    request = get_current_request()
+    matchdict = request.matchdict
+    
+    project = models.Project.objects(name=matchdict.get('project_name')).first()
+    
+    camera = models.Camera.objects(name=field.data, project=project)\
             .first()
     
     if camera is not None:
-        matchdict = request.matchdict
         camera_name = matchdict.get('name', None)
         
         if camera_name is not None and camera.name == camera_name:
-            return value
+            return 
          
-        raise colander.Invalid(node,
-                      'Your camera name %s exist', value)
+        raise validators.ValidationError(
+                      'Your camera name %s exist'% field.data)
             
-def valid_name(node, value):
+def valid_name(form, field):
     letter_regex = re.compile(r'[a-zA-Z0-9_ -]')
-    symbol = letter_regex.sub('', value)
+    symbol = letter_regex.sub('', field.data)
     
     if len(symbol) > 0:
-        raise colander.Invalid(node,
-                      'This symbol "%s" not permit' % value)
+        raise validators.ValidationError('This symbol "%s" not permit' % field.data)

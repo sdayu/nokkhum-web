@@ -4,8 +4,6 @@ from pyramid.view import view_config
 from pyramid.response import Response
 from pyramid.security import authenticated_userid
 
-from nokkhum.form.deform_wrapper import Form, FormRenderer
-
 from nokkhum.form import camera_form
 from nokkhum import models
 
@@ -17,39 +15,54 @@ def add(request):
     project_name = matchdict['project_name']
     
     project = models.Project.objects(name=project_name).first()
-    def form_renderer(form):
-        camera_models = models.CameraModel.objects().all()
-        manufactories = models.Manufactory.objects().all()
     
+    form = camera_form.AddCameraForm(request.POST)
+
+# build form
+    camera_models = models.CameraModel.objects().all()
+    manufactories = models.Manufactory.objects().all()
+
+    model_options = []
+    for model in camera_models:
+        model_options.append((model.name, model.name))
+    
+    camera_man = []
+    for man in manufactories:
+        camera_man.append((man.name, man.name))
+        
+    image_size = ['320x240', '640x480']
+    
+    fps = [
+        '1', '2', '4', '5', '6', '8', '10',
+        '12', '14', '15', '16', '18', '20', '22',
+        '24', '26', '28', '30'
+        ]
+
+    form.fps.choices = [(i, i) for i in fps]
+    form.image_size.choices = [(i, i) for i in image_size]
+    form.camera_man.choices = camera_man
+    form.camera_model.choices = model_options
+        
+    if request.POST and form.validate():
+        camera_man = models.Manufactory.objects(name=form.data.get('camera_man')).first()
+        camera_model = models.CameraModel.objects(name=form.data.get('camera_model'),
+                                                 manufactory=camera_man)\
+                                                 .first()
+        
+        name        = form.data.get('name')
+        username    = form.data.get('username')
+        password    = form.data.get('password')
+        url         = form.data.get('url')
+        fps         = form.data.get('fps')
+        image_size  = form.data.get('image_size')
+        storage_periods = form.data.get('storage_periods')
+    else:
         return dict(
-                form_renderer=FormRenderer(form),
+                form=form,
                 camera_models=camera_models,
                 manufactories=manufactories,
                 )
     
-    form = Form(request,
-                schema=camera_form.AddCameraForm())
-    
-    camera_man = None
-    camera_model = None
-    if form.validate():
-        camera_man = models.Manufactory.objects(name=form.data['camera_man']).first()
-        camera_model = models.CameraModel.objects(name=form.data['camera_model'],
-                                                 manufactory=camera_man)\
-                                                 .first()
-        
-        name =  form.data['name']
-        username =  form.data['username']
-        password =  form.data['password']
-        url =  form.data['url']
-        fps = form.data['fps']
-        image_size = form.data['image_size']
-        storage_periods = form.data['storage_periods']
-    else:
-        return form_renderer(form)
-    
-    if not camera_model:
-        return form_renderer(form)
       
     camera = models.Camera()
     camera.owner = request.user
@@ -86,40 +99,63 @@ def edit(request):
     
     camera = models.Camera.objects(name=camera_name, owner=request.user).first()
 
-    def form_renderer(form):
-        camera_models = models.CameraModel.objects().all()
-        manufactories = models.Manufactory.objects().all()
+    form = camera_form.EditCameraForm(request.POST)
     
-        return dict(
-                camera_models=camera_models,
-                manufactories=manufactories,
-                camera=camera
-                )
+    # build from
+    camera_models = models.CameraModel.objects().all()
+    manufactories = models.Manufactory.objects().all()
+
+    model_options = []
+    for model in camera_models:
+        model_options.append((model.name, model.name))
     
-    form = Form(request,
-                schema=camera_form.EditCameraForm())
+    camera_man = []
+    for man in manufactories:
+        camera_man.append((man.name, man.name))
+        
+    image_size = ['320x240', '640x480']
     
-    camera_man = None
-    camera_model = None
-    if form.validate():
-        camera_man = models.Manufactory.objects(name=form.data['camera_man']).first()
-        camera_model = models.CameraModel.objects(name=form.data['camera_model'],
+    fps = [
+        1, 2, 4, 5, 6, 8, 10,
+        12, 14, 15, 16, 18, 20, 22,
+        24, 26, 28, 30
+        ]
+    
+    camera_status = ["Active", "Suspend"]
+
+    form.fps.choices = [(i, i) for i in fps]
+    form.image_size.choices = [(i, i) for i in image_size]
+    form.camera_man.choices = camera_man
+    form.camera_model.choices = model_options
+    form.camera_status.choices = [(i, i) for i in camera_status]
+    
+    form.fps.data = camera.fps
+    form.image_size.data = camera.image_size
+    form.camera_man.data = camera.camera_model.manufactory.name
+    form.camera_model.data = camera.camera_model.name
+    form.camera_status.data = camera.status
+        
+    if request.POST and form.validate():
+        camera_man = models.Manufactory.objects(name=form.data.get('camera_man')).first()
+        camera_model = models.CameraModel.objects(name=form.data.get('camera_model'),
                                                  manufactory=camera_man)\
                                                  .first()
         
-        name        = form.data['name']
-        username    = form.data['username']
-        password    = form.data['password']
-        url         = form.data['url']
-        fps         = form.data['fps']
-        image_size  = form.data['image_size']
-        camera_status = form.data['camera_status']
-        storage_periods = form.data['storage_periods']
+        name        = form.data.get('name')
+        username    = form.data.get('username')
+        password    = form.data.get('password')
+        url         = form.data.get('url')
+        fps         = form.data.get('fps')
+        image_size  = form.data.get('image_size')
+        camera_status = form.data.get('camera_status')
+        storage_periods = form.data.get('storage_periods')
     else:
-        return form_renderer(form)
-    
-    if not camera_model:
-        return form_renderer(form)
+        
+        return dict(
+                    form=form,
+                    camera=camera
+                    )
+
       
     camera.name =  name
     camera.username =  username
@@ -183,20 +219,20 @@ def processor(request):
         return Response('Camera not found')
     
     import json
-    form = Form(request,
-                defaults={"processors" : json.dumps(camera.processors, indent=4)},
-                schema=camera_form.CameraProcessorForm())
+    form = camera_form.CameraProcessorForm(request.POST,
+                data={"processors" : json.dumps(camera.processors, indent=4)}
+            )
     
-    if form.validate():
+    if request.POST and form.validate():
         import json
         processors = json.loads(form.data['processors'])
     else:
         image_processors = models.ImageProcessor.objects().all()
         return dict(
                 image_processors=image_processors,
-                renderer=FormRenderer(form),
-                camera=camera 
-                    )
+                camera=camera, 
+                form=form
+                )
         
     camera.processors = processors
     camera.save()

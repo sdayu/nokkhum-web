@@ -30,20 +30,19 @@ SyntaxHighlighter.all();
 </ul>
 
 <div style="float: left; width: 400px">
-${renderer.begin(request.route_path('camera_processor', name=camera.name))}
+<form action="${request.current_route_path()}" method="POST">
 <div class="field">
 <label for="name">processors: </label>
-    ${renderer.errorlist("processors")}
+    ${form.get_error("processors")}
     <div>
-    	
-    	${renderer.textarea("processors", cols="40", rows="50", id="processors")}
+    	${form.processors(cols="40", rows="50", id="processors")}
     </div>
 </div>
 
 <div style="width: 200px; text-align: right; padding-top: 10px">
-    ${renderer.submit("submit", "Submit")}
+    <input type="submit" value="Submit" />
 </div>
-${renderer.end()}
+</form>
 ## codemirror2 render
 <script>
       var editor = CodeMirror.fromTextArea(document.getElementById("processors"), {mode: "javascript", tabMode: "indent", lineNumbers: true});
