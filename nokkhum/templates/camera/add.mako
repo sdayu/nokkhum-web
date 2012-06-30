@@ -23,49 +23,42 @@
 
 <form action="${request.current_route_path()}" method="POST" >
 <div class="field">
-    ${form.get_error("name")}
     <div class="block">
     	<label for="name">Name: </label>
-    	${form.name(size=30)}
+    	${form.name(size=30)} ${form.get_error("name")}
     </div>
-    ${form.get_error("url")}
     <div class="block">
     	<label for="url">URL: </label>
-    	${form.url(size=30)}
+    	${form.url(size=30)} ${form.get_error("url")}
     </div>
-    ${form.get_error("username")}
     <div class="block">
     	<label for="username">Username: </label>
-    	${form.username(size=30)}
+    	${form.username(size=30)} ${form.get_error("username")}
     </div>
-    ${form.get_error("password")}
     <div class="block">
     	<label for="password">Password: </label>
-    	${form.password(size=30)}
+    	${form.password(size=30)} ${form.get_error("password")}
     </div>
-    ${form.get_error("fps")}
     <div class="block2">
     	<div class="label"><label for="fps">fps: </label></div>
-    	<div class="field">${form.fps}</div>
+    	<div class="field">${form.fps} ${form.get_error("fps")}</div>
     </div>
-    ${form.get_error("image_size")}
     <div class="block2">
     	<div class="label"><label for="image_size">Image size: </label></div>
-    	<div class="field">${form.image_size}</div>
+    	<div class="field">${form.image_size} ${form.get_error("image_size")}</div>
     </div>
-    ${form.get_error("camera_man")}
     <div class="block2">
     	<div class="label"><label for="camera_man">Manufactory: </label></div>
+    	<div class="field">${form.camera_man} ${form.get_error("camera_man")}</div>
     </div>
-    ${form.get_error("camera_model")}
+    
     <div class="block2">
     	<div class="label"><label for="camera_model">Model: </label></div>
-    	<div class="field">${form.camera_model}</div>
+    	<div class="field">${form.camera_model} ${form.get_error("camera_model")}</div>
     </div>
-    ${form.get_error("storage_periods")}
     <div class="block2">
     	<div class="label"><label for="keep_record">Record Store: </label></div>
-    	<div class="field">${form.storage_periods(size=5)} day</div>
+    	<div class="field">${form.storage_periods(size=5)} day ${form.get_error("storage_periods")}</div>
     </div>
 </div>
 

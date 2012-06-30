@@ -30,12 +30,12 @@ def add(request):
     for man in manufactories:
         camera_man.append((man.name, man.name))
         
-    image_size = ['320x240', '640x480']
+    image_size = [u'320x240', u'640x480']
     
     fps = [
-        '1', '2', '4', '5', '6', '8', '10',
-        '12', '14', '15', '16', '18', '20', '22',
-        '24', '26', '28', '30'
+        1, 2, 4, 5, 6, 8, 10,
+        12, 14, 15, 16, 18, 20, 22,
+        24, 26, 28, 30
         ]
 
     form.fps.choices = [(i, i) for i in fps]
