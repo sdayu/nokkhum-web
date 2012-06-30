@@ -12,7 +12,7 @@ class AddCameraForm(AbstactForm):
 
 
     name        = fields.TextField(u'Name', validators=[validators.required(), c_validators.valid_name, c_validators.unique_camera_name])
-    url         = fields.TextField(u'URL', validators=[validators.required(), validators.URL()])
+    url         = fields.TextField(u'URL', validators=[validators.required()])
     username    = fields.TextField(u'Username')
     password    = fields.TextField(u'Password')
     fps         = fields.SelectField(u'FPS', coerce=int, validators=[validators.required()])
