@@ -36,7 +36,7 @@
 				<td>${command.status}</td>
 				<td>${command.command_date}</td>
 				<td>${command.update_date}</td>
-				<td>${(datetime.datetime.now()-command.update_date).seconds} s</td>
+				<td>${(datetime.datetime.now()-command.update_date).total_seconds()} s</td>
 			</tr>
 			% endfor
 		</tbody>

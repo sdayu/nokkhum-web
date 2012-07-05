@@ -1,7 +1,7 @@
 from pyramid.httpexceptions import HTTPFound
 
 from pyramid.view import view_config
-from pyramid.response import Response
+from pyramid.response import Response, FileResponse
 from pyramid.security import authenticated_userid
 
 from nokkhum.form import camera_form
@@ -125,6 +125,7 @@ def download(request):
     matchdict = request.matchdict
     fizzle = matchdict['fizzle']
     
+    response = FileResponse(file_name, request=request, content_encoding=None)
     extension = fizzle[fizzle.rfind("."):]
     if extension == ".png":
         response = Response(content_type='image/png')
@@ -137,10 +138,10 @@ def download(request):
     elif extension in ".avi":
         response = Response(content_type='video/msvideo')
     elif extension in [".ogv", ".ogg"]:
-        response = Response(content_type='video/ogg')
+        response.content_type='video/ogg'
     
-    response.app_iter = open(file_name, 'rb')
-#    response.body = open(file_name).read()
+    response.content_encoding = None
+    
     return response
 
 @view_config(route_name='storage_delete', permission="login")

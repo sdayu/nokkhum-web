@@ -219,15 +219,13 @@ def processor(request):
         return Response('Camera not found')
     
     import json
-    form = camera_form.CameraProcessorForm(request.POST,
-                data={"processors" : json.dumps(camera.processors, indent=4)}
-            )
+    form = camera_form.CameraProcessorForm(request.POST)
     
     if request.POST and form.validate():
-        import json
         processors = json.loads(form.data['processors'])
     else:
         image_processors = models.ImageProcessor.objects().all()
+        form.processors.data = json.dumps(camera.processors, indent=4)
         return dict(
                 image_processors=image_processors,
                 camera=camera, 
@@ -289,7 +287,7 @@ def operating(request):
     ccq.owner   = request.user
     ccq.save()
 
-    return HTTPFound(location='/home')
+    return HTTPFound(location=request.route_path('project_index', name=camera.project.name))
 
 @view_config(route_name='camera_live_view', permission='login', renderer='/camera/live_view.mako')
 def live_view(request):
