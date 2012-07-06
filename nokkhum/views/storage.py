@@ -36,19 +36,18 @@ def storage_list(request):
             camera_name = uri
 #        print "camera name: ", camera_name
         camera = models.Camera.objects(owner=request.user, name=camera_name).first()
-#        print "ex --> : %s --> %s"%(fizzle, uri[end_pos+1:])
-        prefix = "%d/"%camera.id
-        
+
+        s3_storage.set_buckket_name(int(camera.id))
+
+        prefix = ""
         if len(uri[end_pos+1:]) > 0 and uri[end_pos+1:] != camera_name:
-            prefix = "%s%s/" % (prefix,uri[end_pos+1:])
-#        print "prefix: ", prefix
+            prefix = "%s/" % (uri[end_pos+1:])
+
         for item in s3_storage.list_file(prefix):
             start_pos = item.rfind("/")
-            if uri[end_pos+1:] != camera_name:
-                path = uri[end_pos:]+item[start_pos:]
-            else:
-                path = item[start_pos:]
-            
+
+            path = item
+                
             extension = ""
             pos = path.rfind(".")
             if pos > 0:
@@ -56,14 +55,14 @@ def storage_list(request):
                 if extension not in [".jpg", ".png", ".avi", ".webm", ".webp", ".ogg", ".ogv"]:
                     extension = ""
             if len(extension) > 0:
-                view_link = request.route_path('storage_view', fizzle="/%s%s"%(camera.name, path))
+                view_link = request.route_path('storage_view', fizzle="/%s/%s"%(camera.name, path))
             else:
-                view_link = request.route_path('storage_list', fizzle="/%s%s"%(camera.name, path))
+                view_link = request.route_path('storage_list', fizzle="/%s/%s"%(camera.name, path))
                 
-            delete_link = request.route_path('storage_delete', fizzle="/%s%s"%(camera.name, path))
+            delete_link = request.route_path('storage_delete', fizzle="/%s/%s"%(camera.name, path))
             
             
-            file_list.append((item[start_pos+1:], urllib.unquote(view_link), delete_link))
+            file_list.append((item[start_pos+1:], urllib.unquote(view_link), urllib.unquote(delete_link)))
     return dict(
                 file_list=file_list,
                 )
@@ -88,11 +87,12 @@ def cache_file(request):
     if camera is None:
         return None
     
-    key_name = "%d%s"%(camera.id, uri[end_pos:])
+    key_name = "%s"%(uri[end_pos+1:])
     container_dir = "%s/%d/%s"%(cache_dir, user.id, key_name[:key_name.rfind("/")])
     file_name = "%s/%d/%s"%(cache_dir, user.id, key_name)
     
     s3_storage = request.s3_storage
+    s3_storage.set_buckket_name(int(camera.id))
 
     if not s3_storage.is_avialabel(key_name):
         return None
@@ -122,23 +122,10 @@ def download(request):
         request.response.status = '404 Not Found'
         return request.response
     
-    matchdict = request.matchdict
-    fizzle = matchdict['fizzle']
+    #matchdict = request.matchdict
+    #fizzle = matchdict['fizzle']
     
     response = FileResponse(file_name, request=request, content_encoding=None)
-    extension = fizzle[fizzle.rfind("."):]
-    if extension == ".png":
-        response = Response(content_type='image/png')
-    elif extension == ".jpg":
-        response = Response(content_type='image/jpeg')
-    elif extension in [".mpg", ".mpeg", ".avi"]:
-        response = Response(content_type='video/mpeg')
-    elif extension in [".mp4"]:
-        response = Response(content_type='video/mp4')
-    elif extension in ".avi":
-        response = Response(content_type='video/msvideo')
-    elif extension in [".ogv", ".ogg"]:
-        response.content_type='video/ogg'
     
     response.content_encoding = None
     
@@ -160,9 +147,10 @@ def delete(request):
     if camera is None:
         return None
     
-    key_name = "%d%s"%(camera.id, uri[end_pos:])
+    key_name = "%s"%(uri[end_pos+1:])
     
     s3_storage = request.s3_storage
+    s3_storage.set_buckket_name(int(camera.id))
     s3_storage.delete(key_name)
     
     url = request.referer
