@@ -33,7 +33,7 @@ class RequestWithUserAttribute(Request):
         return unauthenticated_userid(self)
     
     @reify
-    def s3_storage(self):
+    def s3_client(self):
         userid = unauthenticated_userid(self)
         if userid is None:
             return userid
@@ -48,7 +48,7 @@ class RequestWithUserAttribute(Request):
         host = setting.get('nokkhum.s3.host') 
         port = int(setting.get('nokkhum.s3.port'))
         secure = bool(setting.get('nokkhum.s3.secure_connection'))
-        s3_storage = s3.S3Storage(access_key_id, secret_access_key, host, port, secure)
+        s3_storage = s3.S3Client(access_key_id, secret_access_key, host, port, secure)
         
         return s3_storage
 

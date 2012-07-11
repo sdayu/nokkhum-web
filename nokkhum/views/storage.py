@@ -12,12 +12,12 @@ import urllib
 
 @view_config(route_name='storage_list', permission="login", renderer='/storage/list_file.mako')
 def storage_list(request):
-    s3_storage = request.s3_storage
+    s3_client = request.s3_client
     file_list = []
     matchdict = request.matchdict
     fizzle = matchdict['fizzle']
 #    print ("fizzle: '%s'" % fizzle)
-#    for cam_id in s3_storage.list_file():
+#    for cam_id in s3_client.list_file():
 #        camera = models.Camera.objects(id=int(cam_id)).first()
 #        print "cam id: ", cam_id
 #        if camera is not None:
@@ -37,13 +37,13 @@ def storage_list(request):
 #        print "camera name: ", camera_name
         camera = models.Camera.objects(owner=request.user, name=camera_name).first()
 
-        s3_storage.set_buckket_name(int(camera.id))
+        s3_client.set_buckket_name(int(camera.id))
 
         prefix = ""
         if len(uri[end_pos+1:]) > 0 and uri[end_pos+1:] != camera_name:
             prefix = "%s/" % (uri[end_pos+1:])
 
-        for item in s3_storage.list_file(prefix):
+        for item in s3_client.list_file(prefix):
             start_pos = item.rfind("/")
 
             path = item
@@ -91,10 +91,10 @@ def cache_file(request):
     container_dir = "%s/%d/%s"%(cache_dir, user.id, key_name[:key_name.rfind("/")])
     file_name = "%s/%d/%s"%(cache_dir, user.id, key_name)
     
-    s3_storage = request.s3_storage
-    s3_storage.set_buckket_name(int(camera.id))
+    s3_client = request.s3_client
+    s3_client.set_buckket_name(int(camera.id))
 
-    if not s3_storage.is_avialabel(key_name):
+    if not s3_client.is_avialabel(key_name):
         return None
 
     if os.path.exists(file_name):
@@ -108,7 +108,7 @@ def cache_file(request):
 
 #    print "key_name: ", key_name
 #    print "file_name: ", file_name
-    s3_storage.get_file(key_name, file_name)
+    s3_client.get_file(key_name, file_name)
     
     return file_name
                         
@@ -149,9 +149,9 @@ def delete(request):
     
     key_name = "%s"%(uri[end_pos+1:])
     
-    s3_storage = request.s3_storage
-    s3_storage.set_buckket_name(int(camera.id))
-    s3_storage.delete(key_name)
+    s3_client = request.s3_client
+    s3_client.set_buckket_name(int(camera.id))
+    s3_client.delete(key_name)
     
     url = request.referer
     extension = url[url.rfind("."):]

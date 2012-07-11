@@ -12,5 +12,6 @@
 				<li><strong>date: </strong>${command.command_date}</li>
 				<li><strong>update date: </strong>${command.update_date}</li>
 				<li><strong>diff time: </strong><span style="color: red;">${(datetime.datetime.now()-command.command_date).seconds}</span> s ago</li>
+				<li><strong>message: </strong>${command.message}</li>
 			</ul>
 </section>
