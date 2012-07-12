@@ -36,7 +36,7 @@
 		% for compute_node in compute_nodes:
 			<% td = datetime.datetime.now() - compute_node.update_date %>
 			<tr>
-				<td><a href="${request.route_path('admin_compute_node_show', id=compute_node._id)}">${compute_node.name}</a></td>
+				<td><a href="${request.route_path('admin_compute_node_show', id=compute_node.id)}">${compute_node.name}</a></td>
 				<td>${compute_node.host}</td>
 				<td>
 				% if td < datetime.timedelta(minutes=1):

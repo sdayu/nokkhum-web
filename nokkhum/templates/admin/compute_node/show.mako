@@ -3,7 +3,7 @@
 <%! import datetime %>
 <h1>Show Compute Node</h1>
 <section>
-	<h2>Compute Node id: <span style="color: red;">${compute_node._id}</span></h2>
+	<h2>Compute Node id: <span style="color: red;">${compute_node.id}</span></h2>
 			<ul>
 				<li><strong>name: </strong> ${compute_node.name}</li>
 				<li><strong>system: </strong> ${compute_node.system}</li>
