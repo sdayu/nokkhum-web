@@ -2,6 +2,7 @@
 <%block name='title'>List Camera Command Queue</%block>
 <%! import datetime %>
 <h1>List Camera Command Queue</h1>
+Current Date ${datetime.datetime.now()}
 <section>
 	<table border="1" width="800px" style="text-align: center;">
 		<colgroup>
