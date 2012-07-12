@@ -19,7 +19,7 @@
 			<a href="${request.route_path('admin_camera_list')}">Display camera</a>
 		</li>
 		<li>
-			<a href="${request.route_path('admin.camera_running_fail.list_camera')}">Display camera run fail</a>
+			<a href="${request.route_path('admin.camera_running_fail.list_camera')}">Display camera running fail</a>
 		</li>
 		<li>
 			<a href="${request.route_path('admin_user_list')}">Display user</a>

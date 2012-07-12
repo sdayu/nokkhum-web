@@ -12,6 +12,6 @@ from nokkhum import models
 @view_config(route_name='admin.camera_running_fail.list_camera', permission='admin', renderer='/admin/camera_running_fail/list.mako')
 def list_camera(request):
     return dict(
-                run_fail_status= models.CameraFailStatus.objects().all()
+                run_fail_status= models.CameraRunningFail.objects().all()
                 )
     
