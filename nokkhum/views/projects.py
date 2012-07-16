@@ -46,6 +46,9 @@ def add(request):
     project.status = "Active"
     project.owner = request.user
     
+    project.create_date = datetime.datetime.now()
+    project.update_date = datetime.datetime.now()
+    
     project.save()
     
     return HTTPFound('/home')

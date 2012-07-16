@@ -74,6 +74,9 @@ def add(request):
     camera.image_size = image_size
     camera.status = 'Active'
     camera.ip_address =  request.environ['REMOTE_ADDR']
+    
+    camera.create_date = datetime.datetime.now()
+    camera.update_date = datetime.datetime.now()
 
     camera.storage_periods = int(storage_periods)
 
@@ -233,6 +236,7 @@ def processor(request):
                 )
         
     camera.processors = processors
+    camera.update_date = datetime.datetime.now()
     camera.save()
     
     return HTTPFound(location=request.route_path('camera_view', name=camera.name))
@@ -281,6 +285,8 @@ def operating(request):
     camera.save()
     
     ccq         = models.CameraCommandQueue()
+    ccq.command_date = datetime.datetime.now()
+    ccq.update_date = datetime.datetime.now()
     ccq.action  = command_action
     ccq.status  = 'Waiting'
     ccq.camera  = camera
