@@ -132,11 +132,6 @@ def edit(request):
     form.camera_model.choices = model_options
     form.camera_status.choices = [(i, i) for i in camera_status]
     
-    form.fps.data = camera.fps
-    form.image_size.data = camera.image_size
-    form.camera_man.data = camera.camera_model.manufactory.name
-    form.camera_model.data = camera.camera_model.name
-    form.camera_status.data = camera.status
         
     if request.POST and form.validate():
         camera_man = models.Manufactory.objects(name=form.data.get('camera_man')).first()
@@ -153,7 +148,12 @@ def edit(request):
         camera_status = form.data.get('camera_status')
         storage_periods = form.data.get('storage_periods')
     else:
-        
+        form.fps.data = camera.fps
+        form.image_size.data = camera.image_size
+        form.camera_man.data = camera.camera_model.manufactory.name
+        form.camera_model.data = camera.camera_model.name
+        form.camera_status.data = camera.status
+            
         return dict(
                     form=form,
                     camera=camera
