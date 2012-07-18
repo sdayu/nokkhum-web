@@ -26,7 +26,11 @@
 				<td>${command.action}</td>
 				<td>${command.command_date}</td>
 				<td>${command.complete_date}</td>
+				% if command.compute_node:
 				<td><a href="${request.route_path('admin_compute_node_show', id=command.compute_node.id)}">${command.compute_node.name}</a></td>
+				% else:
+				<td>None</td>
+				% endif
 				<td>${command.status}</td>
 				<td>${command.message.replace("\n", "<br/>") | n}</td>
 			</tr>
