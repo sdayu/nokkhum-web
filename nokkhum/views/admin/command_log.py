@@ -8,5 +8,5 @@ from nokkhum import models
 @view_config(route_name='admin_command_log_list', permission='admin', renderer='/admin/command_log/list.mako')
 def list(request):
     return dict(
-                command_log = models.CommandLog.objects().order_by("-id").all()
+                command_log = models.CommandLog.objects().order_by("-id").limit(30)
                 )
