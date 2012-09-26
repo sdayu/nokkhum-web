@@ -62,7 +62,7 @@ def storage_list(request):
             delete_link = request.route_path('storage_delete', fizzle="/%s/%s"%(camera.name, path))
             
             
-            file_list.append((item[start_pos+1:], urllib.unquote(view_link), urllib.unquote(delete_link)))
+            file_list.append((item[start_pos+1:], urllib.parse.unquote(view_link), urllib.parse.unquote(delete_link)))
     return dict(
                 file_list=file_list,
                 )
@@ -179,6 +179,6 @@ def view(request):
 
     return dict (
                  file_type=file_type,
-                 url=urllib.url2pathname(url),
-                 delete_url=urllib.url2pathname(delete_url),
+                 url=urllib.request.url2pathname(url),
+                 delete_url=urllib.request.url2pathname(delete_url),
                  )

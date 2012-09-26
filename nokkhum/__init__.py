@@ -34,7 +34,7 @@ def main(global_config, **settings):
     add_routes(config)
     config.scan('nokkhum.views')
     
-    from security import SecretManager, RequestWithUserAttribute
+    from .security import SecretManager, RequestWithUserAttribute
     
     config.set_request_factory(RequestWithUserAttribute)
     secret_manager = SecretManager(settings.get('nokkhum.auth.secret'))

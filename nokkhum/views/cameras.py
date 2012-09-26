@@ -30,7 +30,7 @@ def add(request):
     for man in manufactories:
         camera_man.append((man.name, man.name))
         
-    image_size = [u'320x240', u'640x480']
+    image_size = ['320x240', '640x480']
     
     fps = [
         1, 2, 4, 5, 6, 8, 10,

@@ -80,10 +80,10 @@ class SecretManager:
 
         
     def getHashPassword(self, password):
-        salt = hashlib.sha1(self.getPasswordSecret())
-        hashPass = hashlib.sha1(password)
+        salt = hashlib.sha1(self.getPasswordSecret().encode('utf-8'))
+        hashPass = hashlib.sha1(password.encode('utf-8'))
         
-        hashPass.update(self.getPasswordSecret() + salt.hexdigest())
+        hashPass.update((self.getPasswordSecret() + salt.hexdigest()).encode('utf-8'))
         return hashPass.hexdigest()
     
     def getEncryptPassword(self, text):

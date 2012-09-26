@@ -12,7 +12,8 @@ requires = [
     'pyramid_debugtoolbar',
     'waitress',
     'mongoengine',
-    'wtforms'
+    'wtforms',
+    'pycrypto'
     ]
 
 setup(name='Nokkhum',
