@@ -47,7 +47,7 @@ def main(argv=sys.argv):
         user.first_name = 'admin'
         user.last_name = ''
         user.password = secret_manager.getHashPassword('password')
-        user.email = 'admin@nokkhum.com'
+        user.email = 'admin@nokkhum.local'
         user.group = models.Group.objects(name='admin').first()
         user.save()
         
