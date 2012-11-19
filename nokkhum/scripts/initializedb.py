@@ -32,7 +32,7 @@ def main(argv=sys.argv):
 
     default_groups = ['admin', 'user']
     
-    print "begin to initial database"
+    print ("begin to initial database")
     
     for gname in default_groups:
         group = models.Group.objects(name=gname).first()
@@ -41,7 +41,7 @@ def main(argv=sys.argv):
             group.name = gname
             group.save()
         
-    user = models.User.objects(email='admin@nokkhum.com').first()
+    user = models.User.objects(email='admin@nokkhum.local').first()
     if not user:
         user = models.User()
         user.first_name = 'admin'
@@ -72,4 +72,4 @@ def main(argv=sys.argv):
             pro.name = name
             pro.save()
             
-    print "end initial database"
+    print ("end initial database")
