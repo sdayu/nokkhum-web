@@ -20,7 +20,7 @@
 				<li><a href="/login" title="login">Log in</a></li>
 				% else:
 				<li><a href="/home" title="Home">Home</a></li>
-				% if request.user.group.name == "admin":
+				% if len([role.name for role in request.user.roles if role.name == 'admin' ]) > 0:
 				<li><a href="/admin" title="Administrator">Administrator</a></li>
 				% endif
 				<%

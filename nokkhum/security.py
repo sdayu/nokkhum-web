@@ -12,7 +12,8 @@ def groupfinder(userid, request):
     
     if user:
         # return [group.name for group in user.group]
-        return [user.group.name]
+        
+        return ["r:%s"%role.name for role in user.roles]
 
 class RequestWithUserAttribute(Request):
     @reify

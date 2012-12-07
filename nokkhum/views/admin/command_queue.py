@@ -5,14 +5,14 @@ from pyramid.security import authenticated_userid
 
 from nokkhum import models
 
-@view_config(route_name='admin_command_queue_list', permission='admin', renderer='/admin/command_queue/list.mako')
+@view_config(route_name='admin_command_queue_list', permission='r:admin', renderer='/admin/command_queue/list.mako')
 def list_command(request):
     return dict(
                 camera_command_queue=models.CameraCommandQueue.objects().order_by("+id").all()
                 )
     
     
-@view_config(route_name='admin_command_queue_show', permission='admin', renderer='/admin/command_queue/show.mako')
+@view_config(route_name='admin_command_queue_show', permission='r:admin', renderer='/admin/command_queue/show.mako')
 def show(request):
     matchdict = request.matchdict
     command_id = matchdict['id']

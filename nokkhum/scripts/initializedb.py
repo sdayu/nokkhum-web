@@ -30,14 +30,14 @@ def main(argv=sys.argv):
     db_host = settings['mongodb.host']
     conn = pymongo.Connection(db_host)
 
-    default_groups = ['admin', 'user']
+    default_roles = ['admin', 'user']
     
     print ("begin to initial database")
     
-    for gname in default_groups:
-        group = models.Group.objects(name=gname).first()
+    for gname in default_roles:
+        group = models.Role.objects(name=gname).first()
         if not group:
-            group = models.Group()
+            group = models.Role()
             group.name = gname
             group.save()
         
@@ -46,10 +46,17 @@ def main(argv=sys.argv):
         user = models.User()
         user.first_name = 'admin'
         user.last_name = ''
-        user.password = secret_manager.getHashPassword('password')
-        user.email = 'admin@nokkhum.com'
-        user.group = models.Group.objects(name='admin').first()
+        user.password = secret_manager.get_hash_password('password')
+        user.email = 'admin@nokkhum.local'
+        role = models.Role.objects(name='admin').first()
+
+        user.roles.append(role)
+
         user.save()
+        
+    user = models.User.objects(email='admin@nokkhum.local').first()
+    
+    print("test mongo: ",user.roles[0].name)
         
     man_count = models.Manufactory.objects().count()
     if man_count == 0:

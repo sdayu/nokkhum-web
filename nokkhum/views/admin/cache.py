@@ -4,7 +4,7 @@ from pyramid.response import Response
 from pyramid.security import authenticated_userid
 import os
 
-@view_config(route_name='admin_cache_clear', permission='admin')
+@view_config(route_name='admin_cache_clear', permission='r:admin')
 def clear(request):
     cache_dir = request.registry.settings.get('nokkhum.temp_dir', None)
     if os.path.exists(cache_dir):    
@@ -15,7 +15,7 @@ def clear(request):
     
     return HTTPFound(request.route_path('admin_cache_stat'))
 
-@view_config(route_name='admin_cache_stat', permission='admin', renderer='/admin/cache/stat.mako')
+@view_config(route_name='admin_cache_stat', permission='r:admin', renderer='/admin/cache/stat.mako')
 def stat(request):
     
     cache_dir = request.registry.settings.get('nokkhum.temp_dir', None)

@@ -5,7 +5,7 @@ from pyramid.security import authenticated_userid
 
 from nokkhum import models
 
-@view_config(route_name='admin_home', permission='admin', renderer='/admin/home.mako')
+@view_config(route_name='admin_home', permission='r:admin', renderer='/admin/home.mako')
 def home(request):
     return dict()
     
