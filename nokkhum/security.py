@@ -48,7 +48,11 @@ class RequestWithUserAttribute(Request):
         secret_access_key = setting.get('nokkhum.s3.secret_access_key')
         host = setting.get('nokkhum.s3.host') 
         port = int(setting.get('nokkhum.s3.port'))
-        secure = bool(setting.get('nokkhum.s3.secure_connection'))
+        
+        secure = False
+        if setting.get('nokkhum.s3.secure_connection') in ['true', 'True']:
+            secure = True
+
         s3_storage = s3.S3Client(access_key_id, secret_access_key, host, port, secure)
         
         return s3_storage
