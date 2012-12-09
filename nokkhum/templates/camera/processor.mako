@@ -12,13 +12,13 @@ SyntaxHighlighter.all();
 </script>
 
 ## codemirror2 for html editor
-<link rel="stylesheet" href="/libs/codemirror2/lib/codemirror.css">
-<script src="/libs/codemirror2/lib/codemirror.js"></script>
-<script src="/libs/codemirror2/mode/xml/xml.js"></script>
-<script src="/libs/codemirror2/mode/javascript/javascript.js"></script>
-<script src="/libs/codemirror2/mode/css/css.js"></script>
-<script src="/libs/codemirror2/mode/htmlmixed/htmlmixed.js"></script>
-<link rel="stylesheet" href="/libs/codemirror2/doc/docs.css">
+<link rel="stylesheet" href="/libs/codemirror/lib/codemirror.css">
+<script src="/libs/codemirror/lib/codemirror.js"></script>
+<script src="/libs/codemirror/mode/xml/xml.js"></script>
+<script src="/libs/codemirror/mode/javascript/javascript.js"></script>
+<script src="/libs/codemirror/mode/css/css.js"></script>
+<script src="/libs/codemirror/mode/htmlmixed/htmlmixed.js"></script>
+<link rel="stylesheet" href="/libs/codemirror/doc/docs.css">
 <style>.CodeMirror {border-top: 1px solid black; border-bottom: 1px solid black;}</style>
 </%block>
 <h2>Processor Setting</h2>
