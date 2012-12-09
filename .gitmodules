@@ -7,9 +7,6 @@
 [submodule "nokkhum/form/deform_wrapper"]
 	path = nokkhum/form/deform_wrapper
 	url = git://github.com/sdayu/deform_wrapper.git
-[submodule "nokkhum/public/libs/codemirror2"]
-	path = nokkhum/public/libs/codemirror2
-	url = http://marijnhaverbeke.nl/git/codemirror2
 [submodule "nokkhum/cloud"]
 	path = nokkhum/cloud
 	url = git://github.com/sdayu/nokkhum-cloud.git
