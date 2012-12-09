@@ -58,15 +58,15 @@ from Crypto.Cipher import AES
 
 class SecretManager:
     def __init__(self, secret):
-        self.passwordSecret = secret
+        self.password_secret = secret
         self.key = ''
         
-        if len(self.passwordSecret)%32 != 0:
-            if len(self.passwordSecret) > 32:
-                self.key = self.passwordSecret[:32]
+        if len(self.password_secret)%32 != 0:
+            if len(self.password_secret) > 32:
+                self.key = self.password_secret[:32]
                 
-            elif len(self.passwordSecret) < 32:
-                self.key = self.passwordSecret + (' '*(32-len(self.passwordSecret)))
+            elif len(self.password_secret) < 32:
+                self.key = self.password_secret + (' '*(32-len(self.password_secret)))
             
         
         Initial16bytes='0123456789ABCDEF' 
@@ -74,26 +74,26 @@ class SecretManager:
                         AES.MODE_CBC, Initial16bytes) 
 
 #    def setPasswordSecret(self, secret):
-#        self.passwordSecret = secret
+#        self.password_secret = secret
     
-    def getPasswordSecret(self):
-        return self.passwordSecret
+    def get_password_secret(self):
+        return self.password_secret
 
         
-    def getHashPassword(self, password):
-        salt = hashlib.sha1(self.getPasswordSecret().encode('utf-8'))
+    def get_hash_password(self, password):
+        salt = hashlib.sha1(self.get_password_secret().encode('utf-8'))
         hashPass = hashlib.sha1(password.encode('utf-8'))
         
-        hashPass.update((self.getPasswordSecret() + salt.hexdigest()).encode('utf-8'))
+        hashPass.update((self.get_password_secret() + salt.hexdigest()).encode('utf-8'))
         return hashPass.hexdigest()
     
-    def getEncryptPassword(self, text):
+    def get_encrypt_password(self, text):
 
         cypher = self.crypt.encrypt(text) 
         return cypher 
     
     
-    def getDecryptPassword(self, cypher):
+    def get_decrypt_password(self, cypher):
 
         plain_text = self.crypt.decrypt(cypher) 
         return plain_text

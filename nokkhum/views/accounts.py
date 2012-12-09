@@ -23,7 +23,7 @@ def login(request):
     
     if 'form.submitted' in request.params:
         email = request.params['email']
-        password = request.secret_manager.getHashPassword(request.params['password'])
+        password = request.secret_manager.get_hash_password(request.params['password'])
 
         user = models.User.objects(email=email, password=password).first()
         
