@@ -13,7 +13,8 @@
       		<col style="width: 5%"/>
       		<col style="width: 5%"/>
       		<col style="width: 5%"/>
-      		<col style="width: 15%"/>
+      		<col style="width: 10%"/>
+      		<col style="width: 5%"/>
    		</colgroup>
 		<thead>
   			<tr>
@@ -23,6 +24,7 @@
     			<th colspan="2">CPU</th>
     			<th colspan="3">RAM(M)</th>
     			<th rowspan="2">Last update</th>
+    			<th rowspan="2">Operation</th>
   			</tr>
   			<tr style="vertical-align: bottom">
          		<th>count</th>
@@ -51,6 +53,7 @@
 				<td>${compute_node.memory.used/1000000}</td>
 				<td>${compute_node.memory.free/1000000}</td>
 				<td>${"%.2f"%td.total_seconds()} s</td>
+				<td><a href="${request.route_path('admin.compute_node.delete', id=compute_node.id)}">Delete</a></td>
 			</tr>
 		% endfor
 		</tbody>

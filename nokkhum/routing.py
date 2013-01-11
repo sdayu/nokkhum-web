@@ -47,6 +47,7 @@ def add_routes(config):
     
     config.add_route('admin_compute_node_list', '/admin/compute_node/list')
     config.add_route('admin_compute_node_show', '/admin/compute_node/show/{id}')
+    config.add_route('admin.compute_node.delete', '/admin/compute_node/delete/{id}')
     
     config.add_route('admin_camera_list', '/admin/camera/list')
     config.add_route('admin_camera_show', '/admin/camera/show/{id}')
