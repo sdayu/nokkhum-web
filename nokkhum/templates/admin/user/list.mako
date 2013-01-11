@@ -19,7 +19,7 @@
     			<th>Name</th>
     			<th>Email</th>
     			<th>Status</th>
-    			<th>Group</th>
+    			<th>Roles</th>
     			<th>Regist Date</th>
     			<th>Update Date</th>
   			</tr>
@@ -31,7 +31,11 @@
 				<td>${user.first_name} ${user.last_name}</td>
 				<td>${user.email}</td>
 				<td>${user.status}</td>
-				<td>${user.group.name}</td>
+				<td>
+				% for role in user.roles:
+				${role.name}, 
+				% endfor
+				</td>
 				<td>${user.registration_date}</td>
 				<td>${user.update_date}</td>
 			</tr>
