@@ -38,8 +38,8 @@
 		% for compute_node in compute_nodes:
 			<% td = datetime.datetime.now() - compute_node.update_date %>
 			<tr>
-				<td><a href="${request.route_path('admin_compute_node_show', id=compute_node.id)}">${compute_node.name}</a></td>
-				<td>${compute_node.host}</td>
+				<td><a href="${request.route_path('admin.compute_nodes.show', id=compute_node.id)}">${compute_node.name}</a></td>
+				<td>${compute_node.host} is VM: ${compute_node.is_vm()}</td>
 				<td>
 				% if td < datetime.timedelta(minutes=1):
 					<span style="color: red;">Ready</span>
@@ -53,7 +53,7 @@
 				<td>${compute_node.memory.used/1000000}</td>
 				<td>${compute_node.memory.free/1000000}</td>
 				<td>${"%.2f"%td.total_seconds()} s</td>
-				<td><a href="${request.route_path('admin.compute_node.delete', id=compute_node.id)}">Delete</a></td>
+				<td><a href="${request.route_path('admin.compute_nodes.delete', id=compute_node.id)}">Delete</a></td>
 			</tr>
 		% endfor
 		</tbody>

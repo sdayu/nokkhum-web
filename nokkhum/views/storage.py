@@ -10,7 +10,7 @@ from nokkhum import models
 import os
 import urllib
 
-@view_config(route_name='storage_list', permission="login", renderer='/storage/list_file.mako')
+@view_config(route_name='storage.list', permission="login", renderer='/storage/list_file.mako')
 def storage_list(request):
     s3_client = request.s3_client
     file_list = []
@@ -26,7 +26,7 @@ def storage_list(request):
     if len(fizzle) == 0 or fizzle == "/":
         cameras = models.Camera.objects(owner=request.user).all()
         for camera in cameras:
-            file_list.append((camera.name, request.route_path('storage_list', fizzle="/%s"%camera.name)))
+            file_list.append((camera.name, request.route_path('storage.list', fizzle="/%s"%camera.name)))
     else:
         uri = fizzle[1:]
         end_pos = uri.find("/")
@@ -55,11 +55,11 @@ def storage_list(request):
                 if extension not in [".jpg", ".png", ".avi", ".webm", ".webp", ".ogg", ".ogv"]:
                     extension = ""
             if len(extension) > 0:
-                view_link = request.route_path('storage_view', fizzle="/%s/%s"%(camera.name, path))
+                view_link = request.route_path('storage.view', fizzle="/%s/%s"%(camera.name, path))
             else:
-                view_link = request.route_path('storage_list', fizzle="/%s/%s"%(camera.name, path))
+                view_link = request.route_path('storage.list', fizzle="/%s/%s"%(camera.name, path))
                 
-            delete_link = request.route_path('storage_delete', fizzle="/%s/%s"%(camera.name, path))
+            delete_link = request.route_path('storage.delete', fizzle="/%s/%s"%(camera.name, path))
             
             
             file_list.append((item[start_pos+1:], urllib.parse.unquote(view_link), urllib.parse.unquote(delete_link)))
@@ -113,7 +113,7 @@ def cache_file(request):
     return file_name
                         
 
-@view_config(route_name='storage_download', permission="login")
+@view_config(route_name='storage.download', permission="login")
 def download(request):
 
     file_name = cache_file(request)
@@ -131,7 +131,7 @@ def download(request):
     
     return response
 
-@view_config(route_name='storage_delete', permission="login")
+@view_config(route_name='storage.delete', permission="login")
 def delete(request):
     matchdict = request.matchdict
     fizzle = matchdict['fizzle']
@@ -157,11 +157,11 @@ def delete(request):
     extension = url[url.rfind("."):]
     if len(extension) < 5:
         fizzle = fizzle[:fizzle.rfind("/")]
-        url = request.route_path("storage_list", fizzle=fizzle)
+        url = request.route_path("storage.list", fizzle=fizzle)
 
     return HTTPFound(url)
 
-@view_config(route_name='storage_view', permission="login", renderer='/storage/view.mako')
+@view_config(route_name='storage.view', permission="login", renderer='/storage/view.mako')
 def view(request):
     matchdict = request.matchdict
     fizzle = matchdict['fizzle']
@@ -173,8 +173,8 @@ def view(request):
     elif extension in [".avi", ".ogg", ".ogv", ".mpg", ".webm"]:
         file_type="video"
 
-    url         = request.route_path("storage_download", fizzle=fizzle)
-    delete_url  = request.route_path("storage_delete", fizzle=fizzle)
+    url         = request.route_path("storage.download", fizzle=fizzle)
+    delete_url  = request.route_path("storage.delete", fizzle=fizzle)
     
 
     return dict (

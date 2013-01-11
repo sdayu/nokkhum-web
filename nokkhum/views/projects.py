@@ -16,7 +16,7 @@ from nokkhum import models
 
 import datetime
 
-@view_config(route_name='project_index', permission='login', renderer='/project/index.mako')
+@view_config(route_name='projects.index', permission='login', renderer='/projects/index.mako')
 def index(request):
     matchdict = request.matchdict
     name = matchdict['name']
@@ -29,7 +29,7 @@ def index(request):
                 cameras=cameras
                 )
 
-@view_config(route_name='project_add', permission='login', renderer='/project/add.mako')
+@view_config(route_name='projects.add', permission='login', renderer='/projects/add.mako')
 def add(request):
     form = project_form.Project(request.POST)
     if request.POST and form.validate():

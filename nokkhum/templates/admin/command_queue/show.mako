@@ -5,8 +5,8 @@
 <section>
 		<h2>Command id: <span style="color: red;">${command.id}</span></h2>
 			<ul>
-				<li><strong>camera name: </strong><a href="${request.route_path('admin_camera_show', id=command.camera.id)}">${command.camera.name}</a></li>
-				<li><strong>owner: </strong><a href="${request.route_path('admin_user_show', id=command.owner.id)}">${command.owner.email}</a></li>
+				<li><strong>camera name: </strong><a href="${request.route_path('admin.cameras.show', id=command.camera.id)}">${command.camera.name}</a></li>
+				<li><strong>owner: </strong><a href="${request.route_path('admin.users.show', id=command.owner.id)}">${command.owner.email}</a></li>
 				<li><strong>action: </strong>${command.action}</li>
 				<li><strong>status: </strong>${command.status}</li>
 				<li><strong>date: </strong>${command.command_date}</li>

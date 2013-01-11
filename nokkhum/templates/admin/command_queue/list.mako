@@ -30,9 +30,9 @@ Current Date ${datetime.datetime.now()}
 		<tbody>
 			% for command in camera_command_queue:
 			<tr>
-				<td><a href="${request.route_path('admin_command_queue_show', id=command.id)}">${command.id}</a></td>
-				<td><a href="${request.route_path('admin_camera_show', id=command.camera.id)}">${command.camera.name}</a></td>
-				<td><a href="${request.route_path('admin_user_show', id=command.owner.id)}">${command.owner.email}</a></td>
+				<td><a href="${request.route_path('admin.command_queue.show', id=command.id)}">${command.id}</a></td>
+				<td><a href="${request.route_path('admin.cameras.show', id=command.camera.id)}">${command.camera.name}</a></td>
+				<td><a href="${request.route_path('admin.users.show', id=command.owner.id)}">${command.owner.email}</a></td>
 				<td>${command.action}</td>
 				<td>${command.status}</td>
 				<td>${command.command_date}</td>

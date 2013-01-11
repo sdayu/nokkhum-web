@@ -18,7 +18,7 @@
 			<tbody>
 				% for project in projects:
 				<tr>
-					<td><a href="${request.route_path('project_index', name=project.name)}">${project.name}</a></td>
+					<td><a href="${request.route_path('projects.index', name=project.name)}">${project.name}</a></td>
 					<td>${project.get_camera_number()}</td>
 				</tr>
 				% endfor
@@ -28,5 +28,5 @@
 	</section>
 </article>
 <section>
-<a href="${request.route_path('project_add')}">Add Project</a>
+<a href="${request.route_path('projects.add')}">Add Project</a>
 </section>

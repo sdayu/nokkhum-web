@@ -27,7 +27,7 @@
 		<tbody>
 			% for user in users:
 			<tr>
-				<td><a href="${request.route_path('admin_user_show', id=user.id)}">${user.id}</a></td>
+				<td><a href="${request.route_path('admin.users.show', id=user.id)}">${user.id}</a></td>
 				<td>${user.first_name} ${user.last_name}</td>
 				<td>${user.email}</td>
 				<td>${user.status}</td>

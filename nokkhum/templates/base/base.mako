@@ -31,7 +31,7 @@
 				<li style="height: auto;"><a href="/home" title="Home">Projects</a>
 					<ul style="padding-bottom: 0px;">
 						% for project in projects:
-						<li><a href="${request.route_path('project_index', name=project.name)}">${project.name}</a></li>
+						<li><a href="${request.route_path('projects.index', name=project.name)}">${project.name}</a></li>
 						% endfor
 					</ul>
 				</li>
@@ -59,19 +59,19 @@
     	<ul>
     		<li><h2>Administrator</h2></li>
         	<li>
-				<a href="${request.route_path('admin_command_queue_list')}">Display camera command queue</a>
+				<a href="${request.route_path('admin.command_queue.list')}">Display camera command queue</a>
 			</li>
 			<li>
-				<a href="${request.route_path('admin_command_log_list')}">Display command log</a>
+				<a href="${request.route_path('admin.command_log.list')}">Display command log</a>
 			</li>
 			<li>
-				<a href="${request.route_path('admin_compute_node_list')}">Display compute node</a>
+				<a href="${request.route_path('admin.compute_nodes.list')}">Display compute node</a>
 			</li>
 			<li>
-				<a href="${request.route_path('admin_camera_list')}">Display camera</a>
+				<a href="${request.route_path('admin.cameras.list')}">Display camera</a>
 			</li>
 			<li>
-				<a href="${request.route_path('admin_user_list')}">Display user</a>
+				<a href="${request.route_path('admin.users.list')}">Display user</a>
 			</li>
     	</ul>
     	<ul>

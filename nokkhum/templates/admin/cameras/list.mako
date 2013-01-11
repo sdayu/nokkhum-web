@@ -31,7 +31,7 @@
 		% for camera in cameras:
   			<tr>
     			<td>
-    				<a href="${request.route_path('admin_camera_show', id=camera.id)}">${camera.id}
+    				<a href="${request.route_path('admin.cameras.show', id=camera.id)}">${camera.id}
     			</td>
     			<td>${camera.update_date}</td>
     			<td>${camera.owner.email}</td>
@@ -40,7 +40,7 @@
     			<td>${(datetime.datetime.now()-camera.operating.update_date).seconds} s</td>
     			<td>
     				% if camera.operating.compute_node is not None:
-					${camera.operating.compute_node.host}
+					<a href="${request.route_path('admin.compute_nodes.show', id=camera.operating.compute_node.id)}">${camera.operating.compute_node.host}</a>
 					% else:
 					Waiting
 					% endif

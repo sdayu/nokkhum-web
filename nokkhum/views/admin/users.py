@@ -5,14 +5,14 @@ from pyramid.security import authenticated_userid
 
 from nokkhum import models
 
-@view_config(route_name='admin_user_list', permission='r:admin', renderer='/admin/user/list.mako')
+@view_config(route_name='admin.users.list', permission='r:admin', renderer='/admin/users/list.mako')
 def list(request):
     return dict(
                 users=models.User.objects().all()
                 )
     
     
-@view_config(route_name='admin_user_show', permission='r:admin', renderer='/admin/user/show.mako')
+@view_config(route_name='admin.users.show', permission='r:admin', renderer='/admin/users/show.mako')
 def show(request):
     matchdict = request.matchdict
     user_id = matchdict['id']

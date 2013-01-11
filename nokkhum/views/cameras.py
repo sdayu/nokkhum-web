@@ -9,7 +9,7 @@ from nokkhum import models
 
 import datetime
 
-@view_config(route_name='camera_add', permission='login', renderer='/camera/add.mako')
+@view_config(route_name='cameras.add', permission='login', renderer='/cameras/add.mako')
 def add(request):
     matchdict = request.matchdict
     project_name = matchdict['project_name']
@@ -92,9 +92,9 @@ def add(request):
     except Exception as e:
         return Response("Exception in add camera: %s"%e)
 
-    return HTTPFound(location=request.route_path('project_index', name=project_name))
+    return HTTPFound(location=request.route_path('projects.index', name=project_name))
 
-@view_config(route_name='camera_edit', permission='login', renderer='/camera/edit.mako')
+@view_config(route_name='cameras.edit', permission='login', renderer='/cameras/edit.mako')
 def edit(request):
     
     matchdict = request.matchdict
@@ -179,10 +179,10 @@ def edit(request):
     except Exception as e:
         return Response("Exception in edit camera: %s"%e)
 
-    return HTTPFound(location = request.route_path('camera_view', name=camera.name))
+    return HTTPFound(location=request.route_path('cameras.view', name=camera.name))
     
 
-@view_config(route_name='camera_delete', permission='login')
+@view_config(route_name='cameras.delete', permission='login')
 def delete(request):
     matchdict = request.matchdict
     camera_name = matchdict['name']
@@ -195,9 +195,9 @@ def delete(request):
     else:
         return Response('Can not delete camera')
     
-    return HTTPFound(location=request.route_path('project_index', name=project_name))
+    return HTTPFound(location=request.route_path('projects.index', name=project_name))
 
-@view_config(route_name='camera_setting', permission='login', renderer='/camera/setting.mako')
+@view_config(route_name='cameras.setting', permission='login', renderer='/cameras/setting.mako')
 def setting(request):
     matchdict = request.matchdict
     camera_name = matchdict['name']
@@ -211,7 +211,7 @@ def setting(request):
                camera=camera 
                 )
     
-@view_config(route_name='camera_processor', permission='login', renderer='/camera/processor.mako')
+@view_config(route_name='cameras.processor', permission='login', renderer='/cameras/processor.mako')
 def processor(request):
     matchdict = request.matchdict
     camera_name = matchdict['name']
@@ -239,9 +239,9 @@ def processor(request):
     camera.update_date = datetime.datetime.now()
     camera.save()
     
-    return HTTPFound(location=request.route_path('camera_view', name=camera.name))
+    return HTTPFound(location=request.route_path('cameras.view', name=camera.name))
     
-@view_config(route_name='camera_view', permission='login', renderer='/camera/view.mako')
+@view_config(route_name='cameras.view', permission='login', renderer='/camera/view.mako')
 def view(request):
     matchdict = request.matchdict
     camera_name = matchdict['name']
@@ -254,7 +254,7 @@ def view(request):
                camera=camera,
                 )
     
-@view_config(route_name='camera_operating', permission='login')
+@view_config(route_name='cameras.operating', permission='login')
 def operating(request):
     matchdict   = request.matchdict
     camera_name = matchdict['name']
@@ -293,9 +293,9 @@ def operating(request):
     ccq.owner   = request.user
     ccq.save()
 
-    return HTTPFound(location=request.route_path('project_index', name=camera.project.name))
+    return HTTPFound(location=request.route_path('projects.index', name=camera.project.name))
 
-@view_config(route_name='camera_live_view', permission='login', renderer='/camera/live_view.mako')
+@view_config(route_name='cameras.live_view', permission='login', renderer='/cameras/live_view.mako')
 def live_view(request):
     matchdict = request.matchdict
     camera_name = matchdict['name']
@@ -308,7 +308,7 @@ def live_view(request):
                camera=camera,
                 )
 
-@view_config(route_name='camera_test_view', permission='login', renderer='/camera/test_view.mako')
+@view_config(route_name='cameras.test_view', permission='login', renderer='/cameras/test_view.mako')
 def test_view(request):
     matchdict = request.matchdict
     camera_name = matchdict['name']

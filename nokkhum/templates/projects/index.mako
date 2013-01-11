@@ -24,17 +24,17 @@
 				<tr>
 					<td>${camera.name}</td>
 					<td><a href="${camera.url}">${camera.url}</a></td>
-					<td><a href="${request.route_path('camera_edit', name=camera.name)}">edit</a></td>
-					<td><a href="${request.route_path('camera_delete', name=camera.name)}">delete</td>
-					<td><a href="${request.route_path('camera_setting', name=camera.name)}">setting</td>
-					<td><a href="${request.route_path('camera_view', name=camera.name)}">view</td>
+					<td><a href="${request.route_path('cameras.edit', name=camera.name)}">edit</a></td>
+					<td><a href="${request.route_path('cameras.delete', name=camera.name)}">delete</td>
+					<td><a href="${request.route_path('cameras.setting', name=camera.name)}">setting</td>
+					<td><a href="${request.route_path('cameras.view', name=camera.name)}">view</td>
 					% if camera.operating.status == "Stop":
-					<td><a href="${request.route_path('camera_operating', name=camera.name, operating='start')}">start</td>
+					<td><a href="${request.route_path('cameras.operating', name=camera.name, operating='start')}">start</td>
 					% else:
-					<td><a href="${request.route_path('camera_operating', name=camera.name, operating='stop')}">stop</td>
+					<td><a href="${request.route_path('cameras.operating', name=camera.name, operating='stop')}">stop</td>
 					% endif
 					<td>${camera.operating.status}</td>
-					<td><a href="${urllib.parse.unquote(request.route_path("storage_list", fizzle="/%s"%camera.name))}">storage</a></td>
+					<td><a href="${urllib.parse.unquote(request.route_path("storage.list", fizzle="/%s"%camera.name))}">storage</a></td>
 				</tr>
 				% endfor
 			</tbody>
@@ -43,5 +43,5 @@
 	</section>
 </article>
 <section>
-<a href="${request.route_path('camera_add', project_name=project.name)}">Add camera</a>
+<a href="${request.route_path('cameras.add', project_name=project.name)}">Add camera</a>
 </section>

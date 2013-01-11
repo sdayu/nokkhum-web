@@ -16,7 +16,7 @@
 </style>
 <h2>Add Project</h2>
 
-<form action="${request.route_path('project_add')}" method="POST">
+<form action="${request.route_path('projects.add')}" method="POST">
 <div class="field">
     ${form.get_error("name")}
     <div class="block">

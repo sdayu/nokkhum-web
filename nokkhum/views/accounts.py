@@ -9,7 +9,7 @@ from pyramid.security import forget
 from pyramid.security import authenticated_userid
 from pyramid.url import route_url
 
-@view_config(route_name='login', renderer='account/login.mako')
+@view_config(route_name='login', renderer='accounts/login.mako')
 def login(request):
     
     signin_url = route_url('login', request)
@@ -49,7 +49,7 @@ def logout(request):
     return HTTPFound(location = route_url('index', request),
                      headers = headers)
 
-@view_config(route_name='home', permission='login', renderer="account/home.mako")
+@view_config(route_name='home', permission='login', renderer="accounts/home.mako")
 def home(request):
     projects = models.Project.objects(owner=request.user).all()
 

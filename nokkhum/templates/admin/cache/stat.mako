@@ -7,6 +7,6 @@
 	<article>Not cache directory found</article>
 % else:
 	<article>There are <strong>${file_count}</strong> files in cache.</article>
-	<a href="${request.route_path('admin_cache_clear')}">Clear</a>
+	<a href="${request.route_path('admin.cache.clear')}">Clear</a>
 % endif
 </section>
