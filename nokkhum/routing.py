@@ -62,7 +62,7 @@ def add_routes(config):
     
     config.add_view('nokkhum.views.accounts.login',
                     context='pyramid.exceptions.Forbidden',
-                    renderer='nokkhum:templates/account/login.mako')
+                    renderer='nokkhum:templates/accounts/login.mako')
     
     # static view
     config.add_static_view('public', 'nokkhum:public')
