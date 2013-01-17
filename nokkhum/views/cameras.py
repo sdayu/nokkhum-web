@@ -241,7 +241,7 @@ def processor(request):
     
     return HTTPFound(location=request.route_path('cameras.view', name=camera.name))
     
-@view_config(route_name='cameras.view', permission='login', renderer='/camera/view.mako')
+@view_config(route_name='cameras.view', permission='login', renderer='/cameras/view.mako')
 def view(request):
     matchdict = request.matchdict
     camera_name = matchdict['name']
