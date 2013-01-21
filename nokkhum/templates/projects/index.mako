@@ -28,7 +28,7 @@
 					<td><a href="${request.route_path('cameras.delete', name=camera.name)}">delete</td>
 					<td><a href="${request.route_path('cameras.setting', name=camera.name)}">setting</td>
 					<td><a href="${request.route_path('cameras.view', name=camera.name)}">view</td>
-					% if camera.operating.status == "Stop":
+					% if camera.operating.status == "stop":
 					<td><a href="${request.route_path('cameras.operating', name=camera.name, operating='start')}">start</td>
 					% else:
 					<td><a href="${request.route_path('cameras.operating', name=camera.name, operating='stop')}">stop</td>

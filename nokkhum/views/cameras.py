@@ -72,7 +72,7 @@ def add(request):
     camera.url =  url
     camera.fps = fps
     camera.image_size = image_size
-    camera.status = 'Active'
+    camera.status = 'active'
     camera.ip_address =  request.environ['REMOTE_ADDR']
     
     camera.create_date = datetime.datetime.now()
@@ -84,7 +84,7 @@ def add(request):
     camera.project = project
     
     camera.operating = models.CameraOperating()
-    camera.operating.status = "Stop"
+    camera.operating.status = "stop"
     camera.operating.update_date = datetime.datetime.now()
     
     try:
@@ -124,7 +124,7 @@ def edit(request):
         24, 26, 28, 30
         ]
     
-    camera_status = ["Active", "Suspend"]
+    camera_status = ["active", "suspend"]
 
     form.fps.choices = [(i, i) for i in fps]
     form.image_size.choices = [(i, i) for i in image_size]
@@ -265,14 +265,14 @@ def operating(request):
     if not camera:
         return Response('Camera not found')
     
-    command_action  = 'No-command'
-    user_command    = 'Undefine'
+    command_action  = 'no-command'
+    user_command    = 'undefined'
     if operating == 'start':
-        command_action = 'Start'
-        user_command = 'Run'
+        command_action = 'start'
+        user_command = 'run'
     elif operating == 'stop':
-        command_action = 'Stop'
-        user_command = 'Suspend'
+        command_action = 'stop'
+        user_command = 'suspend'
     
     ccq = models.CameraCommandQueue.objects(owner=request.user, camera=camera, action=command_action).first()
     if ccq is not None:
@@ -288,7 +288,7 @@ def operating(request):
     ccq.command_date = datetime.datetime.now()
     ccq.update_date = datetime.datetime.now()
     ccq.action  = command_action
-    ccq.status  = 'Waiting'
+    ccq.status  = 'waiting'
     ccq.camera  = camera
     ccq.owner   = request.user
     ccq.save()

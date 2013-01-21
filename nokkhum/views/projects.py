@@ -43,7 +43,7 @@ def add(request):
     project.name = name
     project.description = description
     project.ip_address = request.environ['REMOTE_ADDR']
-    project.status = "Active"
+    project.status = "active"
     project.owner = request.user
     
     project.create_date = datetime.datetime.now()
