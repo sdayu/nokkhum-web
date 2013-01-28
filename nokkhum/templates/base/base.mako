@@ -18,6 +18,7 @@
 			<ul>
 				% if request.userid is None:
 				<li><a href="/login" title="login">Log in</a></li>
+				<li><a href="/register" title="register">Register</a></li>
 				% else:
 				<li><a href="/home" title="Home">Home</a></li>
 				% if len([role.name for role in request.user.roles if role.name == 'admin' ]) > 0:

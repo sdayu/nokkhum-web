@@ -6,6 +6,7 @@ def add_routes(config):
     
     config.add_route('login', '/login')
     config.add_route('logout', '/logout')
+    config.add_route('register', '/register')
     
     # manager part
     # project manager
