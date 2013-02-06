@@ -1,1 +1,0 @@
-Nokkhum README
