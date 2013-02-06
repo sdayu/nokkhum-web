@@ -14,7 +14,7 @@ SyntaxHighlighter.all();
 <h2>Camera infomation</h2>
 <ul>
 	<li><strong>Camera: </strong>${camera.name}</li>
-	<li><strong>URL: </strong>${camera.url}</li>
+	<li><strong>URL: </strong>${camera.video_url}</li>
 	<li><strong>Username: </strong>${camera.username}</li>
 	<li><strong>Password: </strong>${camera.password}</li>
 	<li><strong>FPS: </strong>${camera.fps}</li>

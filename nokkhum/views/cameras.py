@@ -69,7 +69,7 @@ def add(request):
     camera.name =  name
     camera.username =  username
     camera.password =  password
-    camera.url =  url
+    camera.video_url =  url
     camera.fps = fps
     camera.image_size = image_size
     camera.status = 'active'
@@ -163,7 +163,7 @@ def edit(request):
     camera.name =  name
     camera.username =  username
     camera.password =  password
-    camera.url =  url
+    camera.video_url =  url
     camera.fps = fps
     camera.image_size = image_size
     camera.status = camera_status
