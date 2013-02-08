@@ -1,8 +1,15 @@
 <%inherit file="/base/base.mako"/>
 <%block name='title'>Browser</%block>
-
+<%! import urllib %>
 <h2>List</h2>
 % if len(file_list) > 0:
+<%
+url = urllib.parse.unquote(request.current_route_path())
+back = url[:url.rfind('/')]
+%>
+% if back[back.rfind('/')+1:] != 'list':
+<a href="${back}">Back</a>
+% endif
 <ul>
 % for item in file_list:
 	<li style="display:block; width:100%; clear:both;">
