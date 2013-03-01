@@ -19,7 +19,7 @@
 				% for project in projects:
 				<tr>
 					<td><a href="${request.route_path('projects.index', name=project.name)}">${project.name}</a></td>
-					<td>${project.get_camera_number()}</td>
+					<td>${project.camera_number}</td>
 				</tr>
 				% endfor
 			</tbody>

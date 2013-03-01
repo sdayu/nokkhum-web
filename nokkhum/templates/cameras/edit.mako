@@ -29,7 +29,7 @@
     </div>
     <div class="block">
     	<label for="url">URL: </label>
-    	${form.url(size=30, value=camera.url)} ${form.get_error("url")}
+    	${form.url(size=30, value=camera.video_url)} ${form.get_error("url")}
     </div>
     <div class="block">
     	<label for="username">Username: </label>

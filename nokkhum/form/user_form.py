@@ -6,8 +6,6 @@ Created on Jan 28, 2013
 from wtforms import fields
 from wtforms import validators
 
-from nokkhum import models
-
 from . import AbstactForm
 
 def validate_email(form, field):

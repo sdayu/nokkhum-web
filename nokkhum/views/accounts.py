@@ -1,7 +1,6 @@
 from pyramid.view import view_config
 from pyramid.response import Response
 
-from nokkhum import models
 from nokkhum.form import user_form
 
 from pyramid.httpexceptions import HTTPFound
@@ -13,7 +12,6 @@ from pyramid.url import route_url
 
 @view_config(route_name='login', renderer='/accounts/login.mako')
 def login(request):
-    
     signin_url = route_url('login', request)
     referrer = request.url
     if referrer == signin_url:
@@ -25,12 +23,18 @@ def login(request):
     
     if 'form.submitted' in request.params:
         email = request.params['email']
-        password = request.secret_manager.get_hash_password(request.params['password'])
-
-        user = models.User.objects(email=email, password=password).first()
+        password = request.params['password']
         
+        session = request.session
+        session['email'] = email
+        session['password'] = password
+#        user = models.User.objects(email=email, password=password).first()
+        user = request.nokkhum_client.authenticate()
+
         if user:
             headers = remember(request, email)
+            session =  request.session
+            session[email] = user
             if came_from == '/':
                 came_from = '/home'
             return HTTPFound(location = came_from,
@@ -47,17 +51,21 @@ def login(request):
     
 @view_config(route_name='logout')
 def logout(request):
+    email = request.userid
     headers = forget(request)
+    
+    if email in request.session:
+        del request.session[email]
+    
     return HTTPFound(location = route_url('index', request),
                      headers = headers)
 
 @view_config(route_name='home', permission='login', renderer="/accounts/home.mako")
 def home(request):
-    projects = models.Project.objects(owner=request.user).all()
+    session = request.session[request.userid]
+    projects = request.nokkhum_client.projects.list_user_projects(session['access']['user']['id'])
 
-    return dict(
-              projects = projects
-                )
+    return dict(projects=projects)
     
 @view_config(route_name='register', renderer="/accounts/register.mako")
 def register(request):

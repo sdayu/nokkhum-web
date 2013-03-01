@@ -12,7 +12,6 @@ from pyramid.response import Response
 from pyramid.security import authenticated_userid
 
 from nokkhum.form import project_form
-from nokkhum import models
 
 import datetime
 
@@ -21,8 +20,12 @@ def index(request):
     matchdict = request.matchdict
     name = matchdict['name']
     
-    project = models.Project.objects(name=name).first()
-    cameras = models.Camera.objects(project=project).order_by('name').all()
+    #project = models.Project.objects(name=name).first()
+    #cameras = models.Camera.objects(project=project).order_by('name').all()
+    project = request.nokkhum_client.projects.get(name)
+    cameras = None
+    if project is not None:
+        cameras = project.cameras
 
     return dict(
                 project=project,

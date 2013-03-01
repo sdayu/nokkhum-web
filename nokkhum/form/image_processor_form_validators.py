@@ -1,6 +1,5 @@
 from wtforms import validators
 
-from nokkhum import models
 import json
             
 def image_processor(form, field):

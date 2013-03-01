@@ -1,6 +1,5 @@
 from wtforms import validators
 
-from nokkhum import models
 from pyramid.threadlocal import get_current_request
 import re
 

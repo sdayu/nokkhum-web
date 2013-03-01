@@ -3,8 +3,6 @@ from pyramid.view import view_config
 from pyramid.response import Response
 from pyramid.security import authenticated_userid
 
-from nokkhum import models
-
 @view_config(route_name='admin.command_queue.list', permission='r:admin', renderer='/admin/command_queue/list.mako')
 def list_command(request):
     return dict(

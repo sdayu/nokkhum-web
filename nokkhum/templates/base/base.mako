@@ -25,8 +25,9 @@
 				<li><a href="/admin" title="Administrator">Administrator</a></li>
 				% endif
 				<%
-					from nokkhum import models
-					projects = models.Project.objects(owner=request.user).all()
+					projects = request.nokkhum_client.projects.list_user_projects(
+								request.user.id
+								)
 				%>
 				% if projects:
 				<li style="height: auto;"><a href="/home" title="Home">Projects</a>

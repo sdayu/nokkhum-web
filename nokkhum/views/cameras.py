@@ -5,7 +5,6 @@ from pyramid.response import Response
 from pyramid.security import authenticated_userid
 
 from nokkhum.form import camera_form
-from nokkhum import models
 
 import datetime
 
