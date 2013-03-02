@@ -11,7 +11,7 @@ import urllib
 
 @view_config(route_name='storage.list', permission="login", renderer='/storage/list_file.mako')
 def storage_list(request):
-    s3_client = request.s3_client
+
     file_list = []
     matchdict = request.matchdict
     fizzle = matchdict['fizzle']
@@ -34,34 +34,42 @@ def storage_list(request):
         else:
             camera_name = uri
 #        print "camera name: ", camera_name
-        camera = models.Camera.objects(owner=request.user, name=camera_name).first()
-
-        s3_client.set_buckket_name(int(camera.id))
-
+        camera = request.nokkhum_client.cameras.get(camera_name)
+    
+        
+    
+#        s3_client.set_buckket_name(int(camera.id))
+#
         prefix = ""
         if len(uri[end_pos+1:]) > 0 and uri[end_pos+1:] != camera_name:
             prefix = "%s/" % (uri[end_pos+1:])
 
-        for item in s3_client.list_file(prefix):
-            start_pos = item.rfind("/")
-
-            path = item
+        print ("storage prefix: ", prefix)
+        items = None
+        if len(prefix) > 0:
+            items = request.nokkhum_client.storage.list('/'+prefix)
+        else:
+            items = camera.storage
+            
+        for item in items:
+            print("item: ", item.name)
+            
+            path = item.url
                 
-            extension = ""
-            pos = path.rfind(".")
-            if pos > 0:
-                extension = path[pos:]
-                if extension not in [".jpg", ".png", ".avi", ".webm", ".webp", ".ogg", ".ogv"]:
-                    extension = ""
-            if len(extension) > 0:
-                view_link = request.route_path('storage.view', fizzle="/%s/%s"%(camera.name, path))
+#            extension = ""
+#            pos = path.rfind(".")
+#            if pos > 0:
+#                extension = path[pos:]
+#                if extension not in [".jpg", ".png", ".avi", ".webm", ".webp", ".ogg", ".ogv"]:
+#                    extension = ""
+            if item.file:
+                view_link = request.route_path('storage.view', fizzle="/%s%s"%(camera.name, path))
             else:
-                view_link = request.route_path('storage.list', fizzle="/%s/%s"%(camera.name, path))
+                view_link = request.route_path('storage.list', fizzle="/%s%s"%(camera.name, path))
                 
-            delete_link = request.route_path('storage.delete', fizzle="/%s/%s"%(camera.name, path))
+            delete_link = request.route_path('storage.delete', fizzle="/%s%s"%(camera.name, path))
             
-            
-            file_list.append((item[start_pos+1:], urllib.parse.unquote(view_link), urllib.parse.unquote(delete_link)))
+            file_list.append((item.name, urllib.parse.unquote(view_link), urllib.parse.unquote(delete_link)))
     return dict(
                 file_list=file_list,
                 )
@@ -165,14 +173,31 @@ def view(request):
     matchdict = request.matchdict
     fizzle = matchdict['fizzle']
     
+    
+    print ("fizzle:", fizzle)
     file_type="unknow"
     extension = fizzle[fizzle.rfind("."):]
     if extension in [".png", ".jpg", ".jpeg"]:
         file_type="image"
     elif extension in [".avi", ".ogg", ".ogv", ".mpg", ".webm"]:
         file_type="video"
+    
+    key = "/storage"
+    identify = fizzle[fizzle.find(key):fizzle.rfind('/')]
+    print("identify: ", identify)
+   
+    items = request.nokkhum_client.storage.list(identify)
+    
+    key = fizzle[fizzle.rfind('/'):]
 
-    url         = request.route_path("storage.download", fizzle=fizzle)
+    item = None
+    for tmp in items:
+        if key in tmp.url:
+            item = tmp
+            break
+    
+
+    url         = item.download
     delete_url  = request.route_path("storage.delete", fizzle=fizzle)
     
 

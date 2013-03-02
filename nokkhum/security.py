@@ -45,30 +45,6 @@ class RequestWithUserAttribute(Request):
         return unauthenticated_userid(self)
     
     @reify
-    def s3_client(self):
-        userid = unauthenticated_userid(self)
-        if userid is None:
-            return userid
-        
-        user = models.User.objects(email=userid).first()
-        from .cloud.storage import s3
-        from pyramid.threadlocal import get_current_registry
-        settings = get_current_registry().settings
-
-        access_key_id = settings.get('nokkhum.s3.access_key_id')
-        secret_access_key = settings.get('nokkhum.s3.secret_access_key')
-        host = settings.get('nokkhum.s3.host') 
-        port = int(settings.get('nokkhum.s3.port'))
-        
-        secure = False
-        if settings.get('nokkhum.s3.secure_connection') in ['true', 'True']:
-            secure = True
-
-        s3_storage = s3.S3Client(access_key_id, secret_access_key, host, port, secure)
-        
-        return s3_storage
-    
-    @reify
     def nokkhum_client(self):
         settings = get_current_registry().settings
         request = get_current_request()
