@@ -15,6 +15,7 @@ def storage_list(request):
     file_list = []
     matchdict = request.matchdict
     fizzle = matchdict['fizzle']
+    
 #    print ("fizzle: '%s'" % fizzle)
 #    for cam_id in s3_client.list_file():
 #        camera = models.Camera.objects(id=int(cam_id)).first()
@@ -33,35 +34,25 @@ def storage_list(request):
             camera_name = uri[:end_pos]
         else:
             camera_name = uri
-#        print "camera name: ", camera_name
+#        print ("camera name:", camera_name)
         camera = request.nokkhum_client.cameras.get(camera_name)
     
-        
-    
-#        s3_client.set_buckket_name(int(camera.id))
-#
         prefix = ""
         if len(uri[end_pos+1:]) > 0 and uri[end_pos+1:] != camera_name:
-            prefix = "%s/" % (uri[end_pos+1:])
+            prefix = uri[end_pos:]
 
-        print ("storage prefix: ", prefix)
+#        print ("storage prefix: ", prefix)
         items = None
         if len(prefix) > 0:
-            items = request.nokkhum_client.storage.list('/'+prefix)
+            items = request.nokkhum_client.storage.list(prefix)
         else:
             items = camera.storage
             
         for item in items:
-            print("item: ", item.name)
+#            print("item: ", item.name)
             
             path = item.url
                 
-#            extension = ""
-#            pos = path.rfind(".")
-#            if pos > 0:
-#                extension = path[pos:]
-#                if extension not in [".jpg", ".png", ".avi", ".webm", ".webp", ".ogg", ".ogv"]:
-#                    extension = ""
             if item.file:
                 view_link = request.route_path('storage.view', fizzle="/%s%s"%(camera.name, path))
             else:
@@ -73,70 +64,6 @@ def storage_list(request):
     return dict(
                 file_list=file_list,
                 )
-    
-def cache_file(request):
-    cache_dir = request.registry.settings['nokkhum.temp_dir']
-    matchdict = request.matchdict
-    fizzle = matchdict['fizzle']
-    
-    user = request.user
-    
-    camera_name = ""
-    
-    uri = fizzle[1:]
-    end_pos = uri.find("/")
-    if end_pos > 0:
-        camera_name = uri[:end_pos]
-    else:
-        camera_name = uri
-    
-    camera = models.Camera.objects(owner=request.user, name=camera_name).first()
-    if camera is None:
-        return None
-    
-    key_name = "%s"%(uri[end_pos+1:])
-    container_dir = "%s/%d/%s"%(cache_dir, user.id, key_name[:key_name.rfind("/")])
-    file_name = "%s/%d/%s"%(cache_dir, user.id, key_name)
-    
-    s3_client = request.s3_client
-    s3_client.set_buckket_name(int(camera.id))
-
-    if not s3_client.is_avialabel(key_name):
-        return None
-
-    if os.path.exists(file_name):
-        return file_name
-    
-    if not os.path.exists(container_dir):
-        try:
-            os.makedirs(container_dir)
-        except:
-            pass
-
-#    print "key_name: ", key_name
-#    print "file_name: ", file_name
-    s3_client.get_file(key_name, file_name)
-    
-    return file_name
-                        
-
-@view_config(route_name='storage.download', permission="login")
-def download(request):
-
-    file_name = cache_file(request)
-
-    if file_name is None:
-        request.response.status = '404 Not Found'
-        return request.response
-    
-    #matchdict = request.matchdict
-    #fizzle = matchdict['fizzle']
-    
-    response = FileResponse(file_name, request=request, content_encoding=None)
-    
-    response.content_encoding = None
-    
-    return response
 
 @view_config(route_name='storage.delete', permission="login")
 def delete(request):
@@ -150,15 +77,14 @@ def delete(request):
     else:
         camera_name = uri
     
-    camera = models.Camera.objects(owner=request.user, name=camera_name).first()
-    if camera is None:
-        return None
-    
-    key_name = "%s"%(uri[end_pos+1:])
-    
-    s3_client = request.s3_client
-    s3_client.set_buckket_name(int(camera.id))
-    s3_client.delete(key_name)
+    key = "/storage"
+    identify = fizzle[fizzle.find(key):]
+    # print("identify: ", identify)
+   
+    item = request.nokkhum_client.storage.get(identify)
+
+    if item:
+        request.nokkhum_client.storage.delete(item)
     
     url = request.referer
     extension = url[url.rfind("."):]
@@ -173,8 +99,7 @@ def view(request):
     matchdict = request.matchdict
     fizzle = matchdict['fizzle']
     
-    
-    print ("fizzle:", fizzle)
+#    print ("fizzle:", fizzle)
     file_type="unknow"
     extension = fizzle[fizzle.rfind("."):]
     if extension in [".png", ".jpg", ".jpeg"]:
@@ -183,20 +108,13 @@ def view(request):
         file_type="video"
     
     key = "/storage"
-    identify = fizzle[fizzle.find(key):fizzle.rfind('/')]
-    print("identify: ", identify)
+    identify = fizzle[fizzle.find(key):]
+    # print("identify: ", identify)
    
-    items = request.nokkhum_client.storage.list(identify)
+    item = request.nokkhum_client.storage.get(identify)
     
     key = fizzle[fizzle.rfind('/'):]
-
-    item = None
-    for tmp in items:
-        if key in tmp.url:
-            item = tmp
-            break
     
-
     url         = item.download
     delete_url  = request.route_path("storage.delete", fizzle=fizzle)
     
