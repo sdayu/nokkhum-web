@@ -33,7 +33,7 @@ SyntaxHighlighter.all();
 		</ul>
 	</li>
 	<li><strong>Setting: </strong>
-		<a href="${request.route_path('cameras.processor', name=camera.name)}">Image Processor Setting</a>
+		<a href="${request.route_path('cameras.processor', camera_id=camera.id)}">Image Processor Setting</a>
 	</li>
 </ul>
 <p>

@@ -11,7 +11,7 @@ import datetime
 @view_config(route_name='cameras.add', permission='login', renderer='/cameras/add.mako')
 def add(request):
     matchdict = request.matchdict
-    project_name = matchdict['project_name']
+    project_id = matchdict['project_id']
     
     project = models.Project.objects(name=project_name).first()
     
@@ -97,23 +97,26 @@ def add(request):
 def edit(request):
     
     matchdict = request.matchdict
-    camera_name = matchdict['name']
+    camera_id = matchdict['camera_id']
     
-    camera = models.Camera.objects(name=camera_name, owner=request.user).first()
+    #camera = models.Camera.objects(name=camera_name, owner=request.user).first()
+    camera = request.nokkhum_client.cameras.get(camera_id)
 
     form = camera_form.EditCameraForm(request.POST)
     
     # build from
-    camera_models = models.CameraModel.objects().all()
-    manufactories = models.Manufactory.objects().all()
-
+    # camera_models = models.CameraModel.objects().all()
+    # manufactories = models.Manufactory.objects().all()
+    manufactories = request.nokkhum_client.camera_manufactories.list()
+    camera_models = request.nokkhum_client.camera_models.list(camera.camera_model.manufactory.id)
+    
     model_options = []
     for model in camera_models:
-        model_options.append((model.name, model.name))
+        model_options.append((model.id, model.name))
     
     camera_man = []
     for man in manufactories:
-        camera_man.append((man.name, man.name))
+        camera_man.append((man.id, man.name))
         
     image_size = ['320x240', '640x480']
     
@@ -133,11 +136,6 @@ def edit(request):
     
         
     if request.POST and form.validate():
-        camera_man = models.Manufactory.objects(name=form.data.get('camera_man')).first()
-        camera_model = models.CameraModel.objects(name=form.data.get('camera_model'),
-                                                 manufactory=camera_man)\
-                                                 .first()
-        
         name        = form.data.get('name')
         username    = form.data.get('username')
         password    = form.data.get('password')
@@ -146,6 +144,8 @@ def edit(request):
         image_size  = form.data.get('image_size')
         camera_status = form.data.get('camera_status')
         storage_periods = form.data.get('storage_periods')
+        camera_man_id = form.data.get('camera_man')
+        camera_model_id = form.data.get('camera_model')
     else:
         form.fps.data = camera.fps
         form.image_size.data = camera.image_size
@@ -169,16 +169,17 @@ def edit(request):
     camera.ip_address =  request.environ['REMOTE_ADDR']
     camera.update_date = datetime.datetime.now()
     camera.storage_periods = storage_periods
+    
+    camera_model = request.nokkhum_client.camera_models.get(camera_model_id)
 
-    
     camera.camera_model = camera_model
-    
+
     try:
-        camera.save()
+        request.nokkhum_client.cameras.update(camera)
     except Exception as e:
         return Response("Exception in edit camera: %s"%e)
 
-    return HTTPFound(location=request.route_path('cameras.view', name=camera.name))
+    return HTTPFound(location=request.route_path('cameras.view', camera_id=camera.id))
     
 
 @view_config(route_name='cameras.delete', permission='login')
@@ -243,9 +244,9 @@ def processor(request):
 @view_config(route_name='cameras.view', permission='login', renderer='/cameras/view.mako')
 def view(request):
     matchdict = request.matchdict
-    camera_name = matchdict['name']
+    camera_id = matchdict['camera_id']
 
-    camera = models.Camera.objects(owner=request.user, name=camera_name).first()
+    camera = request.nokkhum_client.cameras.get(camera_id)
     
     if not camera:
         return Response('Camera not found')
@@ -256,10 +257,10 @@ def view(request):
 @view_config(route_name='cameras.operating', permission='login')
 def operating(request):
     matchdict   = request.matchdict
-    camera_name = matchdict['name']
+    camera_id   = matchdict['camera_id']
     operating   = matchdict['operating']
 
-    camera = models.Camera.objects(owner=request.user, name=camera_name).first()
+    camera = models.Camera.objects(owner=request.user, id=camera_id).first()
     
     if not camera:
         return Response('Camera not found')
@@ -292,7 +293,7 @@ def operating(request):
     ccq.owner   = request.user
     ccq.save()
 
-    return HTTPFound(location=request.route_path('projects.index', name=camera.project.name))
+    return HTTPFound(location=request.route_path('projects.index', project_id=camera.project.id))
 
 @view_config(route_name='cameras.live_view', permission='login', renderer='/cameras/live_view.mako')
 def live_view(request):

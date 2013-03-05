@@ -18,11 +18,11 @@ import datetime
 @view_config(route_name='projects.index', permission='login', renderer='/projects/index.mako')
 def index(request):
     matchdict = request.matchdict
-    name = matchdict['name']
+    project_id = matchdict['project_id']
     
     #project = models.Project.objects(name=name).first()
     #cameras = models.Camera.objects(project=project).order_by('name').all()
-    project = request.nokkhum_client.projects.get(name)
+    project = request.nokkhum_client.projects.get(project_id)
     cameras = None
     if project is not None:
         cameras = project.cameras

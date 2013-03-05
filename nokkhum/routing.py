@@ -11,22 +11,22 @@ def add_routes(config):
     # manager part
     # project manager
     config.add_route('projects.add', '/manager/projects/add')
-    config.add_route('projects.index', '/manager/projects/{name}')
-    config.add_route('projects.edit', '/manager/projects/{name}/edit')
-    config.add_route('projects.delete', '/manager/projects/{name}/delete')
+    config.add_route('projects.index', '/manager/projects/{project_id}')
+    config.add_route('projects.edit', '/manager/projects/{project_id}/edit')
+    config.add_route('projects.delete', '/manager/projects/{project_id}/delete')
     
     # camera manager
-    config.add_route('cameras.add', '/manager/{project_name}/cameras/add')
-    config.add_route('cameras.edit', '/manager/cameras/{name}/edit')
-    config.add_route('cameras.delete', '/manager/cameras/{name}/delete')
-    config.add_route('cameras.setting', '/manager/cameras/{name}/setting')
-    config.add_route('cameras.processor', '/manager/cameras/{name}/processor')
-    config.add_route('cameras.view', '/manager/cameras/{name}/view')
-    config.add_route('cameras.test_view', '/manager/cameras/{name}/test_view')
-    config.add_route('cameras.live_view', '/manager/cameras/{name}/live_view')
+    config.add_route('cameras.add', '/manager/{project_id}/cameras/add')
+    config.add_route('cameras.edit', '/manager/{project_id}/cameras/{camera_id}/edit')
+    config.add_route('cameras.delete', '/manager/cameras/{camera_id}/delete')
+    config.add_route('cameras.setting', '/manager/cameras/{camera_id}/setting')
+    config.add_route('cameras.processor', '/manager/cameras/{camera_id}/processor')
+    config.add_route('cameras.view', '/manager/cameras/{camera_id}/view')
+    config.add_route('cameras.test_view', '/manager/cameras/{camera_id}/test_view')
+    config.add_route('cameras.live_view', '/manager/cameras/{camera_id}/live_view')
     
     # camera operating
-    config.add_route('cameras.operating', '/manager/cameras/{name}/{operating}')
+    config.add_route('cameras.operating', '/manager/cameras/{camera_id}/{operating}')
     
     # storage
     config.add_route('storage.list', '/home/storage/list{fizzle:.*}')

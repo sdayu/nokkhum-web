@@ -31,14 +31,14 @@ def storage_list(request):
         uri = fizzle[1:]
         end_pos = uri.find("/")
         if end_pos > 0:
-            camera_name = uri[:end_pos]
+            camera_id = uri[:end_pos]
         else:
-            camera_name = uri
-#        print ("camera name:", camera_name)
-        camera = request.nokkhum_client.cameras.get(camera_name)
+            camera_id = uri
+#        print ("camera name:", camera_id)
+        camera = request.nokkhum_client.cameras.get(camera_id)
     
         prefix = ""
-        if len(uri[end_pos+1:]) > 0 and uri[end_pos+1:] != camera_name:
+        if len(uri[end_pos+1:]) > 0 and uri[end_pos+1:] != camera_id:
             prefix = uri[end_pos:]
 
 #        print ("storage prefix: ", prefix)
@@ -54,11 +54,11 @@ def storage_list(request):
             path = item.url
                 
             if item.file:
-                view_link = request.route_path('storage.view', fizzle="/%s%s"%(camera.name, path))
+                view_link = request.route_path('storage.view', fizzle="/%s%s"%(camera.id, path))
             else:
-                view_link = request.route_path('storage.list', fizzle="/%s%s"%(camera.name, path))
+                view_link = request.route_path('storage.list', fizzle="/%s%s"%(camera.id, path))
                 
-            delete_link = request.route_path('storage.delete', fizzle="/%s%s"%(camera.name, path))
+            delete_link = request.route_path('storage.delete', fizzle="/%s%s"%(camera.id, path))
             
             file_list.append((item.name, urllib.parse.unquote(view_link), urllib.parse.unquote(delete_link)))
     return dict(
@@ -73,9 +73,9 @@ def delete(request):
     uri = fizzle[1:]
     end_pos = uri.find("/")
     if end_pos > 0:
-        camera_name = uri[:end_pos]
+        camera_id = uri[:end_pos]
     else:
-        camera_name = uri
+        camera_id = uri
     
     key = "/storage"
     identify = fizzle[fizzle.find(key):]
