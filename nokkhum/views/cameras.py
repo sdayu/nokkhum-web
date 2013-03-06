@@ -91,7 +91,7 @@ def add(request):
     except Exception as e:
         return Response("Exception in add camera: %s"%e)
 
-    return HTTPFound(location=request.route_path('projects.index', name=project_name))
+    return HTTPFound(location=request.route_path('projects.index', project_id=project_id))
 
 @view_config(route_name='cameras.edit', permission='login', renderer='/cameras/edit.mako')
 def edit(request):
@@ -104,7 +104,8 @@ def edit(request):
 
     form = camera_form.EditCameraForm(request.POST)
     
-    # build from
+    # build fromKeyError: 'camera_id'
+
     # camera_models = models.CameraModel.objects().all()
     # manufactories = models.Manufactory.objects().all()
     manufactories = request.nokkhum_client.camera_manufactories.list()
@@ -185,38 +186,38 @@ def edit(request):
 @view_config(route_name='cameras.delete', permission='login')
 def delete(request):
     matchdict = request.matchdict
-    camera_name = matchdict['name']
+    camera_id = matchdict['camera_id']
 
-    camera = models.Camera.objects(owner=request.user, name=camera_name).first()
-    project_name = camera.project.name
+    camera = request.nokkhum_client.cameras.get(camera_id)
+    project = camera.project
     
     if camera:
-        camera.delete()
+        request.nokkhum_client.cameras.delete(camera)
     else:
         return Response('Can not delete camera')
     
-    return HTTPFound(location=request.route_path('projects.index', name=project_name))
+    return HTTPFound(location=request.route_path('projects.index', project_id=project.id))
 
 @view_config(route_name='cameras.setting', permission='login', renderer='/cameras/setting.mako')
 def setting(request):
     matchdict = request.matchdict
-    camera_name = matchdict['name']
+    camera_id = matchdict['camera_id']
 
-    camera = models.Camera.objects(owner=request.user, name=camera_name).first()
+    camera = request.nokkhum_client.cameras.get(camera_id)
     
     if not camera:
         return Response('Camera not found')
     
     return dict(
                camera=camera 
-                )
+            )
     
 @view_config(route_name='cameras.processor', permission='login', renderer='/cameras/processor.mako')
 def processor(request):
     matchdict = request.matchdict
-    camera_name = matchdict['name']
+    camera_id = matchdict['camera_id']
 
-    camera = models.Camera.objects(owner=request.user, name=camera_name).first()
+    camera = request.nokkhum_client.cameras.get(camera_id)
     
     if not camera:
         return Response('Camera not found')
@@ -227,19 +228,20 @@ def processor(request):
     if request.POST and form.validate():
         processors = json.loads(form.data['processors'])
     else:
-        image_processors = models.ImageProcessor.objects().all()
-        form.processors.data = json.dumps(camera.processors, indent=4)
+        image_processors = request.nokkhum_client.image_processors.list()
+        form.processors.data = json.dumps(camera.image_processors, indent=4)
         return dict(
                 image_processors=image_processors,
                 camera=camera, 
                 form=form
                 )
+    print("\n\n\n\nprocessor in view:", processors)
         
-    camera.processors = processors
+    camera.image_processors = processors
     camera.update_date = datetime.datetime.now()
-    camera.save()
-    
-    return HTTPFound(location=request.route_path('cameras.view', name=camera.name))
+    request.nokkhum_client.cameras.update(camera)
+
+    return HTTPFound(location=request.route_path('cameras.view', camera_id=camera.id))
     
 @view_config(route_name='cameras.view', permission='login', renderer='/cameras/view.mako')
 def view(request):
@@ -252,7 +254,7 @@ def view(request):
         return Response('Camera not found')
     return dict(
                camera=camera,
-                )
+            )
     
 @view_config(route_name='cameras.operating', permission='login')
 def operating(request):
@@ -260,38 +262,13 @@ def operating(request):
     camera_id   = matchdict['camera_id']
     operating   = matchdict['operating']
 
-    camera = models.Camera.objects(owner=request.user, id=camera_id).first()
+#    camera = models.Camera.objects(owner=request.user, id=camera_id).first()
+    camera = request.nokkhum_client.cameras.get(camera_id)
     
     if not camera:
         return Response('Camera not found')
     
-    command_action  = 'no-command'
-    user_command    = 'undefined'
-    if operating == 'start':
-        command_action = 'start'
-        user_command = 'run'
-    elif operating == 'stop':
-        command_action = 'stop'
-        user_command = 'suspend'
-    
-    ccq = models.CameraCommandQueue.objects(owner=request.user, camera=camera, action=command_action).first()
-    if ccq is not None:
-        return Response('Camera name %s on operation' % camera.name)
-    
-    
-    camera.operating.status = command_action
-    camera.operating.user_command = user_command
-    camera.update_date = datetime.datetime.now()
-    camera.save()
-    
-    ccq         = models.CameraCommandQueue()
-    ccq.command_date = datetime.datetime.now()
-    ccq.update_date = datetime.datetime.now()
-    ccq.action  = command_action
-    ccq.status  = 'waiting'
-    ccq.camera  = camera
-    ccq.owner   = request.user
-    ccq.save()
+    request.nokkhum_client.camera_operating.update(camera, operating)
 
     return HTTPFound(location=request.route_path('projects.index', project_id=camera.project.id))
 

@@ -1,5 +1,7 @@
 from wtforms import validators
 
+from pyramid.threadlocal import get_current_request
+
 import json
             
 def image_processor(form, field):
@@ -25,7 +27,8 @@ def image_processor(form, field):
         return True
             
     def get_available_processors():
-        processors = models.ImageProcessor.objects().all()
+        request = get_current_request()
+        processors = request.nokkhum_client.image_processors.list()
         
         for processor in processors:
             processor_name.append(processor.name)

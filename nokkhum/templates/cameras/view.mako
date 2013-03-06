@@ -54,7 +54,7 @@ function init() {
  	WIDTH = $("canvas#display_processor").width();
  	HEIGHT = $("canvas#display_processor").height();
  	
- 	var processor_json = ${json.dumps(camera.processors) | n};
+ 	var processor_json = ${json.dumps(camera.image_processors) | n};
  	
  	drawCameraAttribute("${camera.name}", processor_json)
  	 	
@@ -70,5 +70,5 @@ $(document).ready(init());
 <div id="test1"></div>
 <p>JSON Description</p>
 <pre name="code" class="brush: js; toolbar: false;">
-	${json.dumps(camera.processors, indent=4)}
+	${json.dumps(camera.image_processors, indent=4)}
 </pre>
