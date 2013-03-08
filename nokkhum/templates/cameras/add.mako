@@ -32,6 +32,14 @@
     	${form.url(size=30)} ${form.get_error("url")}
     </div>
     <div class="block">
+    	<label for="host">Host: </label>
+    	${form.host(size=30)} ${form.get_error("host")}
+    </div>
+    <div class="block">
+    	<label for="port">port: </label>
+    	${form.port(size=30)} ${form.get_error("port")}
+    </div>
+    <div class="block">
     	<label for="username">Username: </label>
     	${form.username(size=30)} ${form.get_error("username")}
     </div>

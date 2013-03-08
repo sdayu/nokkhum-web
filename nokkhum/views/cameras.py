@@ -13,21 +13,22 @@ def add(request):
     matchdict = request.matchdict
     project_id = matchdict['project_id']
     
-    project = models.Project.objects(name=project_name).first()
+    project = request.nokkhum_client.projects.get(project_id)
     
     form = camera_form.AddCameraForm(request.POST)
 
 # build form
-    camera_models = models.CameraModel.objects().all()
-    manufactories = models.Manufactory.objects().all()
+    
+    manufactories = request.nokkhum_client.camera_manufactories.list()
+    camera_models = request.nokkhum_client.camera_models.list(manufactories[0].id)
 
     model_options = []
     for model in camera_models:
-        model_options.append((model.name, model.name))
+        model_options.append((model.id, model.name))
     
     camera_man = []
     for man in manufactories:
-        camera_man.append((man.name, man.name))
+        camera_man.append((man.id, man.name))
         
     image_size = ['320x240', '640x480']
     
@@ -43,12 +44,12 @@ def add(request):
     form.camera_model.choices = model_options
         
     if request.POST and form.validate():
-        camera_man = models.Manufactory.objects(name=form.data.get('camera_man')).first()
-        camera_model = models.CameraModel.objects(name=form.data.get('camera_model'),
-                                                 manufactory=camera_man)\
-                                                 .first()
+        camera_man = request.nokkhum_client.camera_manufactories.get(form.data.get('camera_man'))
+        camera_model = request.nokkhum_client.camera_models.get(form.data.get('camera_model'))
         
         name        = form.data.get('name')
+        host        = form.data.get('host')
+        port        = form.data.get('port')
         username    = form.data.get('username')
         password    = form.data.get('password')
         url         = form.data.get('url')
@@ -63,33 +64,47 @@ def add(request):
                 )
     
       
-    camera = models.Camera()
-    camera.owner = request.user
-    camera.name =  name
-    camera.username =  username
-    camera.password =  password
-    camera.video_url =  url
-    camera.fps = fps
-    camera.image_size = image_size
-    camera.status = 'active'
-    camera.ip_address =  request.environ['REMOTE_ADDR']
-    
-    camera.create_date = datetime.datetime.now()
-    camera.update_date = datetime.datetime.now()
+#    camera = models.Camera()
+#    camera.owner = request.user
+#    camera.name =  name
+#    camera.username =  username
+#    camera.password =  password
+#    camera.video_url =  url
+#    camera.fps = fps
+#    camera.image_size = image_size
+#    camera.status = 'active'
+#    camera.ip_address =  request.environ['REMOTE_ADDR']
+#    
+#    camera.create_date = datetime.datetime.now()
+#    camera.update_date = datetime.datetime.now()
+#
+#    camera.storage_periods = int(storage_periods)
 
-    camera.storage_periods = int(storage_periods)
-
-    camera.camera_model = camera_model
-    camera.project = project
+#    camera.camera_model = camera_model
+#    camera.project = project
+#    
+#    camera.operating = models.CameraOperating()
+#    camera.operating.status = "stop"
+#    camera.operating.update_date = datetime.datetime.now()
     
-    camera.operating = models.CameraOperating()
-    camera.operating.status = "stop"
-    camera.operating.update_date = datetime.datetime.now()
-    
-    try:
-        camera.save()
-    except Exception as e:
-        return Response("Exception in add camera: %s"%e)
+#    try:
+    request.nokkhum_client.cameras.create(
+           owner=dict(id=request.user.id),
+           name=name,
+           host=host,
+           port=port,
+           username=username,
+           password=password,
+           video_url=url,
+           fps=fps,
+           image_size=image_size,
+           ip_address=request.environ['REMOTE_ADDR'],
+           storage_periods=int(storage_periods),
+           model=dict(id=camera_model.id),
+           project=dict(id=project.id)                               
+        )
+#    except Exception as e:
+#        return Response("Exception in add camera: %s"%e)
 
     return HTTPFound(location=request.route_path('projects.index', project_id=project_id))
 

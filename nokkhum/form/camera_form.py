@@ -12,13 +12,15 @@ class AddCameraForm(AbstactForm):
 
 
     name        = fields.TextField('Name', validators=[validators.required(), c_validators.valid_name, c_validators.unique_camera_name])
-    url         = fields.TextField('URL', validators=[validators.required()])
     username    = fields.TextField('Username')
     password    = fields.TextField('Password')
+    host        = fields.TextField('Host', validators=[validators.InputRequired(), validators.IPAddress()])
+    port        = fields.IntegerField('Port')
     fps         = fields.SelectField('FPS', coerce=int, validators=[validators.required()])
     image_size  = fields.SelectField('Image Size', validators=[validators.required()])
     camera_model= fields.SelectField('Camera Model', validators=[validators.required()])
     camera_man  = fields.SelectField('Camera manufactory', validators=[validators.required()])
+    url         = fields.TextField('URL')
     storage_periods = fields.IntegerField('Storage Periods', validators=[validators.required(), validators.NumberRange(min=0, max=360)])
     
 class EditCameraForm(AddCameraForm):

@@ -9,13 +9,19 @@ def unique_camera_name(form, field):
     request = get_current_request()
     matchdict = request.matchdict
     
-    camera = request.nokkhum_client.cameras.get(matchdict.get('camera_id'))
-    cameras = request.nokkhum_client.cameras.list_cameras_by_project(matchdict.get('camera_id'))
+    camera_id = matchdict.get('camera_id')
+    camera = None
+    if camera_id:
+        camera = request.nokkhum_client.cameras.get(camera_id)
+    cameras = request.nokkhum_client.cameras.list_cameras_by_project(matchdict.get('project_id'))
     
     for cam in cameras:
         if cam.name == field.data:
-            if camera.id != cam.id:
-                raise validators.ValidationError(
+            
+            if camera is not None and camera.id == cam.id:
+                break
+            
+            raise validators.ValidationError(
                         'Your camera name %s exist'% field.data)
             
 def valid_name(form, field):

@@ -42,16 +42,6 @@ def add(request):
     else:
         return dict(form=form)
     
-    project = models.Project()
-    project.name = name
-    project.description = description
-    project.ip_address = request.environ['REMOTE_ADDR']
-    project.status = "active"
-    project.owner = request.user
-    
-    project.create_date = datetime.datetime.now()
-    project.update_date = datetime.datetime.now()
-    
-    project.save()
+    request.nokkhum_client.projects.create(name=name, description=description)
     
     return HTTPFound('/home')
