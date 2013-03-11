@@ -1,4 +1,28 @@
 <%inherit file="/base/base.mako"/>
+
+<%block name='addition_header'>
+<script type="text/javascript" src="/js/jquery-1.9.1.min.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){
+
+	$('#camera_man').change(function(){
+		$.ajax({
+			url: "${request.nokkhum_client.http_client.api_url}"+"/manufactories/"+$(this).val()+"/models"
+		})
+		.done(function(data, status) {
+			var camera_model = null;
+			var options = $("#camera_model").prop('options');
+			options.length = 0;
+			for (var i = 0; i < data.camera_models.length; ++i) {
+				options[options.length] = new Option(data.camera_models[i].name, data.camera_models[i].id);
+			}
+		});
+				
+	});
+});
+</script>
+</%block>
+
 <%block name='title'>Edit Camera</%block>
 <style type="text/css">
 	div.block {
