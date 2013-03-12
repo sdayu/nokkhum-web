@@ -28,11 +28,11 @@
 					<td><a href="${request.route_path('cameras.delete', camera_id=camera.id)}">delete</td>
 					<td><a href="${request.route_path('cameras.setting', camera_id=camera.id)}">setting</td>
 					<td><a href="${request.route_path('cameras.view', camera_id=camera.id)}">view</td>
-					% if camera.operating.status == "running":
-					<td><a href="${request.route_path('cameras.operating', camera_id=camera.id, operating='stop')}">stop</td>
-					% else:
-					<td><a href="${request.route_path('cameras.operating', camera_id=camera.id, operating='start')}">start</td>
-					% endif
+					<td>
+					<a href="${request.route_path('cameras.operating', camera_id=camera.id, operating='start')}">start</a>
+					||
+					<a href="${request.route_path('cameras.operating', camera_id=camera.id, operating='stop')}">stop</a>
+					</td>
 					<td>${camera.operating.status}</td>
 					<td><a href="${urllib.parse.unquote(request.route_path("storage.list", fizzle="/%s"%camera.id))}">storage</a></td>
 				</tr>

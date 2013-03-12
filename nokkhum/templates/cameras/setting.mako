@@ -23,5 +23,5 @@ SyntaxHighlighter.all();
 <strong>Current Image Processor:</strong>
 </p>
 <pre name="code" class="brush: js; toolbar: false;">
-	${json.dumps(camera.processors, indent=4)}
+	${json.dumps(camera.image_processors, indent=4)}
 </pre>
