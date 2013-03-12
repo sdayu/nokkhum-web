@@ -151,7 +151,7 @@ def edit(request):
     form.camera_status.choices = [(i, i) for i in camera_status]
     
         
-    if request.POST and form.validate():
+    if len(request.POST) > 0 and form.validate():
         name        = form.data.get('name')
         username    = form.data.get('username')
         password    = form.data.get('password')
@@ -162,12 +162,22 @@ def edit(request):
         storage_periods = form.data.get('storage_periods')
         camera_man_id = form.data.get('camera_man')
         camera_model_id = form.data.get('camera_model')
-    else:
+    else:        
         form.fps.data = camera.fps
         form.image_size.data = camera.image_size
-        form.camera_man.data = camera.camera_model.manufactory.name
+        form.camera_man.data = camera.camera_model.manufactory.id
         form.camera_model.data = camera.camera_model.name
         form.camera_status.data = camera.status
+        
+        if len(request.POST) == 0:
+            form.name.data = camera.name
+            form.host.data = camera.host
+            form.port.data = camera.port 
+            form.username.data = camera.username
+            form.password.data = camera.password
+            form.url.data = camera.video_url
+            form.storage_periods.data = camera.storage_periods
+            form.camera_status.data = camera.status
             
         return dict(
                     form=form,

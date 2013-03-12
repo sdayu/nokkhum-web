@@ -7,6 +7,9 @@ from nokkhumclient import client, users, roles
 
 from pyramid.threadlocal import get_current_registry, get_current_request
 
+import dateutil.parser
+import datetime
+
 def groupfinder(userid, request):
     #if userid in USERS:
     #    return GROUPS.get(userid, [])
@@ -33,11 +36,11 @@ class RequestWithUserAttribute(Request):
             # in the database
             # return dbconn['users'].query({'id':userid})
             user_dict = request.session[self.userid]['access']['user']
-            user = users.User(request.nokkhum_client, 
+            user = users.User(request.nokkhum_client.users, 
                               user_dict)
-            user.roles = [roles.Role(request.nokkhum_client, 
-                                     role)
-                                     for role in user_dict['roles']]
+#            user.roles = [roles.Role(request.nokkhum_client, 
+#                                     role)
+#                                     for role in user_dict['roles']]
             return user
         
     @reify
@@ -61,7 +64,10 @@ class RequestWithUserAttribute(Request):
         
         token = None
         if request.userid in request.session:
-            token = request.session[self.userid]['access']['token']['id']
+            expire = dateutil.parser.parse(request.session[self.userid]['access']['token']['expire'])
+            if datetime.datetime.now() < expire:
+                token = request.session[self.userid]['access']['token']['id']
+            
             
         nk_client = client.Client(username, 
                                   password, 

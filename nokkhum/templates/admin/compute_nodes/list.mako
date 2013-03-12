@@ -39,7 +39,7 @@
 			<% td = datetime.datetime.now() - compute_node.update_date %>
 			<tr>
 				<td><a href="${request.route_path('admin.compute_nodes.show', id=compute_node.id)}">${compute_node.name}</a></td>
-				<td>${compute_node.host} is VM: ${compute_node.is_vm()}</td>
+				<td>${compute_node.host} is VM: ${compute_node.is_vm}</td>
 				<td>
 				% if td < datetime.timedelta(minutes=1):
 					<span style="color: red;">Ready</span>

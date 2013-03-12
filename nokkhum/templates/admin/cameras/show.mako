@@ -6,7 +6,9 @@
 		<h2>Camera id: ${camera.id}</h2>
 			<ul>
 				<li><strong>Camera: </strong>${camera.name}</li>
-				<li><strong>URL: </strong>${camera.url}</li>
+				<li><strong>Video URL: </strong>${camera.video_url}</li>
+				<li><strong>Audio URL: </strong>${camera.audio_url}</li>
+				<li><strong>Image URL: </strong>${camera.image_url}</li>
 				<li><strong>Username: </strong>${camera.username}</li>
 				<li><strong>Password: </strong>${camera.password}</li>
 				<li><strong>FPS: </strong>${camera.fps}</li>

@@ -6,7 +6,7 @@ from pyramid.security import authenticated_userid
 @view_config(route_name='admin.command_queue.list', permission='r:admin', renderer='/admin/command_queue/list.mako')
 def list_command(request):
     return dict(
-                camera_command_queue=models.CameraCommandQueue.objects().order_by("+id").all()
+                camera_command_queue=request.nokkhum_client.admin.camera_command_queue.list()
                 )
     
     
@@ -14,7 +14,7 @@ def list_command(request):
 def show(request):
     matchdict = request.matchdict
     command_id = matchdict['id']
-    command = models.CameraCommandQueue.objects().with_id(command_id)
+    command = request.nokkhum_client.admin.camera_command_queue.get(command_id)
     return dict(
                 command=command
                 )

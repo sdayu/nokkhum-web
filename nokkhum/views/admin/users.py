@@ -6,7 +6,7 @@ from pyramid.security import authenticated_userid
 @view_config(route_name='admin.users.list', permission='r:admin', renderer='/admin/users/list.mako')
 def list(request):
     return dict(
-                users=models.User.objects().all()
+                users=request.nokkhum_client.admin.users.list()
                 )
     
     
@@ -14,7 +14,7 @@ def list(request):
 def show(request):
     matchdict = request.matchdict
     user_id = matchdict['id']
-    user = models.User.objects().with_id(user_id)
+    user = request.nokkhum_client.admin.users.get(user_id)
     return dict(
                 user=user
                 )
