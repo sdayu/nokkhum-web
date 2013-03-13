@@ -6,6 +6,7 @@
 <%
 url = urllib.parse.unquote(request.current_route_path())
 back = url[:url.rfind('/')]
+print(file_list)
 %>
 % if back[back.rfind('/')+1:] != 'list':
 <a href="${back}">Back</a>
@@ -15,7 +16,7 @@ back = url[:url.rfind('/')]
 	<li style="display:block; width:100%; clear:both;">
 		<span style="float: left; width:50%;">
 			% if ".png" in item[0]:
-				<img src="${item[1].replace('view', 'download')}" width="200px" />
+				<img src="${item[3]}" width="200px" />
 			% else:
 			<a href="${item[1]}">${item[0]}</a> 
 			% endif

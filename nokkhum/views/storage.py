@@ -49,18 +49,20 @@ def storage_list(request):
             items = camera.storage
             
         for item in items:
-#            print("item: ", item.name)
+#            print("item: ", item.__dict__)
             
             path = item.url
-                
+            
+            download_url = None
             if item.file:
                 view_link = request.route_path('storage.view', fizzle="/%s%s"%(camera.id, path))
+                download_url = item.download
             else:
                 view_link = request.route_path('storage.list', fizzle="/%s%s"%(camera.id, path))
                 
             delete_link = request.route_path('storage.delete', fizzle="/%s%s"%(camera.id, path))
             
-            file_list.append((item.name, urllib.parse.unquote(view_link), urllib.parse.unquote(delete_link)))
+            file_list.append((item.name, urllib.parse.unquote(view_link), urllib.parse.unquote(delete_link), download_url))
     return dict(
                 file_list=file_list,
                 )
