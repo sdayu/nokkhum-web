@@ -20,7 +20,11 @@ def add(request):
 # build form
     
     manufactories = request.nokkhum_client.camera_manufactories.list()
-    camera_models = request.nokkhum_client.camera_models.list(manufactories[0].id)
+    
+    if 'camera_man' not in request.POST:
+        camera_models = request.nokkhum_client.camera_models.list(manufactories[0].id)
+    else:
+        camera_models = request.nokkhum_client.camera_models.list(request.POST.get('camera_man'))
 
     model_options = []
     for model in camera_models:
@@ -42,6 +46,7 @@ def add(request):
     form.image_size.choices = [(i, i) for i in image_size]
     form.camera_man.choices = camera_man
     form.camera_model.choices = model_options
+    form.port.data = 80
         
     if request.POST and form.validate():
         camera_man = request.nokkhum_client.camera_manufactories.get(form.data.get('camera_man'))
@@ -124,7 +129,11 @@ def edit(request):
     # camera_models = models.CameraModel.objects().all()
     # manufactories = models.Manufactory.objects().all()
     manufactories = request.nokkhum_client.camera_manufactories.list()
-    camera_models = request.nokkhum_client.camera_models.list(camera.camera_model.manufactory.id)
+
+    if 'camera_man' not in request.POST:
+        camera_models = request.nokkhum_client.camera_models.list(camera.camera_model.manufactory.id)
+    else:
+        camera_models = request.nokkhum_client.camera_models.list(request.POST.get('camera_man'))
     
     model_options = []
     for model in camera_models:
