@@ -56,9 +56,9 @@ SyntaxHighlighter.all();
 	{
 		"name": "Motion Detector", 
 		"interval": 3, 
-		"resolution": 98, 
-		"processors": [],
-		"drop_motion": 5
+		"sensitive": 90, 
+		"wait_motion_time": 10,
+		"processors": []
 	},
 	
 	{
@@ -71,7 +71,6 @@ SyntaxHighlighter.all();
 		"name": "Video Recorder",
 		"width": 640,
 		"height": 480,
-		"maximum_wait_motion": 5, 
 		"fps": 10,
 		"record_motion": true 
 	}, 
@@ -86,7 +85,8 @@ SyntaxHighlighter.all();
 	{
 		"name": "Image Recorder", 
 		"width": 640, 
-		"height": 480
+		"height": 480,
+		"interval": 1
 	}
 ]
 </pre>
