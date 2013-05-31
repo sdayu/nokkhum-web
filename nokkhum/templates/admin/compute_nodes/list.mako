@@ -48,7 +48,7 @@
 				% endif
 				</td>
 				<td>${compute_node.cpu.count}</td>
-				<td>${compute_node.cpu.usage}</td>
+				<td>${compute_node.cpu.used}</td>
 				<td>${compute_node.memory.total/1000000}</td>
 				<td>${compute_node.memory.used/1000000}</td>
 				<td>${compute_node.memory.free/1000000}</td>

@@ -20,8 +20,8 @@
 				<li><strong>CPU:</strong>
 					<ul>
 						<li>count: ${compute_node.cpu.count}</li>
-						<li>usage: ${compute_node.cpu.usage}</li>
-						<li>all CPU : ${compute_node.cpu.usage_per_cpu}</li>
+						<li>usage: ${compute_node.cpu.used}</li>
+						<li>all CPU : ${compute_node.cpu.used_per_cpu}</li>
 					</ul>
 				</li>
 				<li><strong>RAM:</strong>
