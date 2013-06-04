@@ -31,5 +31,12 @@
 						<li>free: ${compute_node.memory.free}</li>
 					</ul>
 				</li>
+				<li><strong>Disk:</strong>
+					<ul>
+						<li>total: ${compute_node.disk.total}</li>
+						<li>used: ${compute_node.disk.used}</li>
+						<li>free: ${compute_node.disk.free}</li>
+					</ul>
+				</li>
 			</ul>
 </section>
