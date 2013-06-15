@@ -162,6 +162,8 @@ def edit(request):
         
     if len(request.POST) > 0 and form.validate():
         name        = form.data.get('name')
+        host        = form.data.get('host')
+        port        = form.data.get('port')
         username    = form.data.get('username')
         password    = form.data.get('password')
         url         = form.data.get('url')
@@ -195,6 +197,8 @@ def edit(request):
 
       
     camera.name =  name
+    camera.host = host
+    camera.port = port
     camera.username =  username
     camera.password =  password
     camera.video_url =  url

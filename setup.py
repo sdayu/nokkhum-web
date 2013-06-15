@@ -10,10 +10,11 @@ requires = [
     'pyramid',
     'pyramid_tm',
     'pyramid_debugtoolbar',
+    'pyramid_beaker',
     'waitress',
     'mongoengine',
     'wtforms',
-    'pycrypto'
+    'pycrypto',
     ]
 
 setup(name='Nokkhum',
