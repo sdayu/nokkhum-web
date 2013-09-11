@@ -33,7 +33,9 @@
 					||
 					<a href="${request.route_path('cameras.operating', camera_id=camera.id, operating='stop')}">stop</a>
 					</td>
-					<td>${camera.operating.status}</td>
+					<td>
+					<%doc> ${camera.operating.status} </%doc>
+					</td>
 					<td><a href="${urllib.parse.unquote(request.route_path("storage.list", fizzle="/%s"%camera.id))}">storage</a></td>
 				</tr>
 				% endfor
@@ -43,5 +45,6 @@
 	</section>
 </article>
 <section>
-<a href="${request.route_path('cameras.add', project_id=project.id)}">Add camera</a>
+<a href="${request.route_path('cameras.add', project_id=project.id)}">Add camera</a> | 
+<a href="${request.route_path('processors.index', project_id=project.id)}">Processors Index</a>
 </section>

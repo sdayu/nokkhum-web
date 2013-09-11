@@ -28,6 +28,10 @@ def add_routes(config):
     # camera operating
     config.add_route('cameras.operating', '/manager/cameras/{camera_id}/{operating}')
     
+    # processors
+    config.add_route('processors.index', '/manager/{project_id}/processors')
+    config.add_route('processors.add', '/manager/{project_id}/processors/add')
+    
     # storage
     config.add_route('storage.list', '/home/storage/list{fizzle:.*}')
     config.add_route('storage.download', '/home/storage/download{fizzle:.*}')
