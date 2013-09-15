@@ -31,14 +31,14 @@ def storage_list(request):
         uri = fizzle[1:]
         end_pos = uri.find("/")
         if end_pos > 0:
-            camera_id = uri[:end_pos]
+            processor_id = uri[:end_pos]
         else:
-            camera_id = uri
-#        print ("camera name:", camera_id)
-        camera = request.nokkhum_client.cameras.get(camera_id)
+            processor_id = uri
+#        print ("camera name:", processor_id)
+        processor = request.nokkhum_client.processors.get(processor_id)
     
         prefix = ""
-        if len(uri[end_pos+1:]) > 0 and uri[end_pos+1:] != camera_id:
+        if len(uri[end_pos+1:]) > 0 and uri[end_pos+1:] != processor_id:
             prefix = uri[end_pos:]
 
 #        print ("storage prefix: ", prefix)
@@ -46,7 +46,7 @@ def storage_list(request):
         if len(prefix) > 0:
             items = request.nokkhum_client.storage.list(prefix)
         else:
-            items = camera.storage
+            items = processor.storage
             
         for item in items:
 #            print("item: ", item.__dict__)
@@ -75,9 +75,9 @@ def delete(request):
     uri = fizzle[1:]
     end_pos = uri.find("/")
     if end_pos > 0:
-        camera_id = uri[:end_pos]
+        processor_id = uri[:end_pos]
     else:
-        camera_id = uri
+        processor_id = uri
     
     key = "/storage"
     identify = fizzle[fizzle.find(key):]

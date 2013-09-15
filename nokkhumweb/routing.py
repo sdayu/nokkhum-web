@@ -18,12 +18,12 @@ def add_routes(config):
     # camera manager
     config.add_route('cameras.add', '/manager/{project_id}/cameras/add')
     config.add_route('cameras.edit', '/manager/{project_id}/cameras/{camera_id}/edit')
-    config.add_route('cameras.delete', '/manager/cameras/{camera_id}/delete')
-    config.add_route('cameras.setting', '/manager/cameras/{camera_id}/setting')
-    config.add_route('cameras.processor', '/manager/cameras/{camera_id}/processor')
-    config.add_route('cameras.view', '/manager/cameras/{camera_id}/view')
-    config.add_route('cameras.test_view', '/manager/cameras/{camera_id}/test_view')
-    config.add_route('cameras.live_view', '/manager/cameras/{camera_id}/live_view')
+    config.add_route('cameras.delete', '/manager/{project_id}/cameras/{camera_id}/delete')
+    config.add_route('cameras.setting', '/manager/{project_id}/cameras/{camera_id}/setting')
+    config.add_route('cameras.processor', '/manager/{project_id}/cameras/{camera_id}/processor')
+    config.add_route('cameras.view', '/manager/{project_id}/cameras/{camera_id}/view')
+    config.add_route('cameras.test_view', '/manager/{project_id}/cameras/{camera_id}/test_view')
+    config.add_route('cameras.live_view', '/manager/{project_id}/cameras/{camera_id}/live_view')
     
     # camera operating
     config.add_route('cameras.operating', '/manager/cameras/{camera_id}/{operating}')
@@ -31,6 +31,10 @@ def add_routes(config):
     # processors
     config.add_route('processors.index', '/manager/{project_id}/processors')
     config.add_route('processors.add', '/manager/{project_id}/processors/add')
+    config.add_route('processors.edit', '/manager/{project_id}/processors/{processor_id}/edit')
+    config.add_route('processors.delete', '/manager/{project_id}/processors/{processor_id}/delete')
+    config.add_route('processors.setting', '/manager/{project_id}/processors/{processor_id}/setting')
+    config.add_route('processors.operating', '/manager/{project_id}/processors/{processor_id}/operating')
     
     # storage
     config.add_route('storage.list', '/home/storage/list{fizzle:.*}')

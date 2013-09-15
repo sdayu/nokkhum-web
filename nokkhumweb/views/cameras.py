@@ -117,11 +117,12 @@ def add(request):
 def edit(request):
     
     matchdict = request.matchdict
+    project_id = matchdict['project_id']
     camera_id = matchdict['camera_id']
     
     #camera = models.Camera.objects(name=camera_name, owner=request.user).first()
     camera = request.nokkhum_client.cameras.get(camera_id)
-
+    project = request.nokkhum_client.projects.get(project_id)
     form = camera_form.EditCameraForm(request.POST)
     
     # build fromKeyError: 'camera_id'
@@ -157,8 +158,6 @@ def edit(request):
     form.image_size.choices = [(i, i) for i in image_size]
     form.camera_man.choices = camera_man
     form.camera_model.choices = model_options
-    form.camera_status.choices = [(i, i) for i in camera_status]
-    
         
     if len(request.POST) > 0 and form.validate():
         name        = form.data.get('name')
@@ -170,7 +169,6 @@ def edit(request):
         fps         = form.data.get('fps')
         image_size  = form.data.get('image_size')
         camera_status = form.data.get('camera_status')
-        storage_periods = form.data.get('storage_periods')
         camera_man_id = form.data.get('camera_man')
         camera_model_id = form.data.get('camera_model')
     else:        
@@ -178,7 +176,6 @@ def edit(request):
         form.image_size.data = camera.image_size
         form.camera_man.data = camera.camera_model.manufactory.id
         form.camera_model.data = camera.camera_model.name
-        form.camera_status.data = camera.status
         
         if len(request.POST) == 0:
             form.name.data = camera.name
@@ -187,9 +184,7 @@ def edit(request):
             form.username.data = camera.username
             form.password.data = camera.password
             form.url.data = camera.video_url
-            form.storage_periods.data = camera.storage_periods
-            form.camera_status.data = camera.status
-            
+             
         return dict(
                     form=form,
                     camera=camera

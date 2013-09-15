@@ -1,4 +1,6 @@
-<%inherit file="/base/base.mako"/>
+<%inherit file="/base/panel.mako"/>
+<%block name='title'>Edit Camera</%block>
+<%block name='panel_title'>Edit camera name: ${camera.name}</%block>
 
 <%block name='addition_header'>
 <script type="text/javascript" src="/js/jquery-1.9.1.min.js"></script>
@@ -22,28 +24,6 @@ $(document).ready(function(){
 });
 </script>
 </%block>
-
-<%block name='title'>Edit Camera</%block>
-<style type="text/css">
-	div.block {
-		width: 370px; 
-		text-align: right;
-	}
-	div.block2 {
-		width: 350px; 
-		text-align: right; 
-		clear: both;
-	}
-	div.label {
-		width:110px; 
-		float:left;
-	}
-	div.field {
-		float:left;
-		padding-left: 5px;
-	}
-</style>
-<h2>Edit camera name: ${camera.name}</h2>
 
 <form action="${request.current_route_path()}" method="POST">
 <div class="field">
@@ -88,14 +68,7 @@ $(document).ready(function(){
     	<div class="label"><label for="camera_model">Model: </label></div>
     	<div class="field">${form.camera_model} ${form.get_error("camera_model")}</div>
     </div>
-    <div class="block2">
-    	<div class="label"><label for="camera_model">Status: </label></div>
-    	<div class="field">${form.camera_status} ${form.get_error("camera_status")}</div>
-    </div>
-    <div class="block2">
-    	<div class="label"><label for="keep_record">Record Store: </label></div>
-    	<div class="field">${form.storage_periods(size=5)} day ${form.get_error("storage_periods")}</div>
-    </div>
+
 </div>
 
 <div style="width: 100px; text-align: right; padding-top: 50px">
