@@ -11,11 +11,11 @@ from pyramid.view import view_config
 from pyramid.response import Response
 from pyramid.security import authenticated_userid
 
-from nokkhum.form import project_form
+from nokkhumweb.forms import project_form
 
 import datetime
 
-@view_config(route_name='projects.index', permission='login', renderer='/projects/index.mako')
+@view_config(route_name='projects.index', permission='authenticated', renderer='/projects/index.mako')
 def index(request):
     matchdict = request.matchdict
     project_id = matchdict['project_id']
@@ -32,7 +32,7 @@ def index(request):
                 cameras=cameras
                 )
 
-@view_config(route_name='projects.add', permission='login', renderer='/projects/add.mako')
+@view_config(route_name='projects.add', permission='authenticated', renderer='/projects/add.mako')
 def add(request):
     form = project_form.Project(request.POST)
     if request.POST and form.validate():

@@ -1,0 +1,3 @@
+[submodule "nokkhumweb/public/libs/codemirror"]
+	path = nokkhumweb/public/libs/codemirror
+	url = https://github.com/marijnh/CodeMirror.git

@@ -19,6 +19,8 @@ def image_processor(form, field):
                     return check
 
 #            print "check name: ", processor["name"], "check status:",check
+            if 'name' not in processor:
+                return False
             
             if not processor["name"] in processor_name:
                 processor_name_not_found = processor["name"] 

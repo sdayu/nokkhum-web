@@ -34,7 +34,8 @@ def add_routes(config):
     config.add_route('processors.edit', '/manager/{project_id}/processors/{processor_id}/edit')
     config.add_route('processors.delete', '/manager/{project_id}/processors/{processor_id}/delete')
     config.add_route('processors.setting', '/manager/{project_id}/processors/{processor_id}/setting')
-    config.add_route('processors.operating', '/manager/{project_id}/processors/{processor_id}/operating')
+    config.add_route('processors.view', '/manager/{project_id}/processors/{processor_id}/view')
+    config.add_route('processors.operating', '/manager/{project_id}/processors/{processor_id}/operating/{operating}')
     
     # storage
     config.add_route('storage.list', '/home/storage/list{fizzle:.*}')
@@ -69,13 +70,13 @@ def add_routes(config):
     
     
     
-    config.add_view('nokkhum.views.accounts.login',
+    config.add_view('nokkhumweb.views.accounts.login',
                     context='pyramid.exceptions.Forbidden',
-                    renderer='nokkhum:templates/accounts/login.mako')
+                    renderer='nokkhumweb:templates/accounts/login.mako')
     
     # static view
-    config.add_static_view('public', 'nokkhum:public')
-    config.add_static_view('js', 'nokkhum:public/js')
-    config.add_static_view('theme', 'nokkhum:public/theme')
-    config.add_static_view('libs', 'nokkhum:public/libs')
+    config.add_static_view('public', 'nokkhumweb:public')
+    config.add_static_view('js', 'nokkhumweb:public/js')
+    config.add_static_view('theme', 'nokkhumweb:public/theme')
+    config.add_static_view('libs', 'nokkhumweb:public/libs')
     

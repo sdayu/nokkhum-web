@@ -4,11 +4,11 @@ from pyramid.view import view_config
 from pyramid.response import Response
 from pyramid.security import authenticated_userid
 
-from nokkhum.form import camera_form
+from nokkhumweb.forms import camera_form
 
 import datetime
 
-@view_config(route_name='cameras.add', permission='login', renderer='/cameras/add.mako')
+@view_config(route_name='cameras.add', permission='authenticated', renderer='/cameras/add.mako')
 def add(request):
     matchdict = request.matchdict
     project_id = matchdict['project_id']
@@ -104,7 +104,6 @@ def add(request):
            fps=fps,
            image_size=image_size,
            ip_address=request.environ['REMOTE_ADDR'],
-           storage_periods=int(storage_periods),
            model=dict(id=camera_model.id),
            project=dict(id=project.id)                               
         )
@@ -113,7 +112,7 @@ def add(request):
 
     return HTTPFound(location=request.route_path('projects.index', project_id=project_id))
 
-@view_config(route_name='cameras.edit', permission='login', renderer='/cameras/edit.mako')
+@view_config(route_name='cameras.edit', permission='authenticated', renderer='/cameras/edit.mako')
 def edit(request):
     
     matchdict = request.matchdict
@@ -216,7 +215,7 @@ def edit(request):
     return HTTPFound(location=request.route_path('cameras.view', camera_id=camera.id))
     
 
-@view_config(route_name='cameras.delete', permission='login')
+@view_config(route_name='cameras.delete', permission='authenticated')
 def delete(request):
     matchdict = request.matchdict
     camera_id = matchdict['camera_id']
@@ -231,7 +230,7 @@ def delete(request):
     
     return HTTPFound(location=request.route_path('projects.index', project_id=project.id))
 
-@view_config(route_name='cameras.setting', permission='login', renderer='/cameras/setting.mako')
+@view_config(route_name='cameras.setting', permission='authenticated', renderer='/cameras/setting.mako')
 def setting(request):
     matchdict = request.matchdict
     camera_id = matchdict['camera_id']
@@ -245,7 +244,7 @@ def setting(request):
                camera=camera 
             )
     
-@view_config(route_name='cameras.processor', permission='login', renderer='/cameras/processor.mako')
+@view_config(route_name='cameras.processor', permission='authenticated', renderer='/cameras/processor.mako')
 def processor(request):
     matchdict = request.matchdict
     camera_id = matchdict['camera_id']
@@ -276,7 +275,7 @@ def processor(request):
 
     return HTTPFound(location=request.route_path('cameras.view', camera_id=camera.id))
     
-@view_config(route_name='cameras.view', permission='login', renderer='/cameras/view.mako')
+@view_config(route_name='cameras.view', permission='authenticated', renderer='/cameras/view.mako')
 def view(request):
     matchdict = request.matchdict
     camera_id = matchdict['camera_id']
@@ -289,7 +288,7 @@ def view(request):
                camera=camera,
             )
     
-@view_config(route_name='cameras.operating', permission='login')
+@view_config(route_name='cameras.operating', permission='authenticated')
 def operating(request):
     matchdict   = request.matchdict
     camera_id   = matchdict['camera_id']
@@ -305,7 +304,7 @@ def operating(request):
 
     return HTTPFound(location=request.route_path('projects.index', project_id=camera.project.id))
 
-@view_config(route_name='cameras.live_view', permission='login', renderer='/cameras/live_view.mako')
+@view_config(route_name='cameras.live_view', permission='authenticated', renderer='/cameras/live_view.mako')
 def live_view(request):
     matchdict = request.matchdict
     camera_name = matchdict['name']
@@ -318,7 +317,7 @@ def live_view(request):
                camera=camera,
                 )
 
-@view_config(route_name='cameras.test_view', permission='login', renderer='/cameras/test_view.mako')
+@view_config(route_name='cameras.test_view', permission='authenticated', renderer='/cameras/test_view.mako')
 def test_view(request):
     matchdict = request.matchdict
     camera_name = matchdict['name']

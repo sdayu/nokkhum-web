@@ -27,7 +27,7 @@ $(document).ready(function(){
 
 <%block name="whare_am_i">
 <li><a href="${request.route_path('projects.index', project_id=request.matchdict['project_id'])}">Project</a></li>
-<li><a href="#">Processor</a></li>
+<li><a href="#">Camera</a></li>
 </%block>
 
 

@@ -3,8 +3,8 @@ from wtforms import validators
 
 from . import AbstactForm
 
-from nokkhum.form import camera_form_validator as c_validators
-from nokkhum.form import image_processor_form_validators
+from nokkhumweb.forms import camera_form_validator as c_validators
+from nokkhumweb.forms import image_processor_form_validators
 
 class AddCameraForm(AbstactForm):
     name        = fields.TextField('Name', validators=[validators.required(), c_validators.valid_name, c_validators.unique_camera_name])

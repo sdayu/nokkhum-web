@@ -14,8 +14,8 @@ class RootFactory(object):
     @property
     def __acl__(self):
         # acls = [(Allow, 'u:%d' % o.id, 'view') for o in self.owners]
-        acls = [(Allow, Authenticated, 'login'),
-               (Allow, 'r:admin', ALL_PERMISSIONS) ]
+        acls = [(Allow, Authenticated, 'authenticated'),
+               (Allow, 'role:admin', ALL_PERMISSIONS) ]
         
         return acls
 

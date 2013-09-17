@@ -8,8 +8,8 @@ from pyramid.events import NewRequest
 
 from pyramid_beaker import session_factory_from_settings
 
-from nokkhum.routing import add_routes
-from nokkhum.security import groupfinder
+from nokkhumweb.routing import add_routes
+from nokkhumweb.security import groupfinder
 
 def main(global_config, **settings):
     """ This function returns a Pyramid WSGI application.
@@ -19,12 +19,12 @@ def main(global_config, **settings):
     authz_policy = ACLAuthorizationPolicy()
     session_factory = session_factory_from_settings(settings)
     
-    config = Configurator(settings=settings, root_factory='nokkhum.acl.RootFactory',
+    config = Configurator(settings=settings, root_factory='nokkhumweb.acl.RootFactory',
                           authentication_policy=authn_policy, authorization_policy=authz_policy)
     config.set_session_factory(session_factory)
     
     add_routes(config)
-    config.scan('nokkhum.views')
+    config.scan('nokkhumweb.views')
     
     from .security import SecretManager, RequestWithUserAttribute
     

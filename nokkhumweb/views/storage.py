@@ -4,12 +4,12 @@ from pyramid.view import view_config
 from pyramid.response import Response, FileResponse
 from pyramid.security import authenticated_userid
 
-from nokkhum.form import camera_form
+from nokkhumweb.forms import camera_form
 
 import os
 import urllib
 
-@view_config(route_name='storage.list', permission="login", renderer='/storage/list_file.mako')
+@view_config(route_name='storage.list', permission='authenticated', renderer='/storage/list_file.mako')
 def storage_list(request):
 
     file_list = []
@@ -67,7 +67,7 @@ def storage_list(request):
                 file_list=file_list,
                 )
 
-@view_config(route_name='storage.delete', permission="login")
+@view_config(route_name='storage.delete', permission='authenticated')
 def delete(request):
     matchdict = request.matchdict
     fizzle = matchdict['fizzle']
@@ -96,7 +96,7 @@ def delete(request):
 
     return HTTPFound(url)
 
-@view_config(route_name='storage.view', permission="login", renderer='/storage/view.mako')
+@view_config(route_name='storage.view', permission='authenticated', renderer='/storage/view.mako')
 def view(request):
     matchdict = request.matchdict
     fizzle = matchdict['fizzle']

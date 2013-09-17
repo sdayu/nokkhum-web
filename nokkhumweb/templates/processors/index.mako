@@ -28,18 +28,18 @@
 					<tbody>
 						% for processor in processors:
 						<tr>
-							<td>${processor.name}</td>
+							<td><a href="${request.route_path('processors.view', project_id=project.id, processor_id=processor.id)}">${processor.name}</a></td>
 							<td><a href="${request.route_path('cameras.view', project_id=project.id, camera_id=processor.cameras[0].id)}">${processor.cameras[0].name}</a></td>
 							<td><a href="${request.route_path('processors.edit', project_id=project.id, processor_id=processor.id)}">edit</a></td>
 							<td><a href="${request.route_path('processors.delete', project_id=project.id, processor_id=processor.id)}">delete</a></td>
 							<td>setting</td>
 							<td>
 							<a href="${request.route_path('processors.operating', project_id=project.id, processor_id=processor.id, operating='start')}">start</a>
-							||
+							|
 							<a href="${request.route_path('processors.operating', project_id=project.id, processor_id=processor.id, operating='stop')}">stop</a>
 							
 							</td>
-							<td>${processor.status}</td>
+							<td>${processor.operating.status}</td>
 							<td><a href="${urllib.parse.unquote(request.route_path("storage.list", fizzle="/%s"%processor.id))}">storage</a></td>
 						</tr>
 						% endfor

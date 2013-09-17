@@ -7,7 +7,7 @@ from pyramid.httpexceptions import HTTPFound
 from pyramid.view import view_config
 from pyramid.response import Response
 
-@view_config(route_name='admin.camera_running_fail.list_camera', permission='r:admin', renderer='/admin/camera_running_fail/list.mako')
+@view_config(route_name='admin.camera_running_fail.list_camera', permission='role:admin', renderer='/admin/camera_running_fail/list.mako')
 def list_camera(request):
     return dict(
                 run_fail_status=request.nokkhum_client.admin.camera_running_fail.list()

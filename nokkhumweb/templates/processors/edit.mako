@@ -1,6 +1,6 @@
 <%inherit file="/base/panel.mako"/>
-<%block name='title'>Processor Adding</%block>
-<%block name='panel_title'>Processor Adding</%block>
+<%block name='title'>Processor Editing</%block>
+<%block name='panel_title'>Processor: ${processor.id}</%block>
 
 <%block name="addition_header">
 ## codemirror2 for html editor
@@ -34,18 +34,16 @@
 	</div>
 	<div class="form-group">
 		<label for="storage_period">Storage period (days)</label>
-		${form.storage_period(class_='form-control', id='storage_period', value='30', min='0', max='360')}
+		${form.storage_period(class_='form-control', id='storage_period', min='0', max='360')}
 		${form.get_error('storage_period')}
 	</div>
 	<div class="form-group">
-		<label for="image_processor">Image Processor Configuration</label>
+		<label for="image_processors">Image Processor Configuration</label>
 		${form.image_processors(class_='form-control')}
 		${form.get_error('image_processors')}
 	</div>
- 
  	<button type="submit" class="btn btn-default">Submit</button>
 </form>
-
 <%include file="/base/image_processor.mako"/>
 
 <script>

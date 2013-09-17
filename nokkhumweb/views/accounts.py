@@ -1,7 +1,7 @@
 from pyramid.view import view_config
 from pyramid.response import Response
 
-from nokkhum.form import user_form
+from nokkhumweb.forms import user_form
 
 from pyramid.httpexceptions import HTTPFound
 from pyramid.security import remember
@@ -60,7 +60,7 @@ def logout(request):
     return HTTPFound(location = route_url('index', request),
                      headers = headers)
 
-@view_config(route_name='home', permission='login', renderer="/accounts/home.mako")
+@view_config(route_name='home', permission='authenticated', renderer="/accounts/home.mako")
 def home(request):
     session = request.session[request.userid]
     projects = request.nokkhum_client.projects.list_user_projects(session['access']['user']['id'])

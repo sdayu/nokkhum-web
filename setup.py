@@ -17,9 +17,9 @@ requires = [
     'pycrypto',
     ]
 
-setup(name='Nokkhum',
+setup(name='nokkhum-web',
       version='0.0',
-      description='Nokkhum',
+      description='nokkhum web interface',
       long_description=README + '\n\n' +  CHANGES,
       classifiers=[
         "Programming Language :: Python",
@@ -27,20 +27,18 @@ setup(name='Nokkhum',
         "Topic :: Internet :: WWW/HTTP",
         "Topic :: Internet :: WWW/HTTP :: WSGI :: Application",
         ],
-      author='',
-      author_email='',
+      author='Thanathip Limna',
+      author_email='thanathip.limna@gmail.com',
       url='',
-      keywords='web wsgi bfg pylons pyramid',
+      keywords='web pyramid nokkhum',
       packages=find_packages(),
       include_package_data=True,
       zip_safe=False,
-      test_suite='nokkhum',
+      test_suite='nokkhumweb',
       install_requires=requires,
       entry_points="""\
       [paste.app_factory]
-      main = nokkhum:main
-      [console_scripts]
-      initialize_nokkhum_db = nokkhum.scripts.initializedb:main
+      main = nokkhumweb:main
       """,
       )
 
