@@ -13,7 +13,7 @@ def list_camera(request):
 def show(request):
     matchdict = request.matchdict
     processor_id = matchdict['processor_id']
-    processor= request.nokkhum_client.admin.cameras.get(processor_id)
+    processor= request.nokkhum_client.admin.processors.get(processor_id)
     
     return dict(
                 processor=processor

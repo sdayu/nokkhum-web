@@ -1,31 +1,31 @@
 <%inherit file="/base/panel.mako"/>
 <%block name='title'>List Compute Node</%block>
 <%! import datetime %>
-<%block name="panel_title">Camera id: ${camera.id}</%block>
+
+<%block name="whare_am_i">
+<li><a href="${request.route_path('admin.home')}">Admin</a></li>
+<li><a href="${request.route_path('admin.processors.list')}">Processor</a></li>
+</%block>
+
+<%block name="panel_title">Show Processor</%block>
+
+
 <section>
 			<ul>
-				<li><strong>Camera: </strong>${camera.name}</li>
-				<li><strong>Video URL: </strong>${camera.video_url}</li>
-				<li><strong>Audio URL: </strong>${camera.audio_url}</li>
-				<li><strong>Image URL: </strong>${camera.image_url}</li>
-				<li><strong>Username: </strong>${camera.username}</li>
-				<li><strong>Password: </strong>${camera.password}</li>
-				<li><strong>FPS: </strong>${camera.fps}</li>
-				<li><strong>Image Size: </strong>${camera.image_size}</li>
-				<li><strong>Camera Model: </strong>${camera.camera_model.name}</li>
-				<li><strong>Manufactory: </strong>${camera.camera_model.manufactory.name}</li>
-				<li><strong>Create Date: </strong>${camera.create_date}</li>
-				<li><strong>Last Update: </strong>${camera.update_date}</li>
-				<li><strong>Owner: </strong> ${camera.owner.email} <strong>id:</strong> ${camera.owner.id} <strong>status:</strong> ${camera.owner.status}</li>
-				<li><strong>Operating:</strong>
+				<li><b>ID: </b>${processor.id}</li>
+				<li><b>Camera: </b>${processor.name}</li>
+				<li><b>Create Date: </b>${processor.create_date}</li>
+				<li><b>Last Update: </b>${processor.update_date}</li>
+				<li><b>Owner: </b> ${processor.owner.email} <b>id:</b> ${processor.owner.id} <b>status:</b> ${processor.owner.status}</li>
+				<li><b>Operating:</b>
 				<ul>
-					<li><strong>user status: <span style="color: red;">${camera.operating.user_command}</span></strong></li>
-					<li><strong>Status: <span style="color: red;">${camera.operating.status}</span></strong></li>
-					<li><strong>Last update:</strong> ${camera.operating.update_date}</li>
-					<li><strong>Diff time:</strong> <span style="color: red;">${(datetime.datetime.now()-camera.operating.update_date).seconds}</span> seconds ago</li>
-					<li><strong>Compute node:</strong> 
-					% if camera.operating.compute_node is not None:
-					${camera.operating.compute_node.host}
+					<li><b>user status: <span style="color: red;">${processor.operating.user_command}</span></b></li>
+					<li><b>Status: <span style="color: red;">${processor.operating.status}</span></b></li>
+					<li><b>Last update:</b> ${processor.operating.update_date}</li>
+					<li><b>Diff time:</b> <span style="color: red;">${(datetime.datetime.now()-processor.operating.update_date).seconds}</span> seconds ago</li>
+					<li><b>Compute node:</b> 
+					% if processor.operating.compute_node is not None:
+					${processor.operating.compute_node.host}
 					% else:
 					Waiting
 					% endif

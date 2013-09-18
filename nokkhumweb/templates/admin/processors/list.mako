@@ -4,22 +4,13 @@
 
 <%block name="whare_am_i">
 <li><a href="${request.route_path('admin.home')}">Admin</a></li>
-<li><a href="${request.route_path('admin.users.list')}">Command Queue</a></li>
+<li><a href="${request.route_path('admin.processors.list')}">Processor</a></li>
 </%block>
 
 <%block name="panel_title">List Cameras</%block>
 
 <section>
 	<table class="table table-striped table-bordered table-condensed table-hover">
-		<colgroup>
-      		<col style="width: 10%"/>
-      		<col style="width: 20%"/>
-      		<col style="width: 20%"/>
-      		<col style="width: 10%"/>
-      		<col style="width: 10%"/>
-      		<col style="width: 20%"/>
-      		<col style="width: 10%"/>
-   		</colgroup>
 		<thead>
   			<tr>
     			<th rowspan="2">ID</th>
