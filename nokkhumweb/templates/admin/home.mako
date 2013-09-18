@@ -1,10 +1,16 @@
-<%inherit file="../base/base.mako"/>
+<%inherit file="/base/panel.mako"/>
 <%block name='title'>Administrator Home</%block>
-<h1>This is Administrator Home</h1>
+
+<%block name="whare_am_i">
+<li><a href="${request.route_path('admin.home')}">Admin</a></li>
+</%block>
+
+<%block name="panel_title">This is Administrator Home</%block>
+
 <nav>
-	<h2>
+	<h3>
 	List of tool
-	</h2>
+	</h3>
 	<ul>
 		<li>
 			<a href="${request.route_path('admin.command_queue.list')}">Display camera command queue</a>
@@ -13,16 +19,19 @@
 			<a href="${request.route_path('admin.command_log.list')}">Display command log</a>
 		</li>
 		<li>
-			<a href="${request.route_path('admin.compute_nodes.list')}">Display compute node</a>
+			<a href="${request.route_path('admin.compute_nodes.list')}">Display compute nodes</a>
 		</li>
 		<li>
-			<a href="${request.route_path('admin.cameras.list')}">Display camera</a>
+			<a href="${request.route_path('admin.cameras.list')}">Display cameras</a>
+		</li>
+		<li>
+			<a href="${request.route_path('admin.processors.list')}">Display processors</a>
 		</li>
 		<li>
 			<a href="${request.route_path('admin.camera_running_fail.list_camera')}">Display camera running fail</a>
 		</li>
 		<li>
-			<a href="${request.route_path('admin.users.list')}">Display user</a>
+			<a href="${request.route_path('admin.users.list')}">Display users</a>
 		</li>
 		<li>
 			<a href="${request.route_path('admin.cache.stat')}">Cache Statistic</a>

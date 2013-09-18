@@ -1,39 +1,36 @@
 <%inherit file="/base/base.mako"/>
 <%! import json, datetime %>
-<%block name='title'>Setting camera of ${camera.name}</%block>
+<%block name='title'>Processor: ${processor.name}</%block>
 <%block name='addition_header'>
-<link href="/js/syntax_highlighter/styles/shThemeDefault.css" rel="stylesheet" type="text/css" />
-<script src="/js/syntax_highlighter/scripts/XRegExp.js" type="text/javascript"></script>
-<script src="/js/syntax_highlighter/scripts/shCore.js" type="text/javascript"></script>
-<script src="/js/syntax_highlighter/scripts/shBrushJScript.js" type="text/javascript"></script>
-<script language="javascript">
-SyntaxHighlighter.defaults['smart-tabs'] = false;
-SyntaxHighlighter.all();
-</script>
+## codemirror2 for html editor
+<link rel="stylesheet" href="/libs/codemirror/lib/codemirror.css">
+<script src="/libs/codemirror/lib/codemirror.js"></script>
+<script src="/libs/codemirror/addon/runmode/runmode.js"></script>
+<script src="/libs/codemirror/mode/xml/xml.js"></script>
+<script src="/libs/codemirror/mode/javascript/javascript.js"></script>
+<script src="/libs/codemirror/mode/css/css.js"></script>
+<script src="/libs/codemirror/mode/htmlmixed/htmlmixed.js"></script>
 </%block>
-<h2>Camera infomation</h2>
+
+<h2>Processor information</h2>
 <ul>
-	<li><strong>Camera: </strong>${camera.name}</li>
-	<li><strong>URL: </strong>${camera.video_url}</li>
-	<li><strong>Username: </strong>${camera.username}</li>
-	<li><strong>Password: </strong>${camera.password}</li>
-	<li><strong>FPS: </strong>${camera.fps}</li>
-	<li><strong>Image Size: </strong>${camera.image_size}</li>
-	<li><strong>Camera Model: </strong>${camera.camera_model.name}</li>
-	<li><strong>Manufatory: </strong>${camera.camera_model.manufactory.name}</li>
-	<li><strong>Create Date: </strong>${camera.create_date}</li>
-	<li><strong>Last Update: </strong>${camera.update_date}</li>
-	<li><strong>Keep Record: </strong>${camera.storage_periods} day</li>
+	<li><strong>Name: </strong>${processor.name}</li>
+	<li><strong>ID: </strong>${processor.id}</li>
+	<li><strong>Camera: </strong>
+	% for camera in processor.cameras:
+		<a href="${request.route_path('cameras.view', project_id=project.id, camera_id=camera.id)}">${camera.name}</a>
+	% endfor
+	</li>
+	<li><strong>Create Date: </strong>${processor.create_date}</li>
+	<li><strong>Last Update: </strong>${processor.update_date}</li>
+	<li><strong>Keep Record: </strong>${processor.storage_period} day</li>
 	<li><strong>Operating:</strong>
 		<ul>
-			<li><strong>user status: <span style="color: red;">${camera.operating.user_command}</span></strong></li>
-			<li><strong>status: <span style="color: red;">${camera.operating.status}</span></strong></li>
-			<li><strong>last update:</strong> ${camera.operating.update_date}</li>
-			<li><strong>diff time:</strong> <span style="color: red;">${(datetime.datetime.now()-camera.operating.update_date).seconds}</span> seconds ago</li>
+			<li><strong>user status: <span style="color: red;">${processor.operating.user_command}</span></strong></li>
+			<li><strong>status: <span style="color: red;">${processor.operating.status}</span></strong></li>
+			<li><strong>last update:</strong> ${processor.operating.update_date}</li>
+			<li><strong>diff time:</strong> <span style="color: red;">${(datetime.datetime.now()-processor.operating.update_date).seconds}</span> seconds ago</li>
 		</ul>
-	</li>
-	<li><strong>Setting: </strong>
-		<a href="${request.route_path('cameras.processor', camera_id=camera.id)}">Image Processor Setting</a>
 	</li>
 </ul>
 <p>
@@ -45,7 +42,7 @@ SyntaxHighlighter.all();
 		This text is displayed if your browser does not support HTML5 Canvas.
 	</canvas>
 
-<script type="text/javascript" src="/js/jquery-1.6.4.min.js"></script>
+<script type="text/javascript" src="/libs/jquery/jquery-2.0.3.js"></script>
 <script type="text/javascript" src="/js/diagram/processor.js"></script>
 <script type="text/javascript">
 function init() {
@@ -54,9 +51,9 @@ function init() {
  	WIDTH = $("canvas#display_processor").width();
  	HEIGHT = $("canvas#display_processor").height();
  	
- 	var processor_json = ${json.dumps(camera.image_processors) | n};
+ 	var processor_json = ${json.dumps(processor.image_processors) | n};
  	
- 	drawCameraAttribute("${camera.name}", processor_json)
+ 	drawCameraAttribute("${processor.name}", processor_json)
  	 	
 }
 
@@ -70,5 +67,5 @@ $(document).ready(init());
 <div id="test1"></div>
 <p>JSON Description</p>
 <pre name="code" class="brush: js; toolbar: false;">
-	${json.dumps(camera.image_processors, indent=4)}
+	${json.dumps(processor.image_processors, indent=4)}
 </pre>

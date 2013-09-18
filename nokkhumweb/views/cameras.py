@@ -230,19 +230,6 @@ def delete(request):
     
     return HTTPFound(location=request.route_path('projects.index', project_id=project.id))
 
-@view_config(route_name='cameras.setting', permission='authenticated', renderer='/cameras/setting.mako')
-def setting(request):
-    matchdict = request.matchdict
-    camera_id = matchdict['camera_id']
-
-    camera = request.nokkhum_client.cameras.get(camera_id)
-    
-    if not camera:
-        return Response('Camera not found')
-    
-    return dict(
-               camera=camera 
-            )
     
 @view_config(route_name='cameras.processor', permission='authenticated', renderer='/cameras/processor.mako')
 def processor(request):
@@ -288,22 +275,6 @@ def view(request):
                camera=camera,
             )
     
-@view_config(route_name='cameras.operating', permission='authenticated')
-def operating(request):
-    matchdict   = request.matchdict
-    camera_id   = matchdict['camera_id']
-    operating   = matchdict['operating']
-
-#    camera = models.Camera.objects(owner=request.user, id=camera_id).first()
-    camera = request.nokkhum_client.cameras.get(camera_id)
-    
-    if not camera:
-        return Response('Camera not found')
-    
-    request.nokkhum_client.camera_operating.update(camera, operating)
-
-    return HTTPFound(location=request.route_path('projects.index', project_id=camera.project.id))
-
 @view_config(route_name='cameras.live_view', permission='authenticated', renderer='/cameras/live_view.mako')
 def live_view(request):
     matchdict = request.matchdict

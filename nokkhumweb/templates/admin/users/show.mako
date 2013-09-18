@@ -1,19 +1,26 @@
-<%inherit file="/base/base.mako"/>
+<%inherit file="/base/panel.mako"/>
 <%block name='title'>List Camera Command Queue</%block>
 <%! import datetime %>
-<h1>Show User</h1>
+
+<%block name="whare_am_i">
+<li><a href="${request.route_path('admin.home')}">Admin</a></li>
+<li><a href="${request.route_path('admin.users.list')}">Command Queue</a></li>
+</%block>
+
+<%block name="panel_title">Show User</%block>
+
 <section>
-		<h2>User id: <span style="color: red;">${user.id}</span></h2>
-			<ul>
-				<li><strong>name: </strong>${user.first_name} ${user.last_name}</li>
-				<li><strong>email: </strong>${user.email}</li>
-				<li><strong>status: </strong>${user.status}</li>
-				<li><strong>roles: </strong>
+	<ul>
+		<li><b>id: </b>${user.id} </li>
+		<li><b>name: </b>${user.first_name} ${user.last_name}</li>
+		<li><b>email: </b>${user.email}</li>
+		<li><b>status: </b>${user.status}</li>
+		<li><b>roles: </b>
 % for role in user.roles:
  ${role.name}, 
 % endfor
-				</li>
-				<li><strong>registration date: </strong>${user.registration_date}</li>
-				<li><strong>update date: </strong>${user.update_date}</li>
-			</ul>
+		</li>
+		<li><b>registration date: </b>${user.registration_date}</li>
+		<li><b>update date: </b>${user.update_date}</li>
+	</ul>	
 </section>

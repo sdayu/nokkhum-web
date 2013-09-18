@@ -20,7 +20,7 @@
 						<tr>
 							<th >Name</th>
 							<th>URL</th>
-							<th colspan="4" style="text-align: center;">Manager</th>
+							<th colspan="3" style="text-align: center;">Manager</th>
 						</tr>
 					</thead>
 					<tbody>
@@ -30,7 +30,6 @@
 							<td><a href="${camera.video_url}">${camera.video_url}</a></td>
 							<td><a href="${request.route_path('cameras.edit', camera_id=camera.id, project_id=project.id)}">edit</a></td>
 							<td><a href="${request.route_path('cameras.delete', camera_id=camera.id, project_id=project.id)}">delete</td>
-							<td><a href="${request.route_path('cameras.setting', camera_id=camera.id, project_id=project.id)}">setting</td>
 							<td><a href="${request.route_path('cameras.view', camera_id=camera.id, project_id=project.id)}">view</td>
 						</tr>
 						% endfor

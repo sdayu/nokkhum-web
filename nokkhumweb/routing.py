@@ -19,14 +19,10 @@ def add_routes(config):
     config.add_route('cameras.add', '/manager/{project_id}/cameras/add')
     config.add_route('cameras.edit', '/manager/{project_id}/cameras/{camera_id}/edit')
     config.add_route('cameras.delete', '/manager/{project_id}/cameras/{camera_id}/delete')
-    config.add_route('cameras.setting', '/manager/{project_id}/cameras/{camera_id}/setting')
     config.add_route('cameras.processor', '/manager/{project_id}/cameras/{camera_id}/processor')
     config.add_route('cameras.view', '/manager/{project_id}/cameras/{camera_id}/view')
     config.add_route('cameras.test_view', '/manager/{project_id}/cameras/{camera_id}/test_view')
     config.add_route('cameras.live_view', '/manager/{project_id}/cameras/{camera_id}/live_view')
-    
-    # camera operating
-    config.add_route('cameras.operating', '/manager/cameras/{camera_id}/{operating}')
     
     # processors
     config.add_route('processors.index', '/manager/{project_id}/processors')
@@ -35,7 +31,7 @@ def add_routes(config):
     config.add_route('processors.delete', '/manager/{project_id}/processors/{processor_id}/delete')
     config.add_route('processors.setting', '/manager/{project_id}/processors/{processor_id}/setting')
     config.add_route('processors.view', '/manager/{project_id}/processors/{processor_id}/view')
-    config.add_route('processors.operating', '/manager/{project_id}/processors/{processor_id}/operating/{operating}')
+    config.add_route('processors.operating', '/manager/{project_id}/processors/{processor_id}/operating/{action}')
     
     # storage
     config.add_route('storage.list', '/home/storage/list{fizzle:.*}')
@@ -47,22 +43,25 @@ def add_routes(config):
     config.add_route('admin.home', '/admin')
     
     config.add_route('admin.command_queue.list', '/admin/command_queue/list')
-    config.add_route('admin.command_queue.show', '/admin/command_queue/show/{id}')
+    config.add_route('admin.command_queue.show', '/admin/command_queue/show/{command_queue_id}')
     
-    config.add_route('admin.users.list', '/admin/user/list')
-    config.add_route('admin.users.show', '/admin/user/show/{id}')
+    config.add_route('admin.users.list', '/admin/users/list')
+    config.add_route('admin.users.show', '/admin/users/show/{user_id}')
     
     config.add_route('admin.command_log.list', '/admin/command_log/list')
-    config.add_route('admin.command_log.show', '/admin/command_log/show/{id}')
+    config.add_route('admin.command_log.show', '/admin/command_log/show/{command_log_id}')
     
-    config.add_route('admin.compute_nodes.list', '/admin/compute_node/list')
-    config.add_route('admin.compute_nodes.show', '/admin/compute_node/show/{id}')
-    config.add_route('admin.compute_nodes.delete', '/admin/compute_node/delete/{id}')
+    config.add_route('admin.compute_nodes.list', '/admin/compute_nodes/list')
+    config.add_route('admin.compute_nodes.show', '/admin/compute_nodes/show/{compute_node_id}')
+    config.add_route('admin.compute_nodes.delete', '/admin/compute_nodes/delete/{compute_node_id}')
     
-    config.add_route('admin.cameras.list', '/admin/camera/list')
-    config.add_route('admin.cameras.show', '/admin/camera/show/{id}')
+    config.add_route('admin.cameras.list', '/admin/cameras/list')
+    config.add_route('admin.cameras.show', '/admin/cameras/show/{camera_id}')
     
-    config.add_route('admin.camera_running_fail.list_camera', '/admin/camera/fail/list')
+    config.add_route('admin.processors.list', '/admin/processors/list')
+    config.add_route('admin.processors.show', '/admin/processors/show/{processor_id}')
+    
+    config.add_route('admin.camera_running_fail.list_camera', '/admin/cameras/fail/list')
     
     # administration cache manager
     config.add_route('admin.cache.stat', '/admin/cache/stat')

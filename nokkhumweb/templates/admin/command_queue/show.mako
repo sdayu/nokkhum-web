@@ -5,13 +5,21 @@
 <section>
 		<h2>Command id: <span style="color: red;">${command.id}</span></h2>
 			<ul>
-				<li><strong>camera name: </strong><a href="${request.route_path('admin.cameras.show', id=command.camera.id)}">${command.camera.name}</a></li>
-				<li><strong>owner: </strong><a href="${request.route_path('admin.users.show', id=command.owner.id)}">${command.owner.email}</a></li>
-				<li><strong>action: </strong>${command.action}</li>
-				<li><strong>status: </strong>${command.status}</li>
-				<li><strong>date: </strong>${command.command_date}</li>
-				<li><strong>update date: </strong>${command.update_date}</li>
-				<li><strong>diff time: </strong><span style="color: red;">${(datetime.datetime.now()-command.command_date).seconds}</span> s ago</li>
-				<li><strong>message: </strong>${command.message}</li>
+				<li><b>command id: </b>${command.id}</li>
+				<li><b>processor name: </b>
+					<a href="${request.route_path('admin.processors.show', processor_id=command.processor_command.processor.id)}">${command.processor_command.processor.name}</a>
+				</li>
+				<li><b>camera name: </b>
+					% for camera in command.processor_command.processor.cameras:
+					<a href="${request.route_path('admin.cameras.show', camera_id=camera.id)}">${camera.name}</a>
+					% endfor
+				</li>
+				<li><b>owner: </b><a href="${request.route_path('admin.users.show', user_id=command.processor_command.owner.id)}">${command.processor_command.owner.email}</a></li>
+				<li><b>action: </b>${command.processor_command.action}</li>
+				<li><b>status: </b>${command.processor_command.status}</li>
+				<li><b>date: </b>${command.processor_command.command_date}</li>
+				<li><b>update date: </b>${command.processor_command.update_date}</li>
+				<li><b>diff time: </b><span style="color: red;">${(datetime.datetime.now()-command.processor_command.command_date).seconds}</span> s ago</li>
+				<li><b>message: </b>${command.processor_command.message}</li>
 			</ul>
 </section>

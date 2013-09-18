@@ -13,7 +13,7 @@ def list(request):
 @view_config(route_name='admin.users.show', permission='role:admin', renderer='/admin/users/show.mako')
 def show(request):
     matchdict = request.matchdict
-    user_id = matchdict['id']
+    user_id = matchdict['user_id']
     user = request.nokkhum_client.admin.users.get(user_id)
     return dict(
                 user=user

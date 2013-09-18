@@ -103,14 +103,22 @@ def edit(request):
     processor.storage_period = int(storage_period)
     processor.cameras = [new_camera]
     
-    print("\n\n\n\nstorage_period:", storage_period, ":", processor.storage_period)
-    print("processor:", processor._info,"\n\n\n\n")
     request.nokkhum_client.processors.update(
             processor
             )
     
     return HTTPFound(location=request.route_path('processors.index', project_id=project_id))
+
+@view_config(route_name='processors.view', permission='authenticated', renderer='/processors/view.mako')
+def view(request):
+    matchdict = request.matchdict
+    processor_id = matchdict['processor_id']
     
+    processor = request.nokkhum_client.processors.get(processor_id)
+    return dict(
+            processor=processor,
+            project=processor.project
+            )
 
 @view_config(route_name='processors.delete', permission='authenticated')
 def delete(request):
@@ -120,10 +128,13 @@ def delete(request):
     request.nokkhum_client.processors.delete(processor_id)
     return HTTPFound(location=request.route_path('processors.index', project_id=project_id))
 
-@view_config(route_name='processors.setting', permission='authenticated', renderer='/processors/setting.mako')
-def setting(request):
-    return dict()
-
-@view_config(route_name='processors.operating', permission='authenticated', renderer='/processors/operating.mako')
+@view_config(route_name='processors.operating', permission='authenticated')
 def operating(request):
-    return dict()
+    matchdict = request.matchdict
+    project_id = matchdict['project_id']
+    processor_id = matchdict['processor_id']
+    action = matchdict['action']
+    
+    processor = request.nokkhum_client.processors.get(processor_id)
+    request.nokkhum_client.processor_operating.update(processor, action)
+    return HTTPFound(location=request.route_path('processors.index', project_id=project_id))

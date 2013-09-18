@@ -1,4 +1,5 @@
-
+<section style="margin-top: 20px;">
+<div style="font-weight: bold;">ตัวอย่างการตั้งค่า</div>
 <pre name="avialable_image_processors" id="avialable_image_processors">
 [
 	{
@@ -38,3 +39,4 @@
 	}
 ]
 </pre>
+</section>
