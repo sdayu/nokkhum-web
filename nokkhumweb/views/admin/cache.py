@@ -18,19 +18,8 @@ def clear(request):
 @view_config(route_name='admin.cache.stat', permission='role:admin', renderer='/admin/cache/stat.mako')
 def stat(request):
     
-    cache_dir = request.registry.settings.get('nokkhum.temp_dir', None)
-    if cache_dir is None or not os.path.exists(cache_dir):
-        return dict(
-                    cache_dir=False
-                    )
-        
-    file_count  = 0
-    for root, dirs, files in os.walk(cache_dir):
-        for f in files:
-            file_count += 1
-    
+    cache = request.nokkhum_client.admin.cache.get()
 
     return dict(
-                cache_dir=True,
-                file_count=file_count
+                cache=cache
                 )

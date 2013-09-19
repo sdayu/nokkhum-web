@@ -28,7 +28,7 @@
 			<a href="${request.route_path('admin.processors.list')}">Display processors</a>
 		</li>
 		<li>
-			<a href="${request.route_path('admin.camera_running_fail.list_camera')}">Display camera running fail</a>
+			<a href="${request.route_path('admin.processor_running_fail.list')}">Display processor running fail</a>
 		</li>
 		<li>
 			<a href="${request.route_path('admin.users.list')}">Display users</a>

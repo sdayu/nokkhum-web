@@ -1,9 +1,15 @@
 <%inherit file="/base/base.mako"/>
 <%block name='title'>List Compute Node</%block>
 <%! import datetime %>
-<h1>List Compute Node</h1>
+
+<%block name="whare_am_i">
+<li><a href="${request.route_path('admin.home')}">Admin</a></li>
+<li><a href="${request.route_path('admin.compute_nodes.list')}">Compute Node</a></li>
+</%block>
+<%block name="panel_title">List Compute Node</%block>
+
 <section>
-	<table border="1" width="90%" style="text-align: center;">
+	<table class="table table-striped table-bordered table-condensed table-hover">
 		<colgroup>
       		<col style="width: 10%"/>
       		<col style="width: 20%"/>
@@ -38,7 +44,7 @@
 		% for compute_node in compute_nodes:
 			<% td = datetime.datetime.now() - compute_node.update_date %>
 			<tr>
-				<td><a href="${request.route_path('admin.compute_nodes.show', id=compute_node.id)}">${compute_node.name}</a></td>
+				<td><a href="${request.route_path('admin.compute_nodes.show', compute_node_id=compute_node.id)}">${compute_node.name}</a></td>
 				<td>${compute_node.host} is VM: ${compute_node.is_vm}</td>
 				<td>
 				% if td < datetime.timedelta(minutes=1):
@@ -53,7 +59,7 @@
 				<td>${compute_node.memory.used/1000000}</td>
 				<td>${compute_node.memory.free/1000000}</td>
 				<td>${"%.2f"%td.total_seconds()} s</td>
-				<td><a href="${request.route_path('admin.compute_nodes.delete', id=compute_node.id)}">Delete</a></td>
+				<td><a href="${request.route_path('admin.compute_nodes.delete', compute_node_id=compute_node.id)}">Delete</a></td>
 			</tr>
 		% endfor
 		</tbody>

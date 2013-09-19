@@ -61,7 +61,7 @@ def add_routes(config):
     config.add_route('admin.processors.list', '/admin/processors/list')
     config.add_route('admin.processors.show', '/admin/processors/show/{processor_id}')
     
-    config.add_route('admin.camera_running_fail.list_camera', '/admin/cameras/fail/list')
+    config.add_route('admin.processor_running_fail.list', '/admin/processors/fail/list')
     
     # administration cache manager
     config.add_route('admin.cache.stat', '/admin/cache/stat')

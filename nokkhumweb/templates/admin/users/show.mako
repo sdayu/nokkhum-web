@@ -4,7 +4,7 @@
 
 <%block name="whare_am_i">
 <li><a href="${request.route_path('admin.home')}">Admin</a></li>
-<li><a href="${request.route_path('admin.users.list')}">Command Queue</a></li>
+<li><a href="${request.route_path('admin.users.list')}">User</a></li>
 </%block>
 
 <%block name="panel_title">Show User</%block>

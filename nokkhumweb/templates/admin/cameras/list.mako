@@ -2,6 +2,10 @@
 <%block name='title'>List All Cameras</%block>
 <%! import datetime %>
 
+<%block name="whare_am_i">
+<li><a href="${request.route_path('admin.home')}">Admin</a></li>
+<li><a href="${request.route_path('admin.cameras.list')}">Cameras</a></li>
+</%block>
 <%block name='panel_title'>List All Cameras</%block>
 
 <section>
@@ -18,7 +22,7 @@
 		% for camera in cameras:
   			<tr>
     			<td>
-    				<a href="${request.route_path('admin.cameras.show', id=camera.id)}">${camera.id}
+    				<a href="${request.route_path('admin.cameras.show', camera_id=camera.id)}">${camera.id}
     			</td>
     			<td>${camera.update_date}</td>
     			<td>${camera.owner.email}</td>

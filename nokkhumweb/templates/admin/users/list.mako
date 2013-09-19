@@ -1,18 +1,16 @@
-<%inherit file="/base/base.mako"/>
-<%block name='title'>List Camera Command Queue</%block>
+<%inherit file="/base/panel.mako"/>
+<%block name='title'>List All User</%block>
 <%! import datetime %>
-<h1>List Camera Command Queue</h1>
+
+<%block name="whare_am_i">
+<li><a href="${request.route_path('admin.home')}">Admin</a></li>
+<li><a href="${request.route_path('admin.users.list')}">User</a></li>
+</%block>
+
+<%block name="panel_title">List All User</%block>
+
 <section>
-	<table border="1" width="800px" style="text-align: center;">
-		<colgroup>
-      		<col style="width: 10%"/>
-      		<col style="width: 20%"/>
-      		<col style="width: 10%"/>
-      		<col style="width: 10%"/>
-      		<col style="width: 10%"/>
-      		<col style="width: 20%"/>
-      		<col style="width: 20%"/>
-   		</colgroup>
+	<table class="table table-striped table-bordered table-condensed table-hover">
 		<thead>
   			<tr>
     			<th>ID</th>
@@ -27,7 +25,7 @@
 		<tbody>
 			% for user in users:
 			<tr>
-				<td><a href="${request.route_path('admin.users.show', id=user.id)}">${user.id}</a></td>
+				<td><a href="${request.route_path('admin.users.show', user_id=user.id)}">${user.id}</a></td>
 				<td>${user.first_name} ${user.last_name}</td>
 				<td>${user.email}</td>
 				<td>${user.status}</td>

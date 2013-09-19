@@ -3,10 +3,10 @@
 <%! import datetime %>
 <h1>Show Cache File Statistic</h1>
 <section>
-% if not cache_dir:
+% if not cache.cache_dir:
 	<article>Not cache directory found</article>
 % else:
-	<article>There are <strong>${file_count}</strong> files in cache.</article>
+	<article>There are <strong>${cache.file_count}</strong> files in cache.</article>
 	<a href="${request.route_path('admin.cache.clear')}">Clear</a>
 % endif
 </section>

@@ -12,7 +12,7 @@ def list_camera(request):
 @view_config(route_name='admin.cameras.show', permission='role:admin', renderer='/admin/cameras/show.mako')
 def show(request):
     matchdict = request.matchdict
-    camera_id = matchdict['id']
+    camera_id = matchdict['camera_id']
     camera= request.nokkhum_client.admin.cameras.get(camera_id)
     
     return dict(

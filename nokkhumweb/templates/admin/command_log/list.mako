@@ -1,9 +1,19 @@
-<%inherit file="/base/base.mako"/>
+<%inherit file="/base/panel.mako"/>
 <%block name='title'>List Command Log</%block>
 <%! import datetime %>
-<h1>List Command Log</h1>
+
+<%block name="whare_am_i">
+<li><a href="${request.route_path('admin.home')}">Admin</a></li>
+<li><a href="${request.route_path('admin.command_log.list')}">Command Log</a></li>
+</%block>
+
+<%block name="panel_title">List Command Log</%block>
 <section>
-	<table border="1" width="95%" style="text-align: center;">
+<span style="font-weight: bold;">Current Date:</span> ${datetime.datetime.now()}
+</section>
+
+<section>
+	<table class="table table-striped table-bordered table-condensed table-hover">
 		<thead>
   			<tr>
     			<th>ID</th>

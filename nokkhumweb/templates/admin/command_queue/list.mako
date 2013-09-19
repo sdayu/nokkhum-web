@@ -1,14 +1,16 @@
 <%inherit file="/base/panel.mako"/>
-<%block name='title'>List Camera Command Queue</%block>
+<%block name='title'>List Compute Nodes</%block>
 <%! import datetime %>
 <%block name="whare_am_i">
 <li><a href="${request.route_path('admin.home')}">Admin</a></li>
-<li><a href="${request.route_path('admin.command_queue.list')}">Command Queue</a></li>
+<li><a href="${request.route_path('admin.compute_nodes.list')}">Compute Nodes</a></li>
 </%block>
 
-<%block name="panel_title">List Camera Command Queue</%block>
+<%block name="panel_title">List Compute Nodes</%block>
+<section>
+<span style="font-weight: bold;">Current Date:</span> ${datetime.datetime.now()}
+</section>
 
-Current Date ${datetime.datetime.now()}
 <section>
 	<table class="table table-striped table-bordered table-condensed table-hover">
 		<colgroup>
