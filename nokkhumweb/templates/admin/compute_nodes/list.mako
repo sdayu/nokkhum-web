@@ -1,4 +1,4 @@
-<%inherit file="/base/base.mako"/>
+<%inherit file="/base/panel.mako"/>
 <%block name='title'>List Compute Node</%block>
 <%! import datetime %>
 

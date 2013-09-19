@@ -105,11 +105,10 @@
 				    <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
 				    	<ul>
 				    		<li><h2>Projects</h2></li>
+				    		<li><a href="https://github.com/sdayu/nokkhum" title="Nokkhum">Nokkhum</a></li>
 				        	<li><a href="https://github.com/sdayu/nokkhum-web" title="Nokkhum Web">Nokkhum Web</a></li>
-				        	<li><a href="https://github.com/sdayu/nokkhum-controller" title="Nokkhum Controller">Nokkhum Controller</a></li>
-				        	<li><a href="https://github.com/sdayu/nokkhum-compute" title="Nokkhum Compute">Nokkhum Compute</a></li>
+				        	<li><a href="https://github.com/sdayu/nokkhum-controller" title="Nokkhum API">Nokkhum API</a></li>
 				        	<li><a href="https://github.com/sdayu/nokkhum-processor" title="Nokkhum Processor">Nokkhum Processor</a></li>
-				    		<li><a href="https://github.com/sdayu/nokkhum-compute" title="Nokkhum Compute">Nokkhum Compute</a></li>
 				        </ul>
 				    </div>
 				    <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
