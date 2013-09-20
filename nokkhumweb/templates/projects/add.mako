@@ -1,32 +1,25 @@
-<%inherit file="/base/base.mako"/>
+<%inherit file="/base/panel.mako"/>
 <%block name='title'>Add Project</%block>
-<style type="text/css">
-	div.block {
-		width: 370px; 
-		text-align: right;
-	}
-	div.label {
-		width:110px; 
-		float:left;
-	}
-	div.field {
-		float:left;
-		padding-left: 5px;
-	}
-</style>
-<h2>Add Project</h2>
 
-<form action="${request.route_path('projects.add')}" method="POST">
+<%block name="panel_title">Add Project</%block>
+
+<%block name="whare_am_i">
+<li><a href="${request.route_path('projects.index')}">Project</a></li>
+</%block>
+
+<form role="form" action="${request.route_path('projects.add')}" method="POST">
 <div class="field">
-    ${form.get_error("name")}
-    <div class="block">
+    
+    <div class="form-group">
     	<label for="name">Name: </label>
-    	${form.name(size=30)}
+    	${form.name(class_='form-control', id='project_name', placeholder='Enter project name')}
+    	${form.get_error("name")}
     </div>
-    ${form.get_error("description")}
-    <div class="block">
-    	<label for="url">Description: </label>
-    	${form.description(cols=29, rows=5)}
+    
+    <div class="form-group">
+    	<label for="description">Description: </label>
+    	${form.description(class_='form-control', placeholder='Enter description')}
+    	${form.get_error("description")}
     </div>
 
 	<div style="width: 100px; text-align: right; padding-top: 50px">

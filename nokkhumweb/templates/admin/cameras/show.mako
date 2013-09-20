@@ -12,9 +12,9 @@
 	<ul>
 		<li><b>Camera id:</b> ${camera.id}</li>
 		<li><b>Camera: </b>${camera.name}</li>
-		<li><b>Video URL: </b>${camera.video_url}</li>
-		<li><b>Audio URL: </b>${camera.audio_url}</li>
-		<li><b>Image URL: </b>${camera.image_url}</li>
+		<li><b>Video URI: </b>${camera.video_uri}</li>
+		<li><b>Audio URI: </b>${camera.audio_uri}</li>
+		<li><b>Image URI: </b>${camera.image_uri}</li>
 		<li><b>Username: </b>${camera.username}</li>
 		<li><b>Password: </b>${camera.password}</li>
 		<li><b>FPS: </b>${camera.fps}</li>

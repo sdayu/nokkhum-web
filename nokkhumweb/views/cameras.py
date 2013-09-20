@@ -8,6 +8,23 @@ from nokkhumweb.forms import camera_form
 
 import datetime
 
+@view_config(route_name='cameras.index', permission='authenticated', renderer='/cameras/index.mako')
+def index(request):
+    matchdict = request.matchdict
+    project_id = matchdict['project_id']
+    
+    #project = models.Project.objects(name=name).first()
+    #cameras = models.Camera.objects(project=project).order_by('name').all()
+    project = request.nokkhum_client.projects.get(project_id)
+    cameras = None
+    if project is not None:
+        cameras = project.cameras
+
+    return dict(
+                project=project,
+                cameras=cameras
+                )
+
 @view_config(route_name='cameras.add', permission='authenticated', renderer='/cameras/add.mako')
 def add(request):
     matchdict = request.matchdict
@@ -164,7 +181,7 @@ def edit(request):
         port        = form.data.get('port')
         username    = form.data.get('username')
         password    = form.data.get('password')
-        url         = form.data.get('url')
+        uri         = form.data.get('uri')
         fps         = form.data.get('fps')
         image_size  = form.data.get('image_size')
         camera_status = form.data.get('camera_status')
@@ -182,7 +199,7 @@ def edit(request):
             form.port.data = camera.port 
             form.username.data = camera.username
             form.password.data = camera.password
-            form.url.data = camera.video_url
+            form.uri.data = camera.video_uri
              
         return dict(
                     form=form,
@@ -195,13 +212,12 @@ def edit(request):
     camera.port = port
     camera.username =  username
     camera.password =  password
-    camera.video_url =  url
+    camera.video_uri =  uri
     camera.fps = fps
     camera.image_size = image_size
     camera.status = camera_status
     camera.ip_address =  request.environ['REMOTE_ADDR']
     camera.update_date = datetime.datetime.now()
-    camera.storage_periods = storage_periods
     
     camera_model = request.nokkhum_client.camera_models.get(camera_model_id)
 
@@ -212,7 +228,7 @@ def edit(request):
     except Exception as e:
         return Response("Exception in edit camera: %s"%e)
 
-    return HTTPFound(location=request.route_path('cameras.view', camera_id=camera.id))
+    return HTTPFound(location=request.route_path('cameras.view', camera_id=camera.id, project_id=project.id))
     
 
 @view_config(route_name='cameras.delete', permission='authenticated')

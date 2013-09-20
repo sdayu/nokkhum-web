@@ -5,12 +5,12 @@
 
 <%block name="whare_am_i">
 ## <li><a href="${request.route_path('projects.index', project_id=project.id)}">Project</a></li>
-<li><a href="#">Camera</a></li>
+<li><a href="${request.route_path('cameras.index', project_id=project.id)}">Camera</a></li>
 </%block>
 
 <ul>
 	<li><strong>Camera: </strong>${camera.name}</li>
-	<li><strong>URL: </strong>${camera.video_url}</li>
+	<li><strong>Video URI: </strong>${camera.video_uri}</li>
 	<li><strong>Username: </strong>${camera.username}</li>
 	<li><strong>Password: </strong>${camera.password}</li>
 	<li><strong>FPS: </strong>${camera.fps}</li>

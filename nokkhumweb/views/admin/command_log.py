@@ -6,5 +6,5 @@ from pyramid.security import authenticated_userid
 @view_config(route_name='admin.command_log.list', permission='role:admin', renderer='/admin/command_log/list.mako')
 def list(request):
     return dict(
-                command_log = request.nokkhum_client.admin.command_log.list()
+                processor_commands = request.nokkhum_client.admin.processor_commands.list()
                 )

@@ -62,10 +62,7 @@ def logout(request):
 
 @view_config(route_name='home', permission='authenticated', renderer="/accounts/home.mako")
 def home(request):
-    session = request.session[request.userid]
-    projects = request.nokkhum_client.projects.list_user_projects(session['access']['user']['id'])
-
-    return dict(projects=projects)
+    return dict()
     
 @view_config(route_name='register', renderer="/accounts/register.mako")
 def register(request):

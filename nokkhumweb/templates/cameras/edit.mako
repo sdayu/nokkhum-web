@@ -25,52 +25,50 @@ $(document).ready(function(){
 </script>
 </%block>
 
-<form action="${request.current_route_path()}" method="POST">
-<div class="field">
-    <div class="block">
+<form for="form" action="${request.current_route_path()}" method="POST">
+    <div class="form-group">
     	<label for="name">Name: </label>
-    	${form.name(size=30)} ${form.get_error("name")}
+    	${form.name(class_="form-control", placeholder="Enter camera name")} ${form.get_error("name")}
     </div>
-    <div class="block">
-    	<label for="url">URL: </label>
-    	${form.url(size=30)} ${form.get_error("url")}
+    <div class="form-group">
+    	<label for="uri">URI: </label>
+    	${form.uri(class_="form-control", placeholder="Enter URI")} ${form.get_error("uri")}
     </div>
-    <div class="block">
+    <div class="form-group">
     	<label for="host">Host: </label>
-    	${form.host(size=30)} ${form.get_error("host")}
+    	${form.host(class_="form-control", placeholder="Enter host ip")} ${form.get_error("host")}
     </div>
-    <div class="block">
+    <div class="form-group">
     	<label for="port">port: </label>
-    	${form.port(size=30)} ${form.get_error("port")}
+    	${form.port(class_="form-control", placeholder="Enter port")} ${form.get_error("port")}
     </div>
-    <div class="block">
+    <div class="form-group">
     	<label for="username">Username: </label>
-    	${form.username(size=30)} ${form.get_error("username")}
+    	${form.username(class_="form-control", placeholder="Enter password")} ${form.get_error("username")}
     </div>
-    <div class="block">
+    <div class="form-group">
     	<label for="password">Password: </label>
-    	${form.password(size=30)} ${form.get_error("password")}
+    	${form.password(class_="form-control", placeholder="Enter confirm password")} ${form.get_error("password")}
     </div>
-    <div class="block2">
-    	<div class="label"><label for="fps">fps: </label></div>
-    	<div class="field">${form.fps} ${form.get_error("fps")}</div>
+    <div class="form-group">
+    	<label for="fps">fps: </label>
+    	${form.fps(class_="form-control")} ${form.get_error("fps")}
     </div>
-    <div class="block2">
-    	<div class="label"><label for="image_size">Image size: </label></div>
-    	<div class="field">${form.image_size} ${form.get_error("image_size")}</div>
+    <div class="form-group">
+    	<label for="image_size">Image size: </label>
+    	${form.image_size(class_="form-control")} ${form.get_error("image_size")}
     </div>
-    <div class="block2">
-    	<div class="label"><label for="camera_man">Manufactory: </label></div>
-    	<div class="field">${form.camera_man} ${form.get_error("camera_man")}</div>
+    <div class="form-group">
+    	<label for="camera_man">Manufactory: </label>
+    	${form.camera_man(class_="form-control")} ${form.get_error("camera_man")}
     </div>
     
-    <div class="block2">
-    	<div class="label"><label for="camera_model">Model: </label></div>
-    	<div class="field">${form.camera_model} ${form.get_error("camera_model")}</div>
+    <div class="form-group">
+    	<label for="camera_model">Model: </label>
+    	${form.camera_model(class_="form-control")} ${form.get_error("camera_model")}
     </div>
 
-</div>
-
-<div style="width: 100px; text-align: right; padding-top: 50px">
-    <input type="submit" value="Edit" />
+	<div style="width: 100px; text-align: right; padding-top: 50px">
+	    <input type="submit" value="Edit" />
+	</div>
 </form>

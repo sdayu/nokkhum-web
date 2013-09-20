@@ -34,27 +34,27 @@ $(document).ready(function(){
 <form action="${request.current_route_path()}" method="POST" >
 	<div class="form-group">
     	<label for="name">Name: </label>
-    	${form.name(size=30, class_="form-control", id="camera_name", placeholder="Enter camera name")} ${form.get_error("name")}
+    	${form.name(class_="form-control", id="camera_name", placeholder="Enter camera name")} ${form.get_error("name")}
     </div>
     <div class="form-group">
     	<label for="uri">URI: </label>
-    	${form.uri(size=30, class_="form-control", id="uri", placeholder="URI")} ${form.get_error("url")}
+    	${form.uri(class_="form-control", id="uri", placeholder="URI")} ${form.get_error("url")}
     </div >
     <div class="form-group">
     	<label for="host">Host: </label>
-    	${form.host(size=30, class_="form-control", id="host", placeholder="Enter host name")} ${form.get_error("host")}
+    	${form.host(class_="form-control", id="host", placeholder="Enter host name")} ${form.get_error("host")}
     </div>
     <div class="form-group">
     	<label for="port">port: </label>
-    	${form.port(size=30, class_="form-control", id="port", placeholder="Enter camera port")} ${form.get_error("port")}
+    	${form.port(class_="form-control", id="port", placeholder="Enter camera port")} ${form.get_error("port")}
     </div>
     <div class="form-group">
     	<label for="username">Username: </label>
-    	${form.username(size=30, class_="form-control", id="username", placeholder="Enter username")} ${form.get_error("username")}
+    	${form.username(class_="form-control", id="username", placeholder="Enter username")} ${form.get_error("username")}
     </div>
     <div class="form-group">
     	<label for="password">Password: </label>
-    	${form.password(size=30, class_="form-control", id="password", placeholder="Enter password")} ${form.get_error("password")}
+    	${form.password(class_="form-control", id="password", placeholder="Enter password")} ${form.get_error("password")}
     </div>
     <div class="form-group">
     	<label for="fps">fps: </label>

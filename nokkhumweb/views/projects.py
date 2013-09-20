@@ -17,20 +17,11 @@ import datetime
 
 @view_config(route_name='projects.index', permission='authenticated', renderer='/projects/index.mako')
 def index(request):
-    matchdict = request.matchdict
-    project_id = matchdict['project_id']
-    
-    #project = models.Project.objects(name=name).first()
-    #cameras = models.Camera.objects(project=project).order_by('name').all()
-    project = request.nokkhum_client.projects.get(project_id)
-    cameras = None
-    if project is not None:
-        cameras = project.cameras
+    session = request.session[request.userid]
+    projects = request.nokkhum_client.projects.list_user_projects(session['access']['user']['id'])
 
-    return dict(
-                project=project,
-                cameras=cameras
-                )
+    return dict(projects=projects)
+
 
 @view_config(route_name='projects.add', permission='authenticated', renderer='/projects/add.mako')
 def add(request):
@@ -45,3 +36,13 @@ def add(request):
     request.nokkhum_client.projects.create(name=name, description=description)
     
     return HTTPFound('/home')
+
+@view_config(route_name='projects.view', permission='authenticated', renderer='/projects/view.mako')
+def view(request):
+    project_id = request.matchdict['project_id']
+    project = request.nokkhum_client.projects.get(project_id)
+    return dict(project=project)
+
+@view_config(route_name='projects.edit', permission='authenticated', renderer='/projects/edir.mako')
+def edit(request):
+    return dict()

@@ -20,7 +20,10 @@
 			<a href="${request.route_path('admin.cameras.show', camera_id=camera.id)}">${camera.name}</a>
 			% endfor
 		</li>
+		% if command.processor_command.owner:
 		<li><b>owner: </b><a href="${request.route_path('admin.users.show', user_id=command.processor_command.owner.id)}">${command.processor_command.owner.email}</a></li>
+		% endif
+		<li><b>Command Type: </b>${command.processor_command.command_type}</li>
 		<li><b>action: </b>${command.processor_command.action}</li>
 		<li><b>status: </b>${command.processor_command.status}</li>
 		<li><b>date: </b>${command.processor_command.command_date}</li>

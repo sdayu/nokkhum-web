@@ -11,7 +11,8 @@ def add_routes(config):
     # manager part
     # project manager
     config.add_route('projects.add', '/manager/projects/add')
-    config.add_route('projects.index', '/manager/projects/{project_id}')
+    config.add_route('projects.index', '/manager/projects')
+    config.add_route('projects.view', '/manager/projects/{project_id}')
     config.add_route('projects.edit', '/manager/projects/{project_id}/edit')
     config.add_route('projects.delete', '/manager/projects/{project_id}/delete')
     
@@ -23,15 +24,16 @@ def add_routes(config):
     config.add_route('cameras.view', '/manager/{project_id}/cameras/{camera_id}/view')
     config.add_route('cameras.test_view', '/manager/{project_id}/cameras/{camera_id}/test_view')
     config.add_route('cameras.live_view', '/manager/{project_id}/cameras/{camera_id}/live_view')
+    config.add_route('cameras.index', '/manager/{project_id}/cameras')
     
     # processors
-    config.add_route('processors.index', '/manager/{project_id}/processors')
     config.add_route('processors.add', '/manager/{project_id}/processors/add')
     config.add_route('processors.edit', '/manager/{project_id}/processors/{processor_id}/edit')
     config.add_route('processors.delete', '/manager/{project_id}/processors/{processor_id}/delete')
     config.add_route('processors.setting', '/manager/{project_id}/processors/{processor_id}/setting')
     config.add_route('processors.view', '/manager/{project_id}/processors/{processor_id}/view')
     config.add_route('processors.operating', '/manager/{project_id}/processors/{processor_id}/operating/{action}')
+    config.add_route('processors.index', '/manager/{project_id}/processors')
     
     # storage
     config.add_route('storage.list', '/home/storage/list{fizzle:.*}')
@@ -60,6 +62,8 @@ def add_routes(config):
     
     config.add_route('admin.processors.list', '/admin/processors/list')
     config.add_route('admin.processors.show', '/admin/processors/show/{processor_id}')
+    
+    config.add_route('admin.processor_commands.show', '/admin/processor_commands/{processor_command_id}')
     
     config.add_route('admin.processor_running_fail.list', '/admin/processors/fail/list')
     
