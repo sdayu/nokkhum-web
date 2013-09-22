@@ -92,13 +92,13 @@
 								<a href="${request.route_path('admin.command_log.list')}">Display command log</a>
 							</li>
 							<li>
-								<a href="${request.route_path('admin.compute_nodes.list')}">Display compute node</a>
+								<a href="${request.route_path('admin.compute_nodes.list')}">Display compute nodes</a>
 							</li>
 							<li>
-								<a href="${request.route_path('admin.cameras.list')}">Display camera</a>
+								<a href="${request.route_path('admin.cameras.list')}">Display cameras</a>
 							</li>
 							<li>
-								<a href="${request.route_path('admin.users.list')}">Display user</a>
+								<a href="${request.route_path('admin.processors.list')}">Display processors</a>
 							</li>
 				    	</ul>
 				    </div>
