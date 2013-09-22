@@ -4,8 +4,8 @@
 <%block name='panel_title'>Camera information</%block>
 
 <%block name="whare_am_i">
-## <li><a href="${request.route_path('projects.index', project_id=project.id)}">Project</a></li>
-<li><a href="${request.route_path('cameras.index', project_id=project.id)}">Camera</a></li>
+## <li><a href="${request.route_path('projects.index', project_id=request.matchdict['project_id'])}">Project</a></li>
+<li><a href="${request.route_path('cameras.index', project_id=request.matchdict['project_id'])}">Camera</a></li>
 </%block>
 
 <ul>

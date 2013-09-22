@@ -127,7 +127,7 @@ def add(request):
 #    except Exception as e:
 #        return Response("Exception in add camera: %s"%e)
 
-    return HTTPFound(location=request.route_path('projects.index', project_id=project_id))
+    return HTTPFound(location=request.route_path('cameras.index', project_id=project_id))
 
 @view_config(route_name='cameras.edit', permission='authenticated', renderer='/cameras/edit.mako')
 def edit(request):
