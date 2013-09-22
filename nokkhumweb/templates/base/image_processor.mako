@@ -7,13 +7,13 @@
 		"interval": 3, 
 		"sensitive": 90, 
 		"wait_motion_time": 10,
-		"processors": []
+		"image_processors": []
 	},
 	
 	{
 		"name": "Face Detector", 
 		"interval": 5, 
-		"processors": []
+		"image_processors": []
 	}, 
 			
 	{
