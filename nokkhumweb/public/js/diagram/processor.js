@@ -124,12 +124,12 @@ function myOut(){
  	canvas.onmousemove = null;
 }
 
-function drawProcessors(processor, index_x, index_y){
+function drawProcessors(image_processor, index_x, index_y){
 	ctx.save(); 
 	var x = grid_width*index_x + grid_start_x;
 	var y = grid_height*index_y + grid_start_y;
  	ctx.translate(x, y);
- 	drawProcessor(processor["name"], 0, 0, "#ccffff");
+ 	drawProcessor(image_processor["name"], 0, 0, "#ccffff");
  	ctx.restore();
  	if( arow_begin_x!=0 && arow_begin_y!=0 ){
  		drawArrow(arow_begin_x, arow_begin_y,
@@ -139,10 +139,10 @@ function drawProcessors(processor, index_x, index_y){
  	}
  	
  	index_x++;
- 	for( var index in processor.processors){
+ 	for( var index in image_processor.image_processors){
  		arow_begin_x =x + 100;
  		arow_begin_y = y + 30;
- 		drawProcessors(processor.processors[index], index_x, index_y);
+ 		drawProcessors(image_processor.image_processors[index], index_x, index_y);
  		if(index_y > max_index_y){
  			max_index_y = index_y;
  		}
@@ -153,7 +153,7 @@ function drawProcessors(processor, index_x, index_y){
 
 }
 
-function drawCameraAttribute(camera_name, processors){
+function drawCameraAttribute(camera_name, image_processors){
 	drawBackground();
 	ctx.save();
  	ctx.translate(10, grid_start_y+10);
@@ -166,8 +166,8 @@ function drawCameraAttribute(camera_name, processors){
  	arow_begin_x = 10+80;
  	arow_begin_y = grid_start_y+30;
  	
- 	for( var index in processors){
- 		drawProcessors(processors[index], index_x, index_y);
+ 	for( var index in image_processors){
+ 		drawProcessors(image_processors[index], index_x, index_y);
  	 	index_x = 0;
  	 	index_y = ++max_index_y;
  	 	arow_begin_x = 10+80;
