@@ -125,6 +125,12 @@ def delete(request):
     matchdict = request.matchdict
     project_id = matchdict['project_id']
     processor_id = matchdict['processor_id']
+    processor = request.nokkhum_client.processors.get(processor_id)
+    request.nokkhum_client.processor_operating.update(processor, "stop")
+    
+    identify = "/storage/%s"%processor_id
+    request.nokkhum_client.storage.delete_identify(identify)
+    
     request.nokkhum_client.processors.delete(processor_id)
     return HTTPFound(location=request.route_path('processors.index', project_id=project_id))
 

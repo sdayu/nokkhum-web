@@ -13,8 +13,8 @@ def image_processor(form, field):
         check = True
         for processor in processors:
 #            print "\npricessor:", processor
-            if "processors" in processor:
-                check = check_avialable_processor(processor["processors"])
+            if "image_processors" in processor:
+                check = check_avialable_processor(processor["image_processors"])
                 if not check:
                     return check
 

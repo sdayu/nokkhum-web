@@ -1,6 +1,7 @@
-<%inherit file="/base/base.mako"/>
+<%inherit file="/base/panel.mako"/>
 <%! import json, datetime %>
 <%block name='title'>Processor: ${processor.name}</%block>
+
 <%block name='addition_header'>
 ## codemirror2 for html editor
 <link rel="stylesheet" href="/libs/codemirror/lib/codemirror.css">
@@ -12,7 +13,13 @@
 <script src="/libs/codemirror/mode/htmlmixed/htmlmixed.js"></script>
 </%block>
 
-<h2>Processor information</h2>
+
+<%block name="whare_am_i">
+<li><a href="${request.route_path('projects.index', project_id=request.matchdict['project_id'])}">Project</a></li>
+<li><a href="${request.route_path('processors.index', project_id=request.matchdict['project_id'])}">Processor</a></li>
+</%block>
+<%block name='panel_title'>Processor information</%block>
+
 <ul>
 	<li><strong>Name: </strong>${processor.name}</li>
 	<li><strong>ID: </strong>${processor.id}</li>
@@ -66,6 +73,13 @@ $(document).ready(init());
 
 <div id="test1"></div>
 <p>JSON Description</p>
-<pre name="code" class="brush: js; toolbar: false;">
-	${json.dumps(processor.image_processors, indent=4)}
+<pre name="code" id="image_processors">
+${json.dumps(processor.image_processors, indent=4)}
 </pre>
+
+<script>
+      $('#image_processors').each(function(index, e) {
+          $(e).addClass('cm-s-default'); // apply a theme class
+          CodeMirror.runMode($(e).text(), "javascript", $(e)[0]);
+      });
+</script>

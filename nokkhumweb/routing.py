@@ -36,10 +36,10 @@ def add_routes(config):
     config.add_route('processors.index', '/manager/{project_id}/processors')
     
     # storage
-    config.add_route('storage.list', '/home/storage/list{fizzle:.*}')
-    config.add_route('storage.download', '/home/storage/download{fizzle:.*}')
-    config.add_route('storage.view', '/home/storage/view{fizzle:.*}')
-    config.add_route('storage.delete', '/home/storage/delete{fizzle:.*}')
+    config.add_route('storage.list', '/home/storage/list{extension:.*}')
+    config.add_route('storage.download', '/home/storage/download{extension:.*}')
+    config.add_route('storage.view', '/home/storage/view{extension:.*}')
+    config.add_route('storage.delete', '/home/storage/delete{extension:.*}')
     
     # administration part
     config.add_route('admin.home', '/admin')

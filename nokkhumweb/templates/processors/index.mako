@@ -40,7 +40,7 @@
 							
 							</td>
 							<td>${processor.operating.status}</td>
-							<td><a href="${urllib.parse.unquote(request.route_path("storage.list", fizzle="/%s"%processor.id))}">storage</a></td>
+							<td><a href="${urllib.parse.unquote(request.route_path("storage.list", extension="/%s"%processor.id))}">storage</a></td>
 						</tr>
 						% endfor
 					</tbody>
