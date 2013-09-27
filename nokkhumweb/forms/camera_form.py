@@ -17,6 +17,7 @@ class AddCameraForm(AbstactForm):
     camera_model= fields.SelectField('Camera Model', validators=[validators.required()])
     camera_man  = fields.SelectField('Camera manufactory', validators=[validators.required()])
     uri         = fields.TextField('URI')
+    location    = fields.TextField('Location')
 
 class EditCameraForm(AddCameraForm):
     pass

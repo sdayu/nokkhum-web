@@ -62,11 +62,15 @@ $(document).ready(function(){
     	<label for="camera_man">Manufactory: </label>
     	${form.camera_man(class_="form-control")} ${form.get_error("camera_man")}
     </div>
-    
     <div class="form-group">
     	<label for="camera_model">Model: </label>
     	${form.camera_model(class_="form-control")} ${form.get_error("camera_model")}
     </div>
+    <div class="form-group">
+    	<label for="location">Location: </label>
+    	<div class="field">${form.location(class_="form-control", placeholder="Enter locattion: latitude, longitude / 7.0073213, 100.5021036")} ${form.get_error("location")} </div>
+    </div>
+    
 
 	<div style="width: 100px; text-align: right; padding-top: 50px">
 	    <input type="submit" value="Edit" />

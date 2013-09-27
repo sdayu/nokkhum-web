@@ -73,6 +73,11 @@ $(document).ready(function(){
     	<label for="camera_model">Model: </label>
     	<div class="field">${form.camera_model(class_="form-control", id="camera_model")} ${form.get_error("camera_model")}</div>
     </div>
+    <div class="form-group">
+    	<label for="location">Location: </label>
+    	<div class="field">${form.location(class_="form-control", placeholder="Enter locattion: latitude, longitude / 7.0073213, 100.5021036")} ${form.get_error("location")} </div>
+    </div>
+    
 
 <div class="form-group">
     <input type="submit" value="Submit"/>

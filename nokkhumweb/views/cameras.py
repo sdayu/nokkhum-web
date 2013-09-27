@@ -34,7 +34,7 @@ def add(request):
     
     form = camera_form.AddCameraForm(request.POST)
 
-# build form
+    # build form
     
     manufactories = request.nokkhum_client.camera_manufactories.list()
     
@@ -77,7 +77,10 @@ def add(request):
         url         = form.data.get('url')
         fps         = form.data.get('fps')
         image_size  = form.data.get('image_size')
-        storage_periods = form.data.get('storage_periods')
+        location_tmp    = form.data.get('location')
+        if len(location_tmp) > 0:
+            location = [float(l) for l in location_tmp.split(',')]
+            
     else:
         return dict(
                 form=form,
@@ -122,7 +125,8 @@ def add(request):
            image_size=image_size,
            ip_address=request.environ['REMOTE_ADDR'],
            model=dict(id=camera_model.id),
-           project=dict(id=project.id)                               
+           project=dict(id=project.id),
+           location=location                             
         )
 #    except Exception as e:
 #        return Response("Exception in add camera: %s"%e)
@@ -187,11 +191,16 @@ def edit(request):
         camera_status = form.data.get('camera_status')
         camera_man_id = form.data.get('camera_man')
         camera_model_id = form.data.get('camera_model')
+        location_tmp    = form.data.get('location')
+        if len(location_tmp) > 0:
+            location = [float(l) for l in location_tmp.split(',')]
     else:        
         form.fps.data = camera.fps
         form.image_size.data = camera.image_size
         form.camera_man.data = camera.camera_model.manufactory.id
         form.camera_model.data = camera.camera_model.name
+        if camera.location:
+            form.location.data = ", ".join(str(l) for l in camera.location)
         
         if len(request.POST) == 0:
             form.name.data = camera.name
@@ -218,6 +227,7 @@ def edit(request):
     camera.status = camera_status
     camera.ip_address =  request.environ['REMOTE_ADDR']
     camera.update_date = datetime.datetime.now()
+    camera.location=location
     
     camera_model = request.nokkhum_client.camera_models.get(camera_model_id)
 
