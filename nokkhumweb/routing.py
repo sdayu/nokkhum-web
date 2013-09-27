@@ -35,6 +35,9 @@ def add_routes(config):
     config.add_route('processors.operating', '/manager/{project_id}/processors/{processor_id}/operating/{action}')
     config.add_route('processors.index', '/manager/{project_id}/processors')
     
+    # api
+    config.add_route('camera_models.list_by_manufactories', '/manufactories/{manufactory_id}/models')
+    
     # storage
     config.add_route('storage.list', '/home/storage/list{extension:.*}')
     config.add_route('storage.download', '/home/storage/download{extension:.*}')

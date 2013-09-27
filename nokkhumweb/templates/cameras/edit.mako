@@ -3,13 +3,12 @@
 <%block name='panel_title'>Edit camera name: ${camera.name}</%block>
 
 <%block name='addition_header'>
-<script type="text/javascript" src="/js/jquery-1.9.1.min.js"></script>
 <script type="text/javascript">
 $(document).ready(function(){
 
 	$('#camera_man').change(function(){
 		$.ajax({
-			url: "${request.nokkhum_client.http_client.api_url}"+"/manufactories/"+$(this).val()+"/models"
+			url: "/manufactories/"+$(this).val()+"/models"
 		})
 		.done(function(data, status) {
 			var camera_model = null;
