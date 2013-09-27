@@ -78,6 +78,8 @@ def add(request):
         fps         = form.data.get('fps')
         image_size  = form.data.get('image_size')
         location_tmp    = form.data.get('location')
+        location = None
+        
         if len(location_tmp) > 0:
             location = [float(l) for l in location_tmp.split(',')]
             
@@ -192,6 +194,8 @@ def edit(request):
         camera_man_id = form.data.get('camera_man')
         camera_model_id = form.data.get('camera_model')
         location_tmp    = form.data.get('location')
+        
+        location = None
         if len(location_tmp) > 0:
             location = [float(l) for l in location_tmp.split(',')]
     else:        
@@ -227,7 +231,9 @@ def edit(request):
     camera.status = camera_status
     camera.ip_address =  request.environ['REMOTE_ADDR']
     camera.update_date = datetime.datetime.now()
-    camera.location=location
+    
+    if location:
+        camera.location=location
     
     camera_model = request.nokkhum_client.camera_models.get(camera_model_id)
 

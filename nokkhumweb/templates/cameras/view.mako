@@ -9,14 +9,15 @@
 </%block>
 
 <ul>
-	<li><strong>Camera: </strong>${camera.name}</li>
-	<li><strong>Video URI: </strong>${camera.video_uri}</li>
-	<li><strong>Username: </strong>${camera.username}</li>
-	<li><strong>Password: </strong>${camera.password}</li>
-	<li><strong>FPS: </strong>${camera.fps}</li>
-	<li><strong>Image Size: </strong>${camera.image_size}</li>
-	<li><strong>Camera Model: </strong>${camera.camera_model.name}</li>
-	<li><strong>Manufatory: </strong>${camera.camera_model.manufactory.name}</li>
-	<li><strong>Create Date: </strong>${camera.create_date}</li>
-	<li><strong>Last Update: </strong>${camera.update_date}</li>
+	<li><b>Camera: </b>${camera.name}</li>
+	<li><b>Video URI: </b>${camera.video_uri}</li>
+	<li><b>Username: </b>${camera.username}</li>
+	<li><b>Password: </b>${camera.password}</li>
+	<li><b>FPS: </b>${camera.fps}</li>
+	<li><b>Image Size: </b>${camera.image_size}</li>
+	<li><b>Camera Model: </b>${camera.camera_model.name}</li>
+	<li><b>Manufatory: </b>${camera.camera_model.manufactory.name}</li>
+	<li><b>Create Date: </b>${camera.create_date}</li>
+	<li><b>Last Update: </b>${camera.update_date}</li>
+	<li><b>Location: </b>${camera.location}</li>
 </ul>
