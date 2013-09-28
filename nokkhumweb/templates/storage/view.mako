@@ -1,7 +1,8 @@
-<%inherit file="/base/base.mako"/>
+<%inherit file="/base/panel.mako"/>
 <%block name='title'>Show: ${url[url.rfind("/")+1:]}</%block>
 
-<h2>Show: ${url[url.rfind("/")+1:]}</h2>
+<%block name="panel_title">Show: ${url[url.rfind("/")+1:]}</%block>
+
 % if file_type == "image":
 <img src="${url}" />
 % elif file_type == "video":

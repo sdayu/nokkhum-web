@@ -1,14 +1,10 @@
-<%inherit file="/base/base.mako"/>
+<%inherit file="/base/panel.mako"/>
 <%block name='title'>Browser</%block>
 <%! import urllib %>
 
-<article>
-	<section title="Storage Section">
-		<div class="panel panel-primary">
-	  		<div class="panel-heading">
-	    		<h2 class="panel-title">Storage List</h2>
-	  		</div>
-	  		<div class="panel-body">
+<%block name="panel_title">Storage List</%block>
+
+
 	    		% if len(file_list) > 0:
 				<%
 				url = urllib.parse.unquote(request.current_route_path())
@@ -36,7 +32,4 @@
 				% endfor
 				</ul>
 				% endif
-	  		</div>
-		</div>
-	</section>
-</article>
+

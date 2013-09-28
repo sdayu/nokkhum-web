@@ -251,6 +251,7 @@ def edit(request):
 def delete(request):
     matchdict = request.matchdict
     camera_id = matchdict['camera_id']
+    project_id = matchdict['project_id']
 
     camera = request.nokkhum_client.cameras.get(camera_id)
     project = camera.project
@@ -260,7 +261,7 @@ def delete(request):
     else:
         return Response('Can not delete camera')
     
-    return HTTPFound(location=request.route_path('projects.index', project_id=project.id))
+    return HTTPFound(location=request.route_path('cameras.index', project_id=project_id))
 
     
 @view_config(route_name='cameras.processor', permission='authenticated', renderer='/cameras/processor.mako')

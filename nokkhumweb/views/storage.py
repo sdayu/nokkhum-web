@@ -64,6 +64,7 @@ def storage_list(request):
             
             file_list.append((item.name, urllib.parse.unquote(view_link), urllib.parse.unquote(delete_link), download_url))
     return dict(
+                project_id=processor.project.id,
                 file_list=file_list,
                 )
 
