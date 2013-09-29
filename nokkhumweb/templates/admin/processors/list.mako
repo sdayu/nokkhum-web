@@ -7,7 +7,7 @@
 <li><a href="${request.route_path('admin.processors.list')}">Processor</a></li>
 </%block>
 
-<%block name="panel_title">List Cameras</%block>
+<%block name="panel_title">List Processors</%block>
 
 <section>
 	<table class="table table-striped table-bordered table-condensed table-hover">
