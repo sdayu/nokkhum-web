@@ -2,8 +2,8 @@
 <%block name='title'>List of Processors</%block>
 <%block name="panel_title">Processors</%block>
 <%block name="whare_am_i">
-<li><a href="${request.route_path('projects.index', project_id=project.id)}">Project</a></li>
-<li><a href="#">Processor</a></li>
+<li><a href="${request.route_path('projects.index', project_id=project.id)}">Projects</a></li>
+<li><a href="#">Processors</a></li>
 </%block>
 
 <%block name="more_body">

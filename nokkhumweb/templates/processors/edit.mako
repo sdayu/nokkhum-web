@@ -17,8 +17,8 @@
 </%block>
 
 <%block name="whare_am_i">
-<li><a href="${request.route_path('projects.index', project_id=request.matchdict['project_id'])}">Project</a></li>
-<li><a href="${request.route_path('processors.index', project_id=request.matchdict['project_id'])}">Processor</a></li>
+<li><a href="${request.route_path('projects.index', project_id=request.matchdict['project_id'])}">Projects</a></li>
+<li><a href="${request.route_path('processors.index', project_id=request.matchdict['project_id'])}">Processors</a></li>
 </%block>
 
 <form role="form" action="${request.current_route_path()}" method="POST">

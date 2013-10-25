@@ -45,10 +45,10 @@
 									)
 					%>
 					% if projects:
-					<li style="height: auto;"><a href="/home" title="Home">Projects</a>
+					<li style="height: auto;"><a href="${request.route_path('projects.index')}" title="Home">Projects</a>
 						<ul style="padding-bottom: 0px;">
 							% for project in projects:
-							<li><a href="${request.route_path('projects.index', project_id=project.id)}">${project.name}</a></li>
+							<li><a href="${request.route_path('projects.view', project_id=project.id)}">${project.name}</a></li>
 							% endfor
 						</ul>
 					</li>

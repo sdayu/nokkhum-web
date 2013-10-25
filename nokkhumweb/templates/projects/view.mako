@@ -3,13 +3,21 @@
 <%! import urllib %>
 
 <%block name="whare_am_i">
-<li><a href="${request.route_path('projects.index')}">Project</a></li>
+<li><a href="${request.route_path('projects.index')}">Projects</a></li>
 </%block>
 
 <%block name="panel_title">Show Project</%block>
 
 <section>
-	<ul><b>ID :</b>${project.id}</ul>
-	<ul><b>name :</b>${project.name}</ul>
-	<ul><b>description :</b>${project.description}</ul>
+	<ul>
+		<li><b>ID :</b>${project.id}</li>
+		<li><b>name :</b>${project.name}</li>
+		<li><b>description :</b>${project.description}</li>
+		<li><b>manager :</b>
+			<ul>
+				<li><a href="${request.route_path('cameras.index', project_id=project.id)}">Cameras Manager</a></li>
+				<li><a href="${request.route_path('processors.index', project_id=project.id)}">Projects Manager</a></li>
+			</ul>
+		</li>
+	</ul>
 </section>

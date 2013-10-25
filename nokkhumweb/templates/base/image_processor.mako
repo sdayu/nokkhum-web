@@ -4,6 +4,7 @@
 [
 	{
 		"name": "Motion Detector", 
+		"motion_analysis_method": "Background Subtraction", // "Optical Flow"
 		"interval": 3, 
 		"sensitive": 90, 
 		"wait_motion_time": 10,

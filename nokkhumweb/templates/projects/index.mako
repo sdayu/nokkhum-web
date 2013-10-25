@@ -3,7 +3,7 @@
 <%! import urllib %>
 
 <%block name="whare_am_i">
-<li><a href="${request.route_path('projects.index')}">Project</a></li>
+<li><a href="${request.route_path('projects.index')}">Projects</a></li>
 </%block>
 
 <%block name="panel_title">All Project</%block>

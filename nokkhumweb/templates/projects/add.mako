@@ -4,7 +4,7 @@
 <%block name="panel_title">Add Project</%block>
 
 <%block name="whare_am_i">
-<li><a href="${request.route_path('projects.index')}">Project</a></li>
+<li><a href="${request.route_path('projects.index')}">Projects</a></li>
 </%block>
 
 <form role="form" action="${request.route_path('projects.add')}" method="POST">
