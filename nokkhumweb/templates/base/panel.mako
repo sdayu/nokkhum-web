@@ -3,7 +3,7 @@
 <section title="where am i">
 	<ol class="breadcrumb">
 	  <li><a href="${request.route_path('home')}">Home</a></li>
-	  <%block name="whare_am_i"></%block>
+	  <%block name="where_am_i"></%block>
 	</ol>
 </section>
 

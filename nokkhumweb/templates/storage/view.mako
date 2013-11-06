@@ -1,12 +1,16 @@
 <%inherit file="/base/panel.mako"/>
+<%! 
+	import urllib 
+	from urllib.parse import unquote
+%>
 <%block name='title'>Show: ${url[url.rfind("/")+1:]}</%block>
-<%block name="whare_am_i">
-${parent.whare_am_i()}
+<%block name="where_am_i">
+${parent.where_am_i()}
 <% 
-	url = unquote(request.current_route_path())
-	url = url[len('/home/storage/list/'):]
-	end = url.find('/') if url.find('/') != -1 else len(url)
-	processor_id = url[:end]
+	url_ = unquote(request.current_route_path())
+	url_ = url_[len('/home/storage/list/'):]
+	end = url_.find('/') if url_.find('/') != -1 else len(url_)
+	processor_id = url_[:end]
 	processor = request.nokkhum_client.processors.get(processor_id)
 %>
 <li>

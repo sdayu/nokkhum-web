@@ -2,7 +2,7 @@
 <%block name='title'>List Command Log</%block>
 <%! import datetime %>
 
-<%block name="whare_am_i">
+<%block name="where_am_i">
 <li><a href="${request.route_path('admin.home')}">Admin</a></li>
 <li><a href="${request.route_path('admin.command_log.list')}">Command Log</a></li>
 </%block>

@@ -5,8 +5,8 @@
 	from urllib.parse import unquote
 %>
 
-<%block name="whare_am_i">
-${parent.whare_am_i()}
+<%block name="where_am_i">
+${parent.where_am_i()}
 <% 
 	url = unquote(request.current_route_path())
 	url = url[len('/home/storage/list/'):]

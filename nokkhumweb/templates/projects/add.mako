@@ -3,7 +3,7 @@
 
 <%block name="panel_title">Add Project</%block>
 
-<%block name="whare_am_i">
+<%block name="where_am_i">
 <li><a href="${request.route_path('projects.index')}">Projects</a></li>
 </%block>
 
