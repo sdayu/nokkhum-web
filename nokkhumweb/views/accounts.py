@@ -9,9 +9,10 @@ from pyramid.security import forget
 from pyramid.security import authenticated_userid
 from pyramid.url import route_url
 
-
 @view_config(route_name='login', renderer='/accounts/login.mako')
 def login(request):
+    if request.user:
+        return HTTPFound(location=request.route_path('home'))
     signin_url = route_url('login', request)
     referrer = request.url
     if referrer == signin_url:
@@ -78,15 +79,8 @@ def register(request):
         return dict(
                     form=form
                     )
-        
-    user = models.User()
-    user.email = email
-    user.first_name = first_name
-    user.last_name = last_name
-    user.set_password(password)
-    user.status = 'disactivate'
-    user.roles.append(models.Role.objects(name='user').first())
     
-    user.save()
+    request.nokkhum_client.accounts.register(**form.data)
+
     
     return HTTPFound(location = request.route_url('index'))

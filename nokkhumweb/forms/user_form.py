@@ -6,11 +6,15 @@ Created on Jan 28, 2013
 from wtforms import fields
 from wtforms import validators
 
+from pyramid.threadlocal import get_current_request
+
 from . import AbstactForm
 
 def validate_email(form, field):
-    user = models.User.objects(email=form.data).first()
+    request = get_current_request()
     
+    # user = request.nokkhum_client.users.get(field.data)
+    user = None
     if user is not None:
         raise validators.ValidationError(
             'This email: %s is available on system'% field.data)

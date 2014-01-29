@@ -44,6 +44,6 @@
 			<strong>Last name:</strong><br/> 
 			${form.last_name} ${form.get_error('last_name')}<br/>
 		</label>
-		<input name='form.submitted' type="submit" value='Login' />
+		<input name='form.submitted' type="submit" value='Regist' />
 		</form>
 	</div>

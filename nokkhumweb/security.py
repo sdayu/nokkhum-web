@@ -55,8 +55,9 @@ class RequestWithUserAttribute(Request):
         
         host = settings.get('nokkhum.api.host') 
         port = int(settings.get('nokkhum.api.port'))
-        username = session['email']
-        password = session['password']
+        
+        username = session.get('email', None)
+        password = session.get('password', None)
         
         secure_connection = False
         if settings.get('nokkhum.api.secure_connection') in ['true', 'True']:
