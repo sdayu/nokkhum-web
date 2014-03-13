@@ -17,7 +17,7 @@
 	<li><b>Image Size: </b>${camera.image_size}</li>
 	<li><b>Camera Model: </b>${camera.camera_model.name}</li>
 	<li><b>Manufatory: </b>${camera.camera_model.manufactory.name}</li>
-	<li><b>Create Date: </b>${camera.create_date}</li>
-	<li><b>Last Update: </b>${camera.update_date}</li>
+	<li><b>Create Date: </b>${camera.created_date}</li>
+	<li><b>Last Update: </b>${camera.updated_date}</li>
 	<li><b>Location: </b>${camera.location}</li>
 </ul>

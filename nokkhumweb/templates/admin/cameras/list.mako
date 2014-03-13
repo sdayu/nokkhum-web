@@ -24,7 +24,7 @@
     			<td>
     				<a href="${request.route_path('admin.cameras.show', camera_id=camera.id)}">${camera.id}
     			</td>
-    			<td>${camera.update_date}</td>
+    			<td>${camera.updated_date}</td>
     			<td>${camera.owner.email}</td>
     			<td>${camera.status}</td>
   			</tr>

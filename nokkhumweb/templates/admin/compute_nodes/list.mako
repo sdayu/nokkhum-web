@@ -42,7 +42,7 @@
 		</thead>
 		<tbody>
 		% for compute_node in compute_nodes:
-			<% td = datetime.datetime.now() - compute_node.update_date %>
+			<% td = datetime.datetime.now() - compute_node.updated_date %>
 			<tr>
 				<td><a href="${request.route_path('admin.compute_nodes.show', compute_node_id=compute_node.id)}">${compute_node.name}</a></td>
 				<td>${compute_node.host} is VM: ${compute_node.is_vm}</td>

@@ -2,7 +2,7 @@
 <%block name='title'>List All User</%block>
 <%! import datetime %>
 
-<%block name="whare_am_i">
+<%block name="where_am_i">
 <li><a href="${request.route_path('admin.home')}">Admin</a></li>
 <li><a href="${request.route_path('admin.users.list')}">User</a></li>
 </%block>
@@ -35,7 +35,7 @@
 				% endfor
 				</td>
 				<td>${user.registration_date}</td>
-				<td>${user.update_date}</td>
+				<td>${user.updated_date}</td>
 			</tr>
 			% endfor
 		</tbody>

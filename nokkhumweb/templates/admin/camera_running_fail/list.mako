@@ -25,9 +25,9 @@
 			% for fail_status in run_fail_status:
 			<tr>
 				<td>${fail_status.processor.id}: ${fail_status.processor.name}</td>
-				<td><a href="${request.route_path('admin.compute_nodes.show', id=fail_status.compute_node.id)}">${fail_status.compute_node.name}</a></td>
-				<td>${fail_status.report_time}</td>
-				<td>${fail_status.process_time}</td>
+				<td><a href="${request.route_path('admin.compute_nodes.show', compute_node_id=fail_status.compute_node.id)}">${fail_status.compute_node.name}</a></td>
+				<td>${fail_status.reported_date}</td>
+				<td>${fail_status.processed_date}</td>
 				<td>${fail_status.message.replace("\n", "<br/>") | n}</td>
 			</tr>
 			% endfor

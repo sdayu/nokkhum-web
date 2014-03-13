@@ -2,7 +2,7 @@
 <%block name='title'>List Camera Command Queue</%block>
 <%! import datetime %>
 
-<%block name="whare_am_i">
+<%block name="where_am_i">
 <li><a href="${request.route_path('admin.home')}">Admin</a></li>
 <li><a href="${request.route_path('admin.users.list')}">User</a></li>
 </%block>
@@ -21,6 +21,6 @@
 % endfor
 		</li>
 		<li><b>registration date: </b>${user.registration_date}</li>
-		<li><b>update date: </b>${user.update_date}</li>
+		<li><b>update date: </b>${user.updated_date}</li>
 	</ul>	
 </section>

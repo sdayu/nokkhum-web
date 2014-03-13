@@ -26,9 +26,9 @@
 		<li><b>Command Type: </b>${command.command_type}</li>
 		<li><b>action: </b>${command.action}</li>
 		<li><b>status: </b>${command.status}</li>
-		<li><b>date: </b>${command.command_date}</li>
-		<li><b>update date: </b>${command.update_date}</li>
-		<li><b>diff time: </b><span style="color: red;">${(datetime.datetime.now()-command.command_date).seconds}</span> s ago</li>
+		<li><b>date: </b>${command.commanded_date}</li>
+		<li><b>update date: </b>${command.updated_date}</li>
+		<li><b>diff time: </b><span style="color: red;">${(datetime.datetime.now()-command.commanded_date).seconds}</span> s ago</li>
 		<li><b>message: </b>
 		% if command.message:
 		<p>

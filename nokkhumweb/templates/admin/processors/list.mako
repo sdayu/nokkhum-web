@@ -31,11 +31,11 @@
     			<td>
     				<a href="${request.route_path('admin.processors.show', processor_id=processor.id)}">${processor.id}
     			</td>
-    			<td>${processor.update_date}</td>
+    			<td>${processor.updated_date}</td>
     			<td>${processor.owner.email}</td>
     			<td>${processor.status}</td>
     			<td>${processor.operating.status}</td>
-    			<td>${(datetime.datetime.now()-processor.operating.update_date).seconds} s</td>
+    			<td>${(datetime.datetime.now()-processor.operating.updated_date).seconds} s</td>
     			<td>
     				% if processor.operating.compute_node is not None:
 					<a href="${request.route_path('admin.compute_nodes.show', compute_node_id=processor.operating.compute_node.id)}">${processor.operating.compute_node.host}</a>

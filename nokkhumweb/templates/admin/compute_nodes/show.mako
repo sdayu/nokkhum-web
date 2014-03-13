@@ -15,10 +15,10 @@
 		<li><b>system: </b> ${compute_node.system}</li>
 		<li><b>host: </b> ${compute_node.host}</li>
 		<li><b>machine: </b> ${compute_node.machine}</li>
-		<li><b>create date: </b> ${compute_node.create_date}</li>
-		<li><b>update date: </b> ${compute_node.update_date}</li>
-		<li><b>diff time: </b> ${(datetime.datetime.now() - compute_node.update_date).seconds} s</li>
-		% if (datetime.datetime.now() - compute_node.update_date) < datetime.timedelta(minutes=1):
+		<li><b>create date: </b> ${compute_node.created_date}</li>
+		<li><b>update date: </b> ${compute_node.updated_date}</li>
+		<li><b>diff time: </b> ${(datetime.datetime.now() - compute_node.updated_date).seconds} s</li>
+		% if (datetime.datetime.now() - compute_node.updated_date) < datetime.timedelta(minutes=1):
 		<li><b>status: </b> <span style="color: red;">Ready</span></li>
 		% else:
 		<li><b>status: </b> <span style="color: red;">Disconnect</span></li>

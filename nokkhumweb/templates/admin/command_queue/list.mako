@@ -48,9 +48,9 @@
 				% endif
 				<td>${command.processor_command.action}</td>
 				<td>${command.processor_command.status}</td>
-				<td>${command.processor_command.command_date}</td>
-				<td>${command.processor_command.update_date}</td>
-				<td>${(datetime.datetime.now()-command.processor_command.update_date).total_seconds()} s</td>
+				<td>${command.processor_command.commanded_date}</td>
+				<td>${command.processor_command.updated_date}</td>
+				<td>${(datetime.datetime.now()-command.processor_command.updated_date).total_seconds()} s</td>
 			</tr>
 			% endfor
 		</tbody>

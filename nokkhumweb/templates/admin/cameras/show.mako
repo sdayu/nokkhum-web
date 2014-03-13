@@ -21,8 +21,8 @@
 		<li><b>Image Size: </b>${camera.image_size}</li>
 		<li><b>Camera Model: </b>${camera.camera_model.name}</li>
 		<li><b>Manufactory: </b>${camera.camera_model.manufactory.name}</li>
-		<li><b>Create Date: </b>${camera.create_date}</li>
-		<li><b>Last Update: </b>${camera.update_date}</li>
+		<li><b>Create Date: </b>${camera.created_date}</li>
+		<li><b>Last Update: </b>${camera.updated_date}</li>
 		<li><b>Owner: </b> ${camera.owner.email} <b>id:</b> ${camera.owner.id} <b>status:</b> ${camera.owner.status}</li>
 	</ul>
 </section>

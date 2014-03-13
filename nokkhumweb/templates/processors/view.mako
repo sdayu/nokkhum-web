@@ -14,7 +14,7 @@
 </%block>
 
 
-<%block name="whare_am_i">
+<%block name="where_am_i">
 <li><a href="${request.route_path('projects.index', project_id=request.matchdict['project_id'])}">Projects</a></li>
 <li><a href="${request.route_path('processors.index', project_id=request.matchdict['project_id'])}">Processors</a></li>
 </%block>
@@ -28,15 +28,15 @@
 		<a href="${request.route_path('cameras.view', project_id=project.id, camera_id=camera.id)}">${camera.name}</a>
 	% endfor
 	</li>
-	<li><strong>Create Date: </strong>${processor.create_date}</li>
-	<li><strong>Last Update: </strong>${processor.update_date}</li>
+	<li><strong>Create Date: </strong>${processor.created_date}</li>
+	<li><strong>Last Update: </strong>${processor.updated_date}</li>
 	<li><strong>Keep Record: </strong>${processor.storage_period} day</li>
 	<li><strong>Operating:</strong>
 		<ul>
 			<li><strong>user status: <span style="color: red;">${processor.operating.user_command}</span></strong></li>
 			<li><strong>status: <span style="color: red;">${processor.operating.status}</span></strong></li>
-			<li><strong>last update:</strong> ${processor.operating.update_date}</li>
-			<li><strong>diff time:</strong> <span style="color: red;">${(datetime.datetime.now()-processor.operating.update_date).seconds}</span> seconds ago</li>
+			<li><strong>last update:</strong> ${processor.operating.updated_date}</li>
+			<li><strong>diff time:</strong> <span style="color: red;">${(datetime.datetime.now()-processor.operating.updated_date).seconds}</span> seconds ago</li>
 		</ul>
 	</li>
 </ul>
