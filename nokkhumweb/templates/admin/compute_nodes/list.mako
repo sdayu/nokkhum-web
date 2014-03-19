@@ -29,6 +29,7 @@
     			<th rowspan="2">Status</th>
     			<th colspan="2">CPU</th>
     			<th colspan="3">RAM(M)</th>
+    			<th colspan="3">Disk(M)</th>
     			<th rowspan="2">Last update</th>
     			<th rowspan="2">Operation</th>
   			</tr>
@@ -38,11 +39,14 @@
          		<th>total</th>
          		<th>used</th>
          		<th>free</th>
+         		<th>total</th>
+         		<th>used</th>
+         		<th>free</th>
       		</tr>
 		</thead>
 		<tbody>
 		% for compute_node in compute_nodes:
-			<% td = datetime.datetime.now() - compute_node.updated_date %>
+			<% td = datetime.datetime.now() - compute_node.updated_resource_date %>
 			<tr>
 				<td><a href="${request.route_path('admin.compute_nodes.show', compute_node_id=compute_node.id)}">${compute_node.name}</a></td>
 				<td>${compute_node.host} is VM: ${compute_node.is_vm}</td>
@@ -58,6 +62,9 @@
 				<td>${compute_node.memory.total/1000000}</td>
 				<td>${compute_node.memory.used/1000000}</td>
 				<td>${compute_node.memory.free/1000000}</td>
+				<td>${compute_node.disk.total/1000000}</td>
+				<td>${compute_node.disk.used/1000000}</td>
+				<td>${compute_node.disk.free/1000000}</td>
 				<td>${"%.2f"%td.total_seconds()} s</td>
 				<td><a href="${request.route_path('admin.compute_nodes.delete', compute_node_id=compute_node.id)}">Delete</a></td>
 			</tr>

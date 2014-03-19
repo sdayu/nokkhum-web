@@ -17,8 +17,9 @@
 		<li><b>machine: </b> ${compute_node.machine}</li>
 		<li><b>create date: </b> ${compute_node.created_date}</li>
 		<li><b>update date: </b> ${compute_node.updated_date}</li>
-		<li><b>diff time: </b> ${(datetime.datetime.now() - compute_node.updated_date).seconds} s</li>
-		% if (datetime.datetime.now() - compute_node.updated_date) < datetime.timedelta(minutes=1):
+		<li><b>last resource report date: </b> ${compute_node.updated_resource_date}</li>
+		<li><b>diff time: </b> ${(datetime.datetime.now() - compute_node.reported_resource_date).seconds} s</li>
+		% if compute_node.online:
 		<li><b>status: </b> <span style="color: red;">Ready</span></li>
 		% else:
 		<li><b>status: </b> <span style="color: red;">Disconnect</span></li>
