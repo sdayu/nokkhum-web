@@ -43,6 +43,30 @@ def view(request):
     project = request.nokkhum_client.projects.get(project_id)
     return dict(project=project)
 
-@view_config(route_name='projects.edit', permission='authenticated', renderer='/projects/edir.mako')
+@view_config(route_name='projects.edit', permission='authenticated', renderer='/projects/add.mako')
 def edit(request):
-    return dict()
+    
+    project_id = request.matchdict['project_id']
+    project = request.nokkhum_client.projects.get(project_id)
+    
+    if len(request.POST) == 0:
+        form = project_form.Project(obj=project)
+        return dict(form=form)
+    
+    form = project_form.Project(request.POST)
+    
+    if not form.validate():
+        return dict(form=form)
+        
+    project.name = form.data.get('name')
+    project.description = form.data.get('description')
+    project = request.nokkhum_client.projects.update(project)
+    
+    return HTTPFound(request.route_path('projects.index'))
+
+@view_config(route_name='projects.delete', permission='authenticated')
+def delete(request):
+    project_id = request.matchdict['project_id']
+    
+    request.nokkhum_client.projects.delete(project_id)
+    return HTTPFound(request.route_path('projects.index'))

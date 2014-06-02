@@ -7,7 +7,7 @@
 <li><a href="${request.route_path('projects.index')}">Projects</a></li>
 </%block>
 
-<form role="form" action="${request.route_path('projects.add')}" method="POST">
+<form role="form" action="${request.current_route_path()}" method="POST">
 <div class="field">
     
     <div class="form-group">

@@ -32,4 +32,13 @@
 					</li>
 				</ul>
 			</ul>
+
+			<div class="panel panel-default">
+				<div class="panel-heading">Operation</div>
+				<div class="panel-body">
+			    	<a class="btn btn-primary${' disabled' if processor.operating.user_command == 'run' else ''}" href="${request.route_path('processors.operating', project_id=processor.project.id, processor_id=processor.id, action='start')}"><span class="glyphicon glyphicon-play"></span> Start</a>
+			    	<a class="btn btn-primary${' disabled' if processor.operating.user_command != 'run' else ''}" href="${request.route_path('processors.operating', project_id=processor.project.id, processor_id=processor.id, action='stop')}"><span class="glyphicon glyphicon-stop"></span> Stop</a>
+				</div>
+			</div>
+
 </section>

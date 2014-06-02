@@ -26,7 +26,19 @@
 	<tbody>
 		% for project in projects:
 		<tr>
-			<td><a href="${request.route_path('projects.view', project_id=project.id)}">${project.name}</a></td>
+			<td>
+				<div class="pull-left">
+					<a href="${request.route_path('projects.view', project_id=project.id)}">${project.name}</a>
+				</div>
+				<div class="pull-right">
+					<a href="${request.route_path('projects.edit', project_id=project.id)}">
+					 	<span class="glyphicon glyphicon-edit"></span>
+					</a>
+					<a href="${request.route_path('projects.delete', project_id=project.id)}">
+					 	<span class="glyphicon glyphicon-trash"></span>
+					</a>
+				</div>
+			</td>
 			<td>
 				${project.camera_number} :
 			    <a href="${request.route_path('cameras.index', project_id=project.id)}">manage</a>
