@@ -13,7 +13,14 @@
 <section>
 			<ul>
 				<li><b>ID: </b>${processor.id}</li>
-				<li><b>Camera: </b>${processor.name}</li>
+				<li><b>Name: </b>${processor.name}</li>
+				<li><b>Camera Name: </b>
+					<ul>
+						% for camera in processor.cameras:
+						<li><b>${camera.name}:</b> <a href="${request.route_path('admin.cameras.show', camera_id=camera.id)}">${camera.id}</a></li>
+						% endfor
+					</ul>
+				</li>
 				<li><b>Create Date: </b>${processor.created_date}</li>
 				<li><b>Last Update: </b>${processor.updated_date}</li>
 				<li><b>Owner: </b> ${processor.owner.email} <b>id:</b> ${processor.owner.id} <b>status:</b> ${processor.owner.status}</li>
