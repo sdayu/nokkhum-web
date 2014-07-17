@@ -23,7 +23,18 @@
 				</li>
 				<li><b>Create Date: </b>${processor.created_date}</li>
 				<li><b>Last Update: </b>${processor.updated_date}</li>
-				<li><b>Owner: </b> ${processor.owner.email} <b>id:</b> ${processor.owner.id} <b>status:</b> ${processor.owner.status}</li>
+				<li>
+					<b>Owner: </b> ${processor.owner.email} 
+					<b>id:</b> <a href="${request.route_path('admin.users.show', user_id=processor.owner.id)}">${processor.owner.id}</a>
+					<b>status:</b> ${processor.owner.status}
+				</li>
+				<li>
+					<b>Storage period:</b> ${processor.storage_period}
+				</li>
+				<li>
+					<b>Project:</b> <a href="${request.route_path('projects.view', project_id=processor.project.id)}">${processor.project.name}</a>
+				</li>
+				<li><b>Status: </b>${processor.status}</li>
 				<li><b>Operating:</b>
 				<ul>
 					<li><b>user status: <span style="color: red;">${processor.operating.user_command}</span></b></li>
@@ -32,7 +43,7 @@
 					<li><b>Diff time:</b> <span style="color: red;">${(datetime.datetime.now()-processor.operating.updated_date).seconds}</span> seconds ago</li>
 					<li><b>Compute node:</b> 
 					% if processor.operating.compute_node is not None:
-					${processor.operating.compute_node.host}
+					<a href="${request.route_path('admin.compute_nodes.show', compute_node_id=processor.operating.compute_node.id)}">${processor.operating.compute_node.host}</a>
 					% else:
 					Waiting
 					% endif

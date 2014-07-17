@@ -64,6 +64,17 @@
 				<li><b><i>free:</i></b> ${compute_node.disk.free}</li>
 			</ul>
 		</li>
+		<li>
+			<b>processors:</b>
+			<% processors = compute_node.manager.get_processors(compute_node.id) %>
+			% if len(processors) > 0:
+				<ul>
+					% for processor in processors:
+					<li>${processor.name}:<a href="${request.route_path('admin.processors.show', processor_id=processor.id)}">${processor.id}</a></li>
+					% endfor
+				</ul>
+			% endif
+		</li>
 		<li><b>extra:</b> <pre>${json.dumps(compute_node.extra, indent=4) | n}</pre></li>
 	</ul>
 </section>
