@@ -1,0 +1,26 @@
+{
+  "name": "Nokkhum Web",
+  "version": "0.0.0",
+  "homepage": "https://github.com/sdayu/nokkhum-web",
+  "authors": [
+    "Thanathip Limna <boatkrap@gmail.com>"
+  ],
+  "description": "Nokkhum web interface",
+  "keywords": [
+    "nokkhum",
+    "nokkhum-web"
+  ],
+  "dependencies":{
+      "jquery": ">= 2.1.1",
+      "bootstrap-css": ">= 3.1.1",
+      "codemirror":">= 4.4.0",
+      "angular": ">= 1.2.19"
+  },
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}

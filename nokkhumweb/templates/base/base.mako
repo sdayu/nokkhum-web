@@ -7,10 +7,10 @@
 	<title><%block name='title'>Nokkhum Web Front-end</%block></title>
 	<link rel="icon" type="image/png" href="/public/images/nokkhum.png"/>
 	
-	<script src="/libs/jquery/jquery-2.0.3.js" type="text/javascript"></script>
-	<script src="/libs/bootstrap/3.0.0/js/bootstrap.js" type="text/javascript"></script>
-	<link href="/libs/bootstrap/3.0.0/css/bootstrap.css" rel="stylesheet" type="text/css"/>
-	<link href="/theme/style/default.css" rel="stylesheet" type="text/css"/>
+	<script src="/public/bower_components/jquery/dist/jquery.js" type="text/javascript"></script>
+	<script src="/public/bower_components/bootstrap-css/js/bootstrap.js" type="text/javascript"></script>
+	<link href="/public/bower_components/bootstrap-css/css/bootstrap.css" rel="stylesheet" type="text/css"/>
+	<link href="/public/theme/style/default.css" rel="stylesheet" type="text/css"/>
 	
 	<%block name='addition_header'></%block>
 </head>

@@ -4,13 +4,13 @@
 
 <%block name='addition_header'>
 ## codemirror2 for html editor
-<link rel="stylesheet" href="/libs/codemirror/lib/codemirror.css">
-<script src="/libs/codemirror/lib/codemirror.js"></script>
-<script src="/libs/codemirror/addon/runmode/runmode.js"></script>
-<script src="/libs/codemirror/mode/xml/xml.js"></script>
-<script src="/libs/codemirror/mode/javascript/javascript.js"></script>
-<script src="/libs/codemirror/mode/css/css.js"></script>
-<script src="/libs/codemirror/mode/htmlmixed/htmlmixed.js"></script>
+<link rel="stylesheet" href="/public/bower_components/codemirror/lib/codemirror.css">
+<script src="/public/bower_components/codemirror/lib/codemirror.js"></script>
+<script src="/public/bower_components/codemirror/addon/runmode/runmode.js"></script>
+<script src="/public/bower_components/codemirror/mode/xml/xml.js"></script>
+<script src="/public/bower_components/codemirror/mode/javascript/javascript.js"></script>
+<script src="/public/bower_components/codemirror/mode/css/css.js"></script>
+<script src="/public/bower_components/codemirror/mode/htmlmixed/htmlmixed.js"></script>
 </%block>
 
 
@@ -49,7 +49,6 @@
 		This text is displayed if your browser does not support HTML5 Canvas.
 	</canvas>
 
-<script type="text/javascript" src="/libs/jquery/jquery-2.0.3.js"></script>
 <script type="text/javascript" src="/js/diagram/processor.js"></script>
 <script type="text/javascript">
 function init() {
