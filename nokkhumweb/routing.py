@@ -1,13 +1,17 @@
 
+def apis_include(config):
+    config.add_route('apis.admin.compute_nodes.resources',
+                     '/admin/compute_nodes/{compute_node_id}/resources')
+
 
 def add_routes(config):
     config.add_route('index', '/')
     config.add_route('home', '/home')
-    
+
     config.add_route('login', '/login')
     config.add_route('logout', '/logout')
     config.add_route('register', '/register')
-    
+
     # manager part
     # project manager
     config.add_route('projects.add', '/manager/projects/add')
@@ -15,7 +19,7 @@ def add_routes(config):
     config.add_route('projects.view', '/manager/projects/{project_id}')
     config.add_route('projects.edit', '/manager/projects/{project_id}/edit')
     config.add_route('projects.delete', '/manager/projects/{project_id}/delete')
-    
+
     # camera manager
     config.add_route('cameras.add', '/manager/{project_id}/cameras/add')
     config.add_route('cameras.edit', '/manager/{project_id}/cameras/{camera_id}/edit')
@@ -25,7 +29,7 @@ def add_routes(config):
     config.add_route('cameras.test_view', '/manager/{project_id}/cameras/{camera_id}/test_view')
     config.add_route('cameras.live_view', '/manager/{project_id}/cameras/{camera_id}/live_view')
     config.add_route('cameras.index', '/manager/{project_id}/cameras')
-    
+
     # processors
     config.add_route('processors.add', '/manager/{project_id}/processors/add')
     config.add_route('processors.edit', '/manager/{project_id}/processors/{processor_id}/edit')
@@ -34,10 +38,11 @@ def add_routes(config):
     config.add_route('processors.view', '/manager/{project_id}/processors/{processor_id}/view')
     config.add_route('processors.operating', '/manager/{project_id}/processors/{processor_id}/operating/{action}')
     config.add_route('processors.index', '/manager/{project_id}/processors')
-    
+
     # api
-    config.add_route('camera_models.list_by_manufactories', '/manufactories/{manufactory_id}/models')
-    
+    config.add_route('apis.camera_models.list_by_manufactories', '/manufactories/{manufactory_id}/models')
+    config.include(apis_include, route_prefix='/apis')
+
     # storage
     config.add_route('storage.list', '/home/storage/list{extension:.*}')
     config.add_route('storage.download', '/home/storage/download{extension:.*}')

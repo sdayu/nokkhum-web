@@ -1,9 +1,114 @@
 <%inherit file="/base/panel.mako"/>
-<%block name='title'>List Compute Node</%block>
+
 <%! 
 	import datetime 
 	import json
 %>
+
+<%block name='addition_header'>
+<script src="/public/bower_components/angular/angular.min.js"></script>
+<script src="/public/bower_components/Chart.js/Chart.min.js"></script>
+<script src="/public/bower_components/angular-chart.js/dist/angular-chart.js"></script>
+
+<link rel="stylesheet" href="/public/bower_components/angular-chart.js/dist/angular-chart.css">
+
+
+<script type="text/javascript">
+
+	var app = angular.module("app", ["chart.js"]);
+	
+	app.factory('Resources', function ($http, $interval) {
+		
+		var resources = {cpu:[[]], memory:[[]], disk:[[]], reported_date:[]};
+		
+		function get_data(){
+			
+			var response = $http.get("/apis/admin/compute_nodes/${compute_node.id}/resources");
+			response.success(function(data, status, headers, config) {
+				
+				var cpu = [];
+				var memory_used = [];
+				var memory_free = [];
+				var memory_total = [];
+				var disk_used = [];
+				var disk_free = [];
+				var disk_total = [];
+				var reported_date = [];
+
+				angular.forEach( data.resources, function(v, i) {
+					cpu.push(v.cpu.used);
+					memory_used.push(v.memory.used);
+					memory_free.push(v.memory.free);
+					memory_total.push(v.memory.total);
+					disk_used.push(v.disk.used);
+					disk_free.push(v.disk.free);
+					disk_total.push(v.disk.total);
+					reported_date.push(new Date(v.reported_date).getMilliseconds());
+				});
+				
+				resources.cpu = [cpu]
+				resources.memory = [memory_used, memory_free, memory_total]
+				resources.disk = [disk_used, disk_free, disk_total]
+				resources.reported_date = reported_date
+
+				// console.log("resources: ", resources.reported_date)
+            });
+			
+			response.error(function(data, status, headers, config) {
+                // alert("AJAX failed!");
+            });
+		};
+		
+		$interval(get_data, 5000);
+		
+        return resources
+    });
+
+	app.controller("CPUCtrl", function ($scope, Resources) {
+		
+	  $scope.resources = Resources;
+	  $scope.labels = [];
+	  $scope.series = ['% Usage'];
+	  $scope.data = [[]];
+	  $scope.options = {animation: false, bezierCurve : false}
+	  $scope.onClick = function (points, evt) {
+	    console.log(points, evt);
+	  };
+	  $scope.$watch( "resources", function(data){ 
+		  console.log("re",data.reported_date); 
+		  	$scope.labels = data.reported_date;
+		  	$scope.data = data.cpu;
+	   }, true );
+	  $scope.$watch( "data", function(data){ console.log("data",data); }, true );
+	  $scope.$watch( "labels", function(data){ console.log("labels",data); }, true );
+	});
+
+	app.controller("MemoryCtrl", function ($scope, Resources) {
+		$scope.resources = Resources;
+  		$scope.labels = [];
+  		$scope.series = ['Usage', 'Free', 'Total'];
+  		$scope.data = [[]];
+  	    $scope.options = {animation: false, bezierCurve: false, datasetFill: false,}
+  		$scope.onClick = function (points, evt) {
+    		console.log(points, evt);
+  			};
+		});
+
+	app.controller("DiskCtrl", function ($scope, Resources) {
+		$scope.resources = Resources;
+		$scope.labels = [];
+		$scope.series = ['Usage', 'Free', 'Total'];
+		$scope.data = [[]];
+		 $scope.options = {animation: false, bezierCurve: false, datasetFill: false,}
+		$scope.onClick = function (points, evt) {
+			console.log(points, evt);
+		  };
+		});
+</script>
+
+</%block>
+
+<%block name='title'>List Compute Node</%block>
 
 <%block name="where_am_i">
 <li><a href="${request.route_path('admin.home')}">Admin</a></li>
@@ -12,6 +117,27 @@
 <%block name="panel_title">Show Compute Node</%block>
 
 <section>
+	<div ng-app="app">
+		<div class="row">
+			<div class="col-sm-4" ng-controller="CPUCtrl">
+				CPU Resource 
+				<%doc>
+				<canvas id="cpu" class="chart chart-line" data="resources.cpu" labels="resources.reported_date" legend="true" series="series" click="onClick" options="options"></canvas> 
+				</%doc>
+				<canvas id="cpu" class="chart chart-line" data="data" labels="labels" legend="true" series="series" click="onClick" options="options"></canvas> 
+				
+			</div>
+			<div class="col-sm-4" ng-controller="MemoryCtrl">
+				Memory Resource
+				<canvas id="memory" class="chart chart-line" data="resources.memory" labels="resources.reported_date" legend="true" series="series" click="onClick" options="options"></canvas> 
+			</div>
+			<div class="col-sm-4" ng-controller="DiskCtrl">
+				Disk Resource
+				<canvas id="disk" class="chart chart-line" data="resources.disk" labels="resources.reported_date" legend="true" series="series" click="onClick" options="options"></canvas> 
+			</div>
+		</div>
+	
+	</div>
 	<ul>
 		<li><b>Compute Node id: </b><span style="color: red;">${compute_node.id}</span></li>
 		<li><b>name: </b> ${compute_node.name}</li>
@@ -43,6 +169,7 @@
 			</ul>
 		</li>
 		% endif
+		
 		<li><b>CPU:</b>
 			<ul>
 				<li><b><i>count:</i></b> ${compute_node.cpu.count}</li>
