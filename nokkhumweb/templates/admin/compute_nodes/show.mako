@@ -7,15 +7,12 @@
 
 <%block name='addition_header'>
 <script src="/public/bower_components/angular/angular.min.js"></script>
-<script src="/public/bower_components/Chart.js/Chart.min.js"></script>
-<script src="/public/bower_components/angular-chart.js/dist/angular-chart.js"></script>
+<script src="/public/bower_components/angular-google-chart/ng-google-chart.js"></script>
 
-<link rel="stylesheet" href="/public/bower_components/angular-chart.js/dist/angular-chart.css">
-
-
+<script type="text/javascript" src="https://www.google.com/jsapi"></script>
 <script type="text/javascript">
 
-	var app = angular.module("app", ["chart.js"]);
+	var app = angular.module("app", ["googlechart"]);
 	
 	app.factory('Resources', function ($http, $interval) {
 		
@@ -27,31 +24,19 @@
 			response.success(function(data, status, headers, config) {
 				
 				var cpu = [];
-				var memory_used = [];
-				var memory_free = [];
-				var memory_total = [];
-				var disk_used = [];
-				var disk_free = [];
-				var disk_total = [];
-				var reported_date = [];
+				var memory = [];
+				var disk = [];
 
 				angular.forEach( data.resources, function(v, i) {
-					cpu.push(v.cpu.used);
-					memory_used.push(v.memory.used);
-					memory_free.push(v.memory.free);
-					memory_total.push(v.memory.total);
-					disk_used.push(v.disk.used);
-					disk_free.push(v.disk.free);
-					disk_total.push(v.disk.total);
-					reported_date.push(new Date(v.reported_date).getMilliseconds());
+					cpu.push({c:[{v: new Date(v.reported_date)}, {v: v.cpu.used}]});
+					memory.push({c:[{v: new Date(v.reported_date)}, {v: v.memory.used}, {v: v.memory.free}, {v: v.memory.total}]});
+					disk.push({c:[{v: new Date(v.reported_date)}, {v: v.disk.used}, {v: v.disk.free}, {v: v.disk.total}]});
 				});
 				
-				resources.cpu = [cpu]
-				resources.memory = [memory_used, memory_free, memory_total]
-				resources.disk = [disk_used, disk_free, disk_total]
-				resources.reported_date = reported_date
+				resources.cpu = cpu
+				resources.memory = memory
+				resources.disk = disk
 
-				// console.log("resources: ", resources.reported_date)
             });
 			
 			response.error(function(data, status, headers, config) {
@@ -59,50 +44,90 @@
             });
 		};
 		
-		$interval(get_data, 5000);
+		get_data();
+		$interval(get_data, 10000);
 		
         return resources
     });
+	
+	app.controller("CPUChartCtrl", function ($scope, Resources) {
+		$scope.resources = Resources
+		var chart = {};
+	    chart.type = "LineChart";
 
-	app.controller("CPUCtrl", function ($scope, Resources) {
-		
-	  $scope.resources = Resources;
-	  $scope.labels = [];
-	  $scope.series = ['% Usage'];
-	  $scope.data = [[]];
-	  $scope.options = {animation: false, bezierCurve : false}
-	  $scope.onClick = function (points, evt) {
-	    console.log(points, evt);
-	  };
-	  $scope.$watch( "resources", function(data){ 
-		  console.log("re",data.reported_date); 
-		  	$scope.labels = data.reported_date;
-		  	$scope.data = data.cpu;
-	   }, true );
-	  $scope.$watch( "data", function(data){ console.log("data",data); }, true );
-	  $scope.$watch( "labels", function(data){ console.log("labels",data); }, true );
+	    chart.data =  {
+	    	     cols: [{id: 'reportedDate', label: 'Reported Date', type: 'datetime'},
+	    	            {id: 'cpu_usage', label: '% CPU Usage', type: 'number'}
+	    	            ],
+	    	     rows: []
+	    	   };
+
+	    chart.options = {
+	    		title: 'CPU Usage'
+	    };
+
+	    chart.formatters = {};
+
+	    $scope.chart = chart;
+	    $scope.$watch( "resources", function(data){ 
+			  chart.data.rows = data.cpu;
+		   }, true);
 	});
 
-	app.controller("MemoryCtrl", function ($scope, Resources) {
-		$scope.resources = Resources;
-  		$scope.labels = [];
-  		$scope.series = ['Usage', 'Free', 'Total'];
-  		$scope.data = [[]];
-  	    $scope.options = {animation: false, bezierCurve: false, datasetFill: false,}
-  		$scope.onClick = function (points, evt) {
-    		console.log(points, evt);
-  			};
+	app.controller("MemoryChartCtrl", function ($scope, Resources) {
+		$scope.resources = Resources
+		var chart = {};
+	    chart.type = "LineChart";
+
+	    chart.data =  {
+	    	     cols: [{id: 'reportedDate', label: 'Reported Date', type: 'datetime'},
+	    	            {id: 'memory_usage', label: 'Memory Usage', type: 'number'},
+	    	            {id: 'memory_free', label: 'Memory Free', type: 'number'},
+	    	            {id: 'memory_total', label: 'Memory Total', type: 'number'}
+	    	            ],
+	    	     rows: []
+	    	   };
+
+	    chart.options = {
+	    	title: 'Memory Usage'
+	    };
+
+	    chart.formatters = {
+	    	timeZone: 7
+	    };
+
+	    $scope.chart = chart;
+  			
+  		$scope.$watch( "resources", function(data){ 
+  			  chart.data.rows = data.memory;
+  		   }, true);
 		});
 
-	app.controller("DiskCtrl", function ($scope, Resources) {
-		$scope.resources = Resources;
-		$scope.labels = [];
-		$scope.series = ['Usage', 'Free', 'Total'];
-		$scope.data = [[]];
-		 $scope.options = {animation: false, bezierCurve: false, datasetFill: false,}
-		$scope.onClick = function (points, evt) {
-			console.log(points, evt);
-		  };
+	app.controller("DiskChartCtrl", function ($scope, Resources) {
+		$scope.resources = Resources
+		var chart = {};
+	    chart.type = "LineChart";
+
+	    chart.data =  {
+	    		cols: [{id: 'reportedDate', label: 'Reported Date', type: 'datetime'},
+	    	            {id: 'disk_usage', label: 'Disk Usage', type: 'number'},
+	    	            {id: 'disk_free', label: 'Disk Free', type: 'number'},
+	    	            {id: 'disk_total', label: 'Disk Total', type: 'number'}
+	    	            ],
+	    	     rows: []
+	    	   };
+
+	    chart.options = {
+	    	title: 'Disk Usage'
+	    };
+
+	    chart.formatters = {};
+
+	    $scope.chart = chart;
+  			
+  		$scope.$watch( "resources", function(data){ 
+  			  chart.data.rows = data.disk;
+  		   }, true);
 		});
 </script>
 
@@ -119,21 +144,17 @@
 <section>
 	<div ng-app="app">
 		<div class="row">
-			<div class="col-sm-4" ng-controller="CPUCtrl">
+			<div class="col-sm-4" ng-controller="CPUChartCtrl">
 				CPU Resource 
-				<%doc>
-				<canvas id="cpu" class="chart chart-line" data="resources.cpu" labels="resources.reported_date" legend="true" series="series" click="onClick" options="options"></canvas> 
-				</%doc>
-				<canvas id="cpu" class="chart chart-line" data="data" labels="labels" legend="true" series="series" click="onClick" options="options"></canvas> 
-				
+				<div google-chart chart="chart"></div>
 			</div>
-			<div class="col-sm-4" ng-controller="MemoryCtrl">
+			<div class="col-sm-4" ng-controller="MemoryChartCtrl">
 				Memory Resource
-				<canvas id="memory" class="chart chart-line" data="resources.memory" labels="resources.reported_date" legend="true" series="series" click="onClick" options="options"></canvas> 
+				<div google-chart chart="chart"></div>
 			</div>
-			<div class="col-sm-4" ng-controller="DiskCtrl">
+			<div class="col-sm-4" ng-controller="DiskChartCtrl">
 				Disk Resource
-				<canvas id="disk" class="chart chart-line" data="resources.disk" labels="resources.reported_date" legend="true" series="series" click="onClick" options="options"></canvas> 
+				<div google-chart chart="chart"></div>
 			</div>
 		</div>
 	
