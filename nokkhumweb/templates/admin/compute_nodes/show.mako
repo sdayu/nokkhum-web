@@ -16,7 +16,7 @@
 	
 	app.factory('Resources', function ($http, $interval) {
 		
-		var resources = {cpu:[[]], memory:[[]], disk:[[]], reported_date:[]};
+		var resources = {cpu:[], memory:[], disk:[]};
 		
 		function get_data(){
 			
@@ -56,7 +56,7 @@
 	    chart.type = "LineChart";
 
 	    chart.data =  {
-	    	     cols: [{id: 'reportedDate', label: 'Reported Date', type: 'datetime'},
+	    	     cols: [{id: 'reported_date', label: 'Reported Date', type: 'datetime'},
 	    	            {id: 'cpu_usage', label: '% CPU Usage', type: 'number'}
 	    	            ],
 	    	     rows: []
@@ -80,7 +80,7 @@
 	    chart.type = "LineChart";
 
 	    chart.data =  {
-	    	     cols: [{id: 'reportedDate', label: 'Reported Date', type: 'datetime'},
+	    	     cols: [{id: 'reported_date', label: 'Reported Date', type: 'datetime'},
 	    	            {id: 'memory_usage', label: 'Memory Usage', type: 'number'},
 	    	            {id: 'memory_free', label: 'Memory Free', type: 'number'},
 	    	            {id: 'memory_total', label: 'Memory Total', type: 'number'}
@@ -92,9 +92,7 @@
 	    	title: 'Memory Usage'
 	    };
 
-	    chart.formatters = {
-	    	timeZone: 7
-	    };
+	    chart.formatters = {};
 
 	    $scope.chart = chart;
   			
@@ -109,7 +107,7 @@
 	    chart.type = "LineChart";
 
 	    chart.data =  {
-	    		cols: [{id: 'reportedDate', label: 'Reported Date', type: 'datetime'},
+	    		cols: [{id: 'reported_date', label: 'Reported Date', type: 'datetime'},
 	    	            {id: 'disk_usage', label: 'Disk Usage', type: 'number'},
 	    	            {id: 'disk_free', label: 'Disk Free', type: 'number'},
 	    	            {id: 'disk_total', label: 'Disk Total', type: 'number'}
@@ -157,8 +155,8 @@
 				<div google-chart chart="chart"></div>
 			</div>
 		</div>
-	
 	</div>
+	
 	<ul>
 		<li><b>Compute Node id: </b><span style="color: red;">${compute_node.id}</span></li>
 		<li><b>name: </b> ${compute_node.name}</li>

@@ -2,6 +2,8 @@
 def apis_include(config):
     config.add_route('apis.admin.compute_nodes.resources',
                      '/admin/compute_nodes/{compute_node_id}/resources')
+    config.add_route('apis.admin.processors.resources',
+                     '/admin/processors/{processor_id}/resources')
 
 
 def add_routes(config):
