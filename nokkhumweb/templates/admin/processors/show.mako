@@ -3,13 +3,18 @@
 <%! import datetime %>
 
 <%block name='addition_header'>
-<script src="/public/bower_components/angular/angular.min.js"></script>
-<script src="/public/bower_components/angular-google-chart/ng-google-chart.js"></script>
 
-<script type="text/javascript" src="https://www.google.com/jsapi"></script>
+## angular-nvd3
+<script src="/public/bower_components/angular/angular.min.js"></script>
+<meta charset="utf-8">
+<script src="/public/bower_components/d3/d3.js"></script>
+<script src="/public/bower_components/nvd3/nv.d3.js"></script>
+<script src="/public/bower_components/angular-nvd3/dist/angular-nvd3.js"></script>
+<link rel="stylesheet" href="/public/bower_components/nvd3/nv.d3.css">
+
 <script type="text/javascript">
 
-	var app = angular.module("app", ["googlechart"]);
+	var app = angular.module("app", ["nvd3"]);
 	
 	app.factory('Resources', function ($http, $interval) {
 		
@@ -20,16 +25,16 @@
 			var response = $http.get("/apis/admin/processors/${processor.id}/resources");
 			response.success(function(data, status, headers, config) {
 				
-				var cpu = [];
-				var memory = [];
+				var cpu_used = [];
+				var memory_used = [];
 
 				angular.forEach( data.resources, function(v, i) {
-					cpu.push({c:[{v: new Date(v.reported_date)}, {v: v.cpu}]});
-					memory.push({c:[{v: new Date(v.reported_date)}, {v: v.memory}]});
+					cpu_used.push({x:new Date(v.reported_date), y:v.cpu});
+					memory_used.push({x:new Date(v.reported_date), y:v.memory});
 				});
 				
-				resources.cpu = cpu
-				resources.memory = memory
+				resources.cpu = {used:cpu_used};
+				resources.memory = {used: memory_used};
 
             });
 			
@@ -46,51 +51,98 @@
 	
 	app.controller("CPUChartCtrl", function ($scope, Resources) {
 		$scope.resources = Resources
-		var chart = {};
-	    chart.type = "LineChart";
 
-	    chart.data =  {
-	    	     cols: [{id: 'reportedDate', label: 'Reported Date', type: 'datetime'},
-	    	            {id: 'cpu_usage', label: '% CPU Usage', type: 'number'}
-	    	            ],
-	    	     rows: []
-	    	   };
-
-	    chart.options = {
-	    		title: 'CPU Usage'
-	    };
-
-	    chart.formatters = {};
-
-	    $scope.chart = chart;
+		$scope.options = {
+		        chart: {
+		            type: 'lineChart',
+		            height: 250,
+		            x: function(d){ return d.x; },
+		            y: function(d){ return d.y; },
+		            margin: {
+		                "top": 100,
+		                "right": 30,
+		                "bottom": 40,
+		                "left": 40
+		              },
+		            useInteractiveGuideline: true,
+		            transitionDuration: 1,
+		            yAxis: {
+		            	axisLabel: '% Usage',
+		                tickFormat: function(d){
+		                   return d3.format()(d);
+		                },
+		                axisLabelDistance: 50
+		            },
+		            xAxis: {
+		            	axisLabel: 'Time',
+		                tickFormat: function(d){
+		                   return d3.time.format('%H:%M:%S')(new Date(d));
+		                }
+		            },
+		            yDomain: [0,100],
+		        },
+		        
+				title: {
+		            enable: true,
+		            text: 'Compute Node CPU Usage'
+		        }
+		    };
+		
+		$scope.data = [];
+		
 	    $scope.$watch( "resources", function(data){ 
-			  chart.data.rows = data.cpu;
+	    	if(typeof(data.cpu.used) == 'undefined')
+	    		return;
+	    	$scope.data = [{values:data.cpu.used, key:"% CPU used"}];
 		   }, true);
 	});
 
 	app.controller("MemoryChartCtrl", function ($scope, Resources) {
 		$scope.resources = Resources
-		var chart = {};
-	    chart.type = "LineChart";
+		
+		$scope.options = {
+		        chart: {
+		            type: 'lineChart',
+		            height: 250,
+		            x: function(d){ return d.x; },
+		            y: function(d){ return d.y; },
+		            margin: {
+		                "top": 100,
+		                "right": 30,
+		                "bottom": 40,
+		                "left": 60
+		              },
+		            useInteractiveGuideline: true,
+		            transitionDuration: 1,
+		            yAxis: {
+		            	axisLabel: 'Unit (MB)',
+		                tickFormat: function(d){
+		                   return d3.format('.2f')(d/Math.pow(1024, 2));
+		                },
+		                axisLabelDistance: 25
+		            },
+		            xAxis: {
+		            	axisLabel: 'Time',
+		                tickFormat: function(d){
+		                   return d3.time.format('%H:%M:%S')(new Date(d));
+		                }
+		            },
+		        },
+		        
+				title: {
+		            enable: true,
+		            text: 'Compute Node Memory Usage'
+		        }
+		    };
+		    
 
-	    chart.data =  {
-	    	     cols: [{id: 'reportedDate', label: 'Reported Date', type: 'datetime'},
-	    	            {id: 'memory_usage', label: 'Memory Usage', type: 'number'},
-	    	            ],
-	    	     rows: []
-	    	   };
-
-	    chart.options = {
-	    	title: 'Memory Usage'
-	    };
-
-	    chart.formatters = {};
-
-	    $scope.chart = chart;
-  			
-  		$scope.$watch( "resources", function(data){ 
-  			  chart.data.rows = data.memory;
-  		   }, true);
+		$scope.data = [];
+	    $scope.$watch( "resources", function(data){ 
+	    	if(typeof(data.memory.used) == 'undefined')
+	    		return;
+	    	$scope.data = [{values:data.memory.used, key:"Memory used"}];
+		   }, true);
+		
 		});
 </script>
 
@@ -109,11 +161,11 @@
 		<div class="row">
 			<div class="col-sm-6" ng-controller="CPUChartCtrl">
 				CPU Resource 
-				<div google-chart chart="chart"></div>
+				<nvd3 options='options' data='data'></nvd3>
 			</div>
 			<div class="col-sm-6" ng-controller="MemoryChartCtrl">
 				Memory Resource
-				<div google-chart chart="chart"></div>
+				<nvd3 options='options' data='data'></nvd3>
 			</div>
 		</div>
 	</div>

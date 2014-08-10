@@ -6,36 +6,49 @@
 %>
 
 <%block name='addition_header'>
-<script src="/public/bower_components/angular/angular.min.js"></script>
-<script src="/public/bower_components/angular-google-chart/ng-google-chart.js"></script>
 
-<script type="text/javascript" src="https://www.google.com/jsapi"></script>
+## angular-nvd3
+<script src="/public/bower_components/angular/angular.min.js"></script>
+<meta charset="utf-8">
+<script src="/public/bower_components/d3/d3.js"></script>
+<script src="/public/bower_components/nvd3/nv.d3.js"></script>
+<script src="/public/bower_components/angular-nvd3/dist/angular-nvd3.js"></script>
+<link rel="stylesheet" href="/public/bower_components/nvd3/nv.d3.css">
+
 <script type="text/javascript">
 
-	var app = angular.module("app", ["googlechart"]);
+	var app = angular.module("app", ['nvd3']);
 	
 	app.factory('Resources', function ($http, $interval) {
 		
-		var resources = {cpu:[], memory:[], disk:[]};
+		var resources = {cpu:{}, memory:{}, disk:{}};
 		
 		function get_data(){
 			
 			var response = $http.get("/apis/admin/compute_nodes/${compute_node.id}/resources");
 			response.success(function(data, status, headers, config) {
 				
-				var cpu = [];
-				var memory = [];
-				var disk = [];
+				var cpu_used = [];
+				var memory_used = [];
+				var memory_free = [];
+				var memory_total = [];
+				var disk_used = [];
+				var disk_free = [];
+				var disk_total = [];
 
 				angular.forEach( data.resources, function(v, i) {
-					cpu.push({c:[{v: new Date(v.reported_date)}, {v: v.cpu.used}]});
-					memory.push({c:[{v: new Date(v.reported_date)}, {v: v.memory.used}, {v: v.memory.free}, {v: v.memory.total}]});
-					disk.push({c:[{v: new Date(v.reported_date)}, {v: v.disk.used}, {v: v.disk.free}, {v: v.disk.total}]});
+					cpu_used.push({x:new Date(v.reported_date), y:v.cpu.used});
+					memory_used.push({x:new Date(v.reported_date), y:v.memory.used});
+					memory_free.push({x:new Date(v.reported_date), y:v.memory.free});
+					memory_total.push({x:new Date(v.reported_date), y:v.memory.total});
+					disk_used.push({x:new Date(v.reported_date), y:v.disk.used});
+					disk_free.push({x:new Date(v.reported_date), y:v.disk.free});
+					disk_total.push({x:new Date(v.reported_date), y:v.disk.total});
 				});
 				
-				resources.cpu = cpu
-				resources.memory = memory
-				resources.disk = disk
+				resources.cpu = {used:cpu_used};
+				resources.memory = {used: memory_used, free: memory_free, total: memory_total};
+				resources.disk = {used: disk_used, free: disk_free, total:disk_total};
 
             });
 			
@@ -43,7 +56,7 @@
                 // alert("AJAX failed!");
             });
 		};
-		
+
 		get_data();
 		$interval(get_data, 10000);
 		
@@ -52,80 +65,146 @@
 	
 	app.controller("CPUChartCtrl", function ($scope, Resources) {
 		$scope.resources = Resources
-		var chart = {};
-	    chart.type = "LineChart";
 
-	    chart.data =  {
-	    	     cols: [{id: 'reported_date', label: 'Reported Date', type: 'datetime'},
-	    	            {id: 'cpu_usage', label: '% CPU Usage', type: 'number'}
-	    	            ],
-	    	     rows: []
-	    	   };
-
-	    chart.options = {
-	    		title: 'CPU Usage'
-	    };
-
-	    chart.formatters = {};
-
-	    $scope.chart = chart;
+		$scope.options = {
+		        chart: {
+		            type: 'lineChart',
+		            height: 250,
+		            x: function(d){ return d.x; },
+		            y: function(d){ return d.y; },
+		            margin: {
+		                "top": 100,
+		                "right": 30,
+		                "bottom": 40,
+		                "left": 40
+		              },
+		            useInteractiveGuideline: true,
+		            transitionDuration: 1,
+		            yAxis: {
+		            	axisLabel: '% Usage',
+		                tickFormat: function(d){
+		                   return d3.format()(d);
+		                },
+		                axisLabelDistance: 50
+		            },
+		            xAxis: {
+		            	axisLabel: 'Time',
+		                tickFormat: function(d){
+		                   return d3.time.format('%H:%M:%S')(new Date(d));
+		                }
+		            },
+		            yDomain: [0,100],
+		        },
+		        
+				title: {
+		            enable: true,
+		            text: 'Compute Node CPU Usage'
+		        }
+		    };
+		
+		$scope.data = [];
+		
 	    $scope.$watch( "resources", function(data){ 
-			  chart.data.rows = data.cpu;
+	    	if(typeof(data.cpu.used) == 'undefined')
+	    		return;
+	    	$scope.data = [{values:data.cpu.used, key:"% CPU used"}];
 		   }, true);
 	});
 
 	app.controller("MemoryChartCtrl", function ($scope, Resources) {
 		$scope.resources = Resources
-		var chart = {};
-	    chart.type = "LineChart";
+		
+		$scope.options = {
+		        chart: {
+		            type: 'lineChart',
+		            height: 250,
+		            x: function(d){ return d.x; },
+		            y: function(d){ return d.y; },
+		            margin: {
+		                "top": 100,
+		                "right": 30,
+		                "bottom": 40,
+		                "left": 60
+		              },
+		            useInteractiveGuideline: true,
+		            transitionDuration: 1,
+		            yAxis: {
+		            	axisLabel: 'Unit (MB)',
+		                tickFormat: function(d){
+		                   return d3.format('.2f')(d/Math.pow(1024, 2));
+		                },
+		                axisLabelDistance: 25
+		            },
+		            xAxis: {
+		            	axisLabel: 'Time',
+		                tickFormat: function(d){
+		                   return d3.time.format('%H:%M:%S')(new Date(d));
+		                }
+		            },
+		        },
+		        
+				title: {
+		            enable: true,
+		            text: 'Compute Node Memory Usage'
+		        }
+		    };
+		    
 
-	    chart.data =  {
-	    	     cols: [{id: 'reported_date', label: 'Reported Date', type: 'datetime'},
-	    	            {id: 'memory_usage', label: 'Memory Usage', type: 'number'},
-	    	            {id: 'memory_free', label: 'Memory Free', type: 'number'},
-	    	            {id: 'memory_total', label: 'Memory Total', type: 'number'}
-	    	            ],
-	    	     rows: []
-	    	   };
-
-	    chart.options = {
-	    	title: 'Memory Usage'
-	    };
-
-	    chart.formatters = {};
-
-	    $scope.chart = chart;
-  			
-  		$scope.$watch( "resources", function(data){ 
-  			  chart.data.rows = data.memory;
-  		   }, true);
+		$scope.data = [];
+	    $scope.$watch( "resources", function(data){ 
+	    	if(typeof(data.memory.used) == 'undefined')
+	    		return;
+	    	$scope.data = [{values:data.memory.used, key:"Memory used"}, {values:data.memory.free, key:"Memory free"}, {values:data.memory.total, key:"Memory total"}];
+		   }, true);
+		
 		});
 
 	app.controller("DiskChartCtrl", function ($scope, Resources) {
 		$scope.resources = Resources
-		var chart = {};
-	    chart.type = "LineChart";
+		
+		$scope.options = {
+		        chart: {
+		            type: 'lineChart',
+		            height: 250,
+		            x: function(d){ return d.x; },
+		            y: function(d){ return d.y; },
+		            margin: {
+		                "top": 100,
+		                "right": 30,
+		                "bottom": 40,
+		                "left": 60
+		              },
+		            useInteractiveGuideline: true,
+		            transitionDuration: 1,
+		            yAxis: {
+		            	axisLabel: 'Unit (MB)',
+		                tickFormat: function(d){
+		                   return d3.format('.2f')(d/Math.pow(1024, 2));
+		                },
+		                axisLabelDistance: 25
+		            },
+		            xAxis: {
+		            	axisLabel: 'Time',
+		                tickFormat: function(d){
+		                   return d3.time.format('%H:%M:%S')(new Date(d));
+		                }
+		            },
+		        },
+		        
+				title: {
+		            enable: true,
+		            text: 'Compute Node Disk Usage'
+		        }
+		    };
+		    
 
-	    chart.data =  {
-	    		cols: [{id: 'reported_date', label: 'Reported Date', type: 'datetime'},
-	    	            {id: 'disk_usage', label: 'Disk Usage', type: 'number'},
-	    	            {id: 'disk_free', label: 'Disk Free', type: 'number'},
-	    	            {id: 'disk_total', label: 'Disk Total', type: 'number'}
-	    	            ],
-	    	     rows: []
-	    	   };
-
-	    chart.options = {
-	    	title: 'Disk Usage'
-	    };
-
-	    chart.formatters = {};
-
-	    $scope.chart = chart;
-  			
-  		$scope.$watch( "resources", function(data){ 
-  			  chart.data.rows = data.disk;
-  		   }, true);
+		$scope.data = [];
+	    $scope.$watch( "resources", function(data){ 
+	    	if(typeof(data.cpu.used) == 'undefined')
+	    		return;
+	    	$scope.data = [{values:data.disk.used, key:"Disk used"}, {values:data.disk.free, key:"Disk free"}, {values:data.disk.total, key:"Disk total"}];
+		   }, true);
+		
 		});
 </script>
 
@@ -144,15 +223,15 @@
 		<div class="row">
 			<div class="col-sm-4" ng-controller="CPUChartCtrl">
 				CPU Resource 
-				<div google-chart chart="chart"></div>
+				<nvd3 options='options' data='data'></nvd3>
 			</div>
 			<div class="col-sm-4" ng-controller="MemoryChartCtrl">
 				Memory Resource
-				<div google-chart chart="chart"></div>
+				<nvd3 options='options' data='data'></nvd3>
 			</div>
 			<div class="col-sm-4" ng-controller="DiskChartCtrl">
 				Disk Resource
-				<div google-chart chart="chart"></div>
+				<nvd3 options='options' data='data'></nvd3>
 			</div>
 		</div>
 	</div>
