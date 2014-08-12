@@ -24,7 +24,6 @@
 		var resources = {cpu:{}, memory:{}, disk:{}};
 		
 		function get_data(){
-			
 			var response = $http.get("/apis/admin/compute_nodes/${compute_node.id}/resources");
 			response.success(function(data, status, headers, config) {
 				
@@ -45,11 +44,10 @@
 					disk_free.push({x:new Date(v.reported_date), y:v.disk.free});
 					disk_total.push({x:new Date(v.reported_date), y:v.disk.total});
 				});
-				
+
 				resources.cpu = {used:cpu_used};
 				resources.memory = {used: memory_used, free: memory_free, total: memory_total};
 				resources.disk = {used: disk_used, free: disk_free, total:disk_total};
-
             });
 			
 			response.error(function(data, status, headers, config) {
@@ -221,15 +219,15 @@
 <section>
 	<div ng-app="app">
 		<div class="row">
-			<div class="col-sm-4" ng-controller="CPUChartCtrl">
+			<div class="col-md-4" ng-controller="CPUChartCtrl">
 				CPU Resource 
 				<nvd3 options='options' data='data'></nvd3>
 			</div>
-			<div class="col-sm-4" ng-controller="MemoryChartCtrl">
+			<div class="col-md-4" ng-controller="MemoryChartCtrl">
 				Memory Resource
 				<nvd3 options='options' data='data'></nvd3>
 			</div>
-			<div class="col-sm-4" ng-controller="DiskChartCtrl">
+			<div class="col-md-4" ng-controller="DiskChartCtrl">
 				Disk Resource
 				<nvd3 options='options' data='data'></nvd3>
 			</div>
