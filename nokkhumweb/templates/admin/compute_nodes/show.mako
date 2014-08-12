@@ -139,6 +139,7 @@
 		                   return d3.time.format('%H:%M:%S')(new Date(d));
 		                }
 		            },
+		            forceY:[0]
 		        },
 		        
 				title: {
@@ -187,6 +188,7 @@
 		                   return d3.time.format('%H:%M:%S')(new Date(d));
 		                }
 		            },
+		            forceY:[0]
 		        },
 		        
 				title: {
