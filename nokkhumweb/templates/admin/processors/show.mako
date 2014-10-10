@@ -79,7 +79,7 @@
 		                   return d3.time.format('%H:%M:%S')(new Date(d));
 		                }
 		            },
-		            yDomain: [0,100],
+		            forceY:[0],
 		        },
 		        
 				title: {
