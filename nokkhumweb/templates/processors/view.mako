@@ -21,27 +21,30 @@
 <%block name='panel_title'>Processor information</%block>
 
 <ul>
-	<li><strong>Name: </strong>${processor.name}</li>
-	<li><strong>ID: </strong>${processor.id}</li>
-	<li><strong>Camera: </strong>
+	<li><b>Name: </b>${processor.name}</li>
+	<li><b>ID: </b>${processor.id}</li>
+	<li><b>Camera: </b>
 	% for camera in processor.cameras:
 		<a href="${request.route_path('cameras.view', project_id=project.id, camera_id=camera.id)}">${camera.name}</a>
 	% endfor
 	</li>
-	<li><strong>Create Date: </strong>${processor.created_date}</li>
-	<li><strong>Last Update: </strong>${processor.updated_date}</li>
-	<li><strong>Keep Record: </strong>${processor.storage_period} day</li>
-	<li><strong>Operating:</strong>
+	<li><b>Create Date: </b>${processor.created_date}</li>
+	<li><b>Last Update: </b>${processor.updated_date}</li>
+	<li><b>Keep Record: </b>${processor.storage_period} day</li>
+	<li><b>Operating:</b>
 		<ul>
-			<li><strong>user status: <span style="color: red;">${processor.operating.user_command}</span></strong></li>
-			<li><strong>status: <span style="color: red;">${processor.operating.status}</span></strong></li>
-			<li><strong>last update:</strong> ${processor.operating.updated_date}</li>
-			<li><strong>diff time:</strong> <span style="color: red;">${(datetime.datetime.now()-processor.operating.updated_date).seconds}</span> seconds ago</li>
+			<li><b>user status: <span style="color: red;">${processor.operating.user_command}</span></b></li>
+			<li><b>status: <span style="color: red;">${processor.operating.status}</span></b></li>
+			<li><b>last update:</b> ${processor.operating.updated_date}</li>
+			<li><b>diff time:</b> <span style="color: red;">${(datetime.datetime.now()-processor.operating.updated_date).seconds}</span> seconds ago</li>
 		</ul>
 	</li>
+	% if request.has_permission('admin'):
+	<li><b>Process Status: </b><a href="${request.route_path('admin.processors.show', processor_id=processor.id)}">view</a></li>
+	% endif
 </ul>
 <p>
-<strong>Current Image Processor:</strong>
+<b>Current Image Processor:</b>
 </p>
 <section>
 	<div>
