@@ -125,7 +125,7 @@
 					<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 						<div class="detailfooterbox">
 							<span class="detailfooter">
-								&copy; 2012 Thanathip Limna. Department of Computer Engineering, Prince of Songkla University. All Rights Reserved. 
+								&copy; 2012. Department of Computer Engineering, Prince of Songkla University.
 							</span>
 						</div>
 					</div>
