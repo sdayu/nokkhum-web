@@ -122,7 +122,7 @@ def view(request):
     file_extension = extension[extension.rfind("."):]
     if file_extension in [".png", ".jpg", ".jpeg"]:
         file_type="image"
-    elif file_extension in [".avi", ".ogg", ".ogv", ".mpg", ".webm"]:
+    elif file_extension in [".avi", ".ogg", ".ogv", ".mpg", ".webm", ".mp4"]:
         file_type="video"
     
     key = "/storage"
