@@ -1,0 +1,15 @@
+{% extends "/base/mdl-dashboard.jinja2" %}
+{% block title %} Hello {{request.user.first_name}} {{request.user.last_name}}{% endblock %}
+
+{% block layout_title %}Home{% endblock %}
+
+{% block contents %}
+<article>
+
+		<ul>
+      <li><a href="{{request.route_path('projects.index')}}">Project Index</a></li>
+      <li><a href="{{request.route_path('projects.add')}}">Add Project</a></li>
+		</ul>
+
+</article>
+{% endblock %}

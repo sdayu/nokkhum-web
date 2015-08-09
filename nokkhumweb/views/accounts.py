@@ -9,7 +9,8 @@ from pyramid.security import forget
 from pyramid.security import authenticated_userid
 from pyramid.url import route_url
 
-@view_config(route_name='login', renderer='/accounts/login.mako')
+@view_config(route_name='index', renderer='/accounts/login.jinja2')
+@view_config(route_name='login', renderer='/accounts/login.jinja2')
 def login(request):
     if request.user:
         return HTTPFound(location=request.route_path('home'))
@@ -21,11 +22,11 @@ def login(request):
     message = ''
     email = ''
     password = ''
-    
+
     if 'form.submitted' in request.params:
         email = request.params['email']
         password = request.params['password']
-        
+
         session = request.session
         session['email'] = email
         session['password'] = password
@@ -61,11 +62,11 @@ def logout(request):
     return HTTPFound(location = route_url('index', request),
                      headers = headers)
 
-@view_config(route_name='home', permission='authenticated', renderer="/accounts/home.mako")
+@view_config(route_name='home', permission='authenticated', renderer="/accounts/home.jinja2")
 def home(request):
     return dict()
     
-@view_config(route_name='register', renderer="/accounts/register.mako")
+@view_config(route_name='register', renderer="/accounts/register.jinja2")
 def register(request):
     form = user_form.Register(request.POST)
     
@@ -84,3 +85,4 @@ def register(request):
 
     
     return HTTPFound(location = request.route_url('index'))
+    

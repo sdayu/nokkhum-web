@@ -8,6 +8,7 @@ def apis_include(config):
 
 def add_routes(config):
     config.add_route('index', '/')
+    config.add_route('about', '/about')
     config.add_route('home', '/home')
 
     config.add_route('login', '/login')

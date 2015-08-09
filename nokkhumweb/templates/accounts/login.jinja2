@@ -1,0 +1,43 @@
+{% extends "/base/base.jinja2" %}
+{% block title %}User Login{% endblock %}
+
+{% block body %}
+<p>
+<div class="mdl-grid">
+  <div class="mdl-cell mdl-cell--4-col mdl-cell--3-col-tablet">
+  </div>
+  <div class="mdl-cell mdl-cell--4-col mdl-cell--6-col-tablet">
+  	<div style="text-align:center; padding-top:40%;">
+        <img alt="นกคุ่ม (nokkhum)" src="/public/images/nokkhum.png" width="100px" />
+	  </div>
+
+
+	<div style="text-align:center; padding-top:10px;">
+		<form action="/login" method="POST">
+      <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label textfield-demo">
+        <input class="mdl-textfield__input" type="text" id="email" name="email" />
+        <label class="mdl-textfield__label" for="email">Email</label>
+      </div>
+      <br/>
+      <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label textfield-demo">
+        <input class="mdl-textfield__input" type="password" id="password" name="password" />
+        <label class="mdl-textfield__label" for="passwoed">Password</label>
+      </div>
+      <br/>
+      <input type="hidden" name="came_from" value="{{came_from}}"/>
+    <button name='form.submitted' type="submit" class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored">
+        Login
+    </button>
+		</form>
+	</div>
+  </div>
+  <div class="mdl-cell mdl-cell--4-col mdl-cell--3-col-tablet">
+  </div>
+</div>
+
+	{% if message | length > 0 %}
+	<p>${message}</p>
+	{% endif %}
+
+{% endblock %}
+

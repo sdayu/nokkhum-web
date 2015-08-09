@@ -8,12 +8,10 @@ pyramid.debug_routematch = false
 pyramid.debug_templates = true
 pyramid.default_locale_name = en
 pyramid.includes = pyramid_tm
-                pyramid_mako
+                pyramid_jinja2
                 pyramid_beaker
 #					pyramid_debugtoolbar
-
-mako.directories = nokkhumweb:templates
-mako.module_directory = /tmp/nokkhum-web/mako
+jinja2.directories = mypkg:templates
 
 nokkhum.auth.secret = nokkhum
 
