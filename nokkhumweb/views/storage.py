@@ -9,13 +9,13 @@ from nokkhumweb.forms import camera_form
 import os
 import urllib
 
-@view_config(route_name='storage.list', permission='authenticated', renderer='/storage/list_file.mako')
+@view_config(route_name='storage.list', permission='authenticated', renderer='/storage/list_file.jinja2')
 def storage_list(request):
 
     file_list = []
     matchdict = request.matchdict
     extension = matchdict['extension']
-    
+
 #    print ("extension: '%s'" % extension)
 #    for cam_id in s3_client.list_file():
 #        camera = models.Camera.objects(id=int(cam_id)).first()
@@ -36,7 +36,7 @@ def storage_list(request):
             processor_id = uri
 #        print ("camera name:", processor_id)
         processor = request.nokkhum_client.processors.get(processor_id)
-    
+
         prefix = ""
         if len(uri[end_pos+1:]) > 0 and uri[end_pos+1:] != processor_id:
             prefix = uri[end_pos:]
@@ -47,21 +47,21 @@ def storage_list(request):
             items = request.nokkhum_client.storage.list(prefix)
         else:
             items = processor.storage
-            
+
         for item in items:
 #            print("item: ", item.__dict__)
-            
+
             path = item.url
-            
+
             download_url = None
             if item.file:
                 view_link = request.route_path('storage.view', extension="/%s%s"%(processor.id, path))
                 download_url = item.download
             else:
                 view_link = request.route_path('storage.list', extension="/%s%s"%(processor.id, path))
-                
+
             delete_link = request.route_path('storage.delete', extension="/%s%s"%(processor.id, path))
-            
+
             file_list.append((item.name, urllib.parse.unquote(view_link), urllib.parse.unquote(delete_link), download_url))
     return dict(
                 project_id=processor.project.id,
@@ -72,18 +72,18 @@ def storage_list(request):
 def delete(request):
     matchdict = request.matchdict
     extension = matchdict['extension']
-    
+
     uri = extension[1:]
     end_pos = uri.find("/")
     if end_pos > 0:
         processor_id = uri[:end_pos]
     else:
         processor_id = uri
-    
+
     key = "/storage"
     identify = extension[extension.find(key):]
     # print("identify: ", identify)
-   
+
     dot_count = identify.rfind(".")
     item = None
     items = None
@@ -91,12 +91,12 @@ def delete(request):
         item = request.nokkhum_client.storage.get(identify)
     else:
         items = request.nokkhum_client.storage.list(identify)
-    
+
     if item:
         request.nokkhum_client.storage.delete(item)
     if items:
         request.nokkhum_client.storage.delete_identify(identify)
-    
+
     url = request.referer
     if not url:
         url = extension
@@ -112,11 +112,11 @@ def delete(request):
 
     return HTTPFound(url)
 
-@view_config(route_name='storage.view', permission='authenticated', renderer='/storage/view.mako')
+@view_config(route_name='storage.view', permission='authenticated', renderer='/storage/view.jinja2')
 def view(request):
     matchdict = request.matchdict
     extension = matchdict['extension']
-    
+
 #    print ("extension:", extension)
     file_type="unknow"
     file_extension = extension[extension.rfind("."):]
@@ -124,18 +124,18 @@ def view(request):
         file_type="image"
     elif file_extension in [".avi", ".ogg", ".ogv", ".mpg", ".webm", ".mp4"]:
         file_type="video"
-    
+
     key = "/storage"
     identify = extension[extension.find(key):]
     # print("identify: ", identify)
-   
+
     item = request.nokkhum_client.storage.get(identify)
-    
+
     key = extension[extension.rfind('/'):]
-    
+
     url         = item.download
     delete_url  = request.route_path("storage.delete", extension=extension)
-    
+
 
     return dict (
                  file_type=file_type,

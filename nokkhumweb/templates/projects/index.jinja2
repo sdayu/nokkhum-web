@@ -43,12 +43,12 @@
 				</div>
 			</td>
 			<td>
-        {{project.camera_number}} :
         <a href="{{request.route_path('cameras.index', project_id=project.id)}}">manage</a>
+        ({{project.camera_number}})
 			</td>
 			<td>
-        {{project.processor_number}} :
-        <a href="{request.route_path('processors.index', project_id=project.id)}}">manage</a>
+        <a href="{{request.route_path('processors.index', project_id=project.id)}}">manage</a>
+        ({{project.processor_number}})
 			</td>
 		</tr>
     {% endfor %}

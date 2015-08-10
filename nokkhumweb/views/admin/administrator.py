@@ -4,8 +4,8 @@ from pyramid.response import Response
 from pyramid.security import authenticated_userid
 
 
-@view_config(route_name='admin.home', permission='role:admin', renderer='/admin/home.mako')
+@view_config(route_name='admin.home', permission='role:admin', renderer='/admin/home.jinja2')
 def home(request):
     return dict()
-    
+
 
