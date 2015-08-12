@@ -6,6 +6,7 @@ from pyramid.response import Response
 from nokkhumweb.forms import processor_form
 
 import json
+import datetime
 
 @view_config(route_name='processors.index', permission='authenticated', renderer='/processors/index.jinja2')
 def index(request):
@@ -17,9 +18,11 @@ def index(request):
     if project is not None:
         processors = project.processors
 
+    import urllib
     return dict(
                 project=project,
-                processors=processors
+                processors=processors,
+                urllib=urllib
                 )
 
 @view_config(route_name='processors.add', permission='authenticated', renderer='/processors/add.jinja2')
@@ -115,9 +118,10 @@ def view(request):
     processor_id = matchdict['processor_id']
 
     processor = request.nokkhum_client.processors.get(processor_id)
-    return dict(
-            processor=processor,
-            project=processor.project
+    return dict(processor=processor,
+                project=processor.project,
+                datetime=datetime,
+                json=json,
             )
 
 @view_config(route_name='processors.delete', permission='authenticated')

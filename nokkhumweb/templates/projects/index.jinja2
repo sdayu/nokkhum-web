@@ -16,10 +16,10 @@
 
 {% block contents %}
 {% if projects %}
-<table class="mdl-data-table mdl-shadow--2dp">
+<table class="mdl-data-table mdl-js-data-tabl">
 	<thead>
 		<tr>
-			<th>Name</th>
+			<th class="mdl-data-table__cell--non-numeric">Name</th>
 			<th>Cameras</th>
 			<th>Processors</th>
 		</tr>
@@ -27,7 +27,7 @@
 	<tbody>
     {% for project in projects %}
 		<tr>
-			<td>
+			<td class="mdl-data-table__cell--non-numeric">
 				<div class="pull-left">
           <a href="{{request.route_path('projects.view', project_id=project.id)}}">
             {{project.name}}

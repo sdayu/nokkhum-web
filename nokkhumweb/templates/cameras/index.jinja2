@@ -1,40 +1,40 @@
-<%inherit file="/base/panel.mako"/>
-<%! import urllib %>
-<%block name='title'>Hello ${request.user.first_name} ${request.user.last_name}</%block>
-<%block name="panel_title">Cameras</%block>
+{% extends "/base/mdl-dashboard.jinja2" %}
+{% block title %}Hello {{request.user.first_name}} {{request.user.last_name}}{% endblock %}
+{% block layout_title %}Cameras{% endblock %}
 
 <%block name="whare_am_i">
-<li><a href="${request.route_path('projects.index')}">Project</a></li>
-<li><a href="${request.route_path('cameras.index', project_id=project.id)}">Camera</a></li>
+<li><a href="{{request.route_path('projects.index')}}">Project</a></li>
+<li><a href="{{request.route_path('cameras.index', project_id=project.id)}}">Camera</a></li>
 </%block>
 
-<%block name="more_body">
+{% block more_body %}
 <section>
-<a href="${request.route_path('cameras.add', project_id=project.id)}">Add camera</a> | 
-<a href="${request.route_path('processors.index', project_id=project.id)}">Processors Index</a>
+<a href="{{request.route_path('cameras.add', project_id=project.id)}}">Add camera</a> | 
+<a href="{{request.route_path('processors.index', project_id=project.id)}}">Processors Index</a>
 </section>
-</%block>
+{% endblock %}
 
-		  		% if cameras:
-				<table class="table table-striped table-bordered table-condensed table-hover">
+{% block contents %}
+		  {% if cameras %}
+				<table class="mdl-data-table mdl-js-data-table">
 					<thead>
 						<tr>
-							<th >Name</th>
-							<th>URL</th>
+							<th class="mdl-data-table__cell--non-numeric">Name</th>
+							<th class="mdl-data-table__cell--non-numeric">URL</th>
 							<th colspan="3" style="text-align: center;">Manager</th>
 						</tr>
 					</thead>
 					<tbody>
-						% for camera in cameras:
+						{% for camera in cameras %}
 						<tr>
-							<td>${camera.name}</td>
-							<td><a href="${camera.video_uri}">${camera.video_uri}</a></td>
-							<td><a href="${request.route_path('cameras.edit', camera_id=camera.id, project_id=project.id)}">edit</a></td>
-							<td><a href="${request.route_path('cameras.delete', camera_id=camera.id, project_id=project.id)}">delete</td>
-							<td><a href="${request.route_path('cameras.view', camera_id=camera.id, project_id=project.id)}">view</td>
+							<td class="mdl-data-table__cell--non-numeric">{{camera.name}}</td>
+              <td class="mdl-data-table__cell--non-numeric"><a href="{{camera.video_uri}}">{{camera.video_uri}}</a></td>
+							<td><a href="{{request.route_path('cameras.edit', camera_id=camera.id, project_id=project.id)}}">edit</a></td>
+							<td><a href="{{request.route_path('cameras.delete', camera_id=camera.id, project_id=project.id)}}">delete</td>
+							<td><a href="{{request.route_path('cameras.view', camera_id=camera.id, project_id=project.id)}}">view</td>
 						</tr>
-						% endfor
+						{% endfor %}
 					</tbody>
 				</table>
-			% endif
-		  	
+		  {% endif %}
+{% endblock %}
