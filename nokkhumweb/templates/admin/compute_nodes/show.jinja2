@@ -1,13 +1,11 @@
-<%inherit file="/base/panel.mako"/>
+{% extends "/base/mdl-dashboard.jinja2" %}
+{% block title %}List Compute Node{% endblock %}
+{% block layout_title %}Compute Node: {{compute_node.name}}{% endblock %}
 
-<%! 
-	import datetime 
-	import json
-%>
 
-<%block name='addition_header'>
+{% block addition_header %}
 
-## angular-nvd3
+{# angular-nvd3 #}
 <script src="/public/bower_components/angular/angular.min.js"></script>
 <meta charset="utf-8">
 <script src="/public/bower_components/d3/d3.js"></script>
@@ -18,15 +16,15 @@
 <script type="text/javascript">
 
 	var app = angular.module("app", ['nvd3']);
-	
+
 	app.factory('Resources', function ($http, $interval) {
-		
+
 		var resources = {cpu:{}, memory:{}, disk:{}};
-		
+
 		function get_data(){
-			var response = $http.get("/apis/admin/compute_nodes/${compute_node.id}/resources");
+			var response = $http.get("/apis/admin/compute_nodes/{{compute_node.id}}/resources");
 			response.success(function(data, status, headers, config) {
-				
+
 				var cpu_used = [];
 				var memory_used = [];
 				var memory_free = [];
@@ -49,7 +47,7 @@
 				resources.memory = {used: memory_used, free: memory_free, total: memory_total};
 				resources.disk = {used: disk_used, free: disk_free, total:disk_total};
             });
-			
+
 			response.error(function(data, status, headers, config) {
                 // alert("AJAX failed!");
             });
@@ -57,10 +55,10 @@
 
 		get_data();
 		$interval(get_data, 10000);
-		
+
         return resources
     });
-	
+
 	app.controller("CPUChartCtrl", function ($scope, Resources) {
 		$scope.resources = Resources
 
@@ -93,16 +91,16 @@
 		            },
 		            yDomain: [0,100],
 		        },
-		        
+
 				title: {
 		            enable: true,
 		            text: 'Compute Node CPU Usage'
 		        }
 		    };
-		
+
 		$scope.data = [];
-		
-	    $scope.$watch( "resources", function(data){ 
+
+	    $scope.$watch( "resources", function(data){
 	    	if(typeof(data.cpu.used) == 'undefined')
 	    		return;
 	    	$scope.data = [{values:data.cpu.used, key:"% CPU used"}];
@@ -111,7 +109,7 @@
 
 	app.controller("MemoryChartCtrl", function ($scope, Resources) {
 		$scope.resources = Resources
-		
+
 		$scope.options = {
 		        chart: {
 		            type: 'lineChart',
@@ -141,26 +139,26 @@
 		            },
 		            forceY:[0]
 		        },
-		        
+
 				title: {
 		            enable: true,
 		            text: 'Compute Node Memory Usage'
 		        }
 		    };
-		    
+
 
 		$scope.data = [];
-	    $scope.$watch( "resources", function(data){ 
+	    $scope.$watch( "resources", function(data){
 	    	if(typeof(data.memory.used) == 'undefined')
 	    		return;
 	    	$scope.data = [{values:data.memory.used, key:"Memory used"}, {values:data.memory.free, key:"Memory free"}, {values:data.memory.total, key:"Memory total"}];
 		   }, true);
-		
+
 		});
 
 	app.controller("DiskChartCtrl", function ($scope, Resources) {
 		$scope.resources = Resources
-		
+
 		$scope.options = {
 		        chart: {
 		            type: 'lineChart',
@@ -190,116 +188,117 @@
 		            },
 		            forceY:[0]
 		        },
-		        
+
 				title: {
 		            enable: true,
 		            text: 'Compute Node Disk Usage'
 		        }
 		    };
-		    
+
 
 		$scope.data = [];
-	    $scope.$watch( "resources", function(data){ 
+	    $scope.$watch( "resources", function(data){
 	    	if(typeof(data.cpu.used) == 'undefined')
 	    		return;
 	    	$scope.data = [{values:data.disk.used, key:"Disk used"}, {values:data.disk.free, key:"Disk free"}, {values:data.disk.total, key:"Disk total"}];
 		   }, true);
-		
+
 		});
 </script>
 
-</%block>
+{% endblock %}
 
-<%block name='title'>List Compute Node</%block>
 
-<%block name="where_am_i">
-<li><a href="${request.route_path('admin.home')}">Admin</a></li>
-<li><a href="${request.route_path('admin.compute_nodes.list')}">Compute Node</a></li>
-</%block>
-<%block name="panel_title">Show Compute Node</%block>
+{% block where_am_i %}
+<li><a href="{{request.route_path('admin.home')}}">Admin</a></li>
+<li><a href="{{request.route_path('admin.compute_nodes.list')}}">Compute Node</a></li>
+{% endblock %}
 
+{% block contents %}
 <section>
 	<div ng-app="app">
-		<div class="row">
-			<div class="col-md-4" ng-controller="CPUChartCtrl">
-				CPU Resource 
+		<div class="mdl-grid">
+			<div class="mdl-cell mdl-cell--4-col" ng-controller="CPUChartCtrl">
+				CPU Resource
 				<nvd3 options='options' data='data'></nvd3>
 			</div>
-			<div class="col-md-4" ng-controller="MemoryChartCtrl">
+			<div class="mdl-cell mdl-cell--4-col" ng-controller="MemoryChartCtrl">
 				Memory Resource
 				<nvd3 options='options' data='data'></nvd3>
 			</div>
-			<div class="col-md-4" ng-controller="DiskChartCtrl">
+			<div class="mdl-cell mdl-cell--4-col" ng-controller="DiskChartCtrl">
 				Disk Resource
 				<nvd3 options='options' data='data'></nvd3>
 			</div>
 		</div>
 	</div>
-	
+
 	<ul>
-		<li><b>Compute Node id: </b><span style="color: red;">${compute_node.id}</span></li>
-		<li><b>name: </b> ${compute_node.name}</li>
-		<li><b>system: </b> ${compute_node.system}</li>
-		<li><b>host: </b> ${compute_node.host}</li>
-		<li><b>machine: </b> ${compute_node.machine}</li>
-		<li><b>create date: </b> ${compute_node.created_date}</li>
-		<li><b>update date: </b> ${compute_node.updated_date}</li>
-		<li><b>last resource report date: </b> ${compute_node.updated_resource_date}</li>
-		<li><b>diff time: </b> ${(datetime.datetime.now() - compute_node.updated_resource_date).seconds} s</li>
-		% if compute_node.online:
+		<li><b>Compute Node id: </b><span style="color: red;">{{compute_node.id}}</span></li>
+		<li><b>name: </b> {{compute_node.name}}</li>
+		<li><b>system: </b> {{compute_node.machine_specification.system}}</li>
+		<li><b>host: </b> {{compute_node.host}}</li>
+		<li><b>machine: </b> {{compute_node.machine_specification.machine}}</li>
+		<li><b>create date: </b> {{compute_node.created_date}}</li>
+		<li><b>update date: </b> {{compute_node.updated_date}}</li>
+		<li><b>last resource report date: </b> {{compute_node.updated_resource_date}}</li>
+		<li><b>diff time: </b> {{(datetime.datetime.now() - compute_node.updated_resource_date).seconds}} s</li>
+		{% if compute_node.online %}
 		<li><b>status: </b> <span style="color: red;">Ready</span></li>
-		% else:
+		{% else %}
 		<li><b>status: </b> <span style="color: red;">Disconnect</span></li>
-		% endif
-		% if compute_node.is_vm:
+		{% endif %}
+		{% if compute_node.is_vm %}
 		<li><b>VM:</b>
 			<ul>
-				<li><b><i>name:</i></b> ${compute_node.vm.name}</li>
-				<li><b><i>image id:</i></b> ${compute_node.vm.image_id}</li>
-				<li><b><i>instance id:</i></b> ${compute_node.vm.instance_id}</li>
-				<li><b><i>instance type:</i></b> ${compute_node.vm.instance_type}</li>
-				<li><b><i>ip_address:</i></b> ${compute_node.vm.ip_address}</li>
-				<li><b><i>private_ip_address:</i></b> ${compute_node.vm.private_ip_address}</li>
-				<li><b><i>started_instance_date:</i></b> ${compute_node.vm.started_instance_date}</li>
-				<li><b><i>status:</i></b> ${compute_node.vm.status}</li>
-				<li><b><i>extra:</i></b> <pre>${json.dumps(compute_node.vm.extra, indent=4) | n}</pre></li>
-				
+				<li><b><i>name:</i></b> {{compute_node.vm.name}}</li>
+				<li><b><i>image id:</i></b> {{compute_node.vm.image_id}}</li>
+				<li><b><i>instance id:</i></b> {{compute_node.vm.instance_id}}</li>
+				<li><b><i>instance type:</i></b> {{compute_node.vm.instance_type}}</li>
+				<li><b><i>ip_address:</i></b> {{compute_node.vm.ip_address}}</li>
+				<li><b><i>private_ip_address:</i></b> {{compute_node.vm.private_ip_address}}</li>
+				<li><b><i>started_instance_date:</i></b> {{compute_node.vm.started_instance_date}}</li>
+				<li><b><i>status:</i></b> {{compute_node.vm.status}}</li>
+				<li><b><i>extra:</i></b> <pre>{{json.dumps(compute_node.vm.extra, indent=4) | e}}</pre></li>
+
 			</ul>
 		</li>
-		% endif
-		
+		{% endif %}
+
 		<li><b>CPU:</b>
 			<ul>
-				<li><b><i>count:</i></b> ${compute_node.cpu.count}</li>
-				<li><b><i>usage:</i></b> ${compute_node.cpu.used}</li>
-				<li><b><i>all CPU:</i></b> ${compute_node.cpu.used_per_cpu}</li>
+				<li><b><i>count:</i></b> {{compute_node.cpu.count}}</li>
+				<li><b><i>usage:</i></b> {{compute_node.cpu.used}}</li>
+				<li><b><i>all CPU:</i></b> {{compute_node.cpu.used_per_cpu}}</li>
 			</ul>
 		</li>
 		<li><b>RAM:</b>
 			<ul>
-				<li><b><i>total:</i></b> ${compute_node.memory.total}</li>
-				<li><b><i>used:</i></b> ${compute_node.memory.used}</li>
-				<li><b><i>free:</i></b> ${compute_node.memory.free}</li>
+				<li><b><i>total:</i></b> {{compute_node.memory.total}}</li>
+				<li><b><i>used:</i></b> {{compute_node.memory.used}}</li>
+				<li><b><i>free:</i></b> {{compute_node.memory.free}}</li>
 			</ul>
 		</li>
 		<li><b>Disk:</b>
 			<ul>
-				<li><b><i>total:</i></b> ${compute_node.disk.total}</li>
-				<li><b><i>used:</i></b>${compute_node.disk.used}</li>
-				<li><b><i>free:</i></b> ${compute_node.disk.free}</li>
+				<li><b><i>total:</i></b> {{compute_node.disk.total}}</li>
+				<li><b><i>used:</i></b> {{compute_node.disk.used}}</li>
+				<li><b><i>free:</i></b> {{compute_node.disk.free}}</li>
 			</ul>
 		</li>
 		<li>
 			<b>processors:</b>
-			<% processors = compute_node.manager.get_processors(compute_node.id) %>
-			% if len(processors) > 0:
+			{% set processors = compute_node.manager.get_processors(compute_node.id) %}
+			{% if processors|count > 0 %}
 				<ul>
-					% for processor in processors:
-					<li>${processor.name}:<a href="${request.route_path('admin.processors.show', processor_id=processor.id)}">${processor.id}</a></li>
-					% endfor
+					{% for processor in processors %}
+					<li>{{processor.name}}:<a href="{{request.route_path('admin.processors.show', processor_id=processor.id)}}">{{processor.id}}</a></li>
+					{% endfor %}
 				</ul>
-			% endif
+			{% endif %}
 		</li>
-		<li><b>extra:</b> <pre>${json.dumps(compute_node.extra, indent=4) | n}</pre></li>
+		<li><b>extra:</b> <pre>{{json.dumps(compute_node.extra, indent=4) | e}}</pre></li>
 	</ul>
 </section>
+
+{% endblock %}

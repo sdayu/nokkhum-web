@@ -1,40 +1,41 @@
-<%inherit file="/base/panel.mako"/>
-<%block name='title'>Administrator Home</%block>
+{% extends "/base/mdl-dashboard.jinja2" %}
+{% block title %}Administrator Home{% endblock %}
+{% block layout_title %}This is Administrator Home{% endblock %}
 
-<%block name="where_am_i">
-<li><a href="${request.route_path('admin.home')}">Admin</a></li>
-</%block>
+{% block where_am_i %}
+<li><a href="{{request.route_path('admin.home')}}">Admin</a></li>
+{% endblock %}
 
-<%block name="panel_title">This is Administrator Home</%block>
-
+{% block contents %}
 <nav>
 	<h3>
 	List of tool
 	</h3>
 	<ul>
 		<li>
-			<a href="${request.route_path('admin.command_queue.list')}">Display camera command queue</a>
+			<a href="{{request.route_path('admin.command_queue.list')}}">Display camera command queue</a>
 		</li>
 		<li>
-			<a href="${request.route_path('admin.command_log.list')}">Display command log</a>
+			<a href="{{request.route_path('admin.command_log.list')}}">Display command log</a>
 		</li>
 		<li>
-			<a href="${request.route_path('admin.compute_nodes.list')}">Display compute nodes</a>
+			<a href="{{request.route_path('admin.compute_nodes.list')}}">Display compute nodes</a>
 		</li>
 		<li>
-			<a href="${request.route_path('admin.cameras.list')}">Display cameras</a>
+			<a href="{{request.route_path('admin.cameras.list')}}">Display cameras</a>
 		</li>
 		<li>
-			<a href="${request.route_path('admin.processors.list')}">Display processors</a>
+			<a href="{{request.route_path('admin.processors.list')}}">Display processors</a>
 		</li>
 		<li>
-			<a href="${request.route_path('admin.processor_running_fail.list')}">Display processor running fail</a>
+			<a href="{{request.route_path('admin.processor_running_fail.list')}}">Display processor running fail</a>
 		</li>
 		<li>
-			<a href="${request.route_path('admin.users.list')}">Display users</a>
+			<a href="{{request.route_path('admin.users.list')}}">Display users</a>
 		</li>
 		<li>
-			<a href="${request.route_path('admin.cache.stat')}">Cache Statistic</a>
+			<a href="{{request.route_path('admin.cache.stat')}}">Cache Statistic</a>
 		</li>
 	</ul>
 </nav>
+{% endblock %}

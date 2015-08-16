@@ -16,7 +16,8 @@
 
 {% block contents %}
 {% if projects %}
-<table class="mdl-data-table mdl-js-data-tabl">
+<div align="center">
+<table class="mdl-data-table mdl-js-data-table"> 
 	<thead>
 		<tr>
 			<th class="mdl-data-table__cell--non-numeric">Name</th>
@@ -54,6 +55,7 @@
     {% endfor %}
 	</tbody>
 </table>
+</div>
 {% endif %}
 {% endblock %}
 

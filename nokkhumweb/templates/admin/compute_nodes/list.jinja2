@@ -1,0 +1,74 @@
+{% extends "/base/mdl-dashboard.jinja2" %}
+{% block title %}List Compute Node{% endblock %}
+{% block layout_title %}List Compute Node{% endblock %}
+
+{% block where_am_i %}
+<li><a href="{{request.route_path('admin.home')}}">Admin</a></li>
+<li><a href="{{request.route_path('admin.compute_nodes.list')}}">Compute Node</a></li>
+{% endblock %}
+
+{% block contents %}
+<section>
+	<table class="mdl-data-table mdl-js-data-table">
+		<colgroup>
+      		<col style="width: 10%"/>
+      		<col style="width: 20%"/>
+      		<col style="width: 10%"/>
+      		<col style="width: 5%"/>
+      		<col style="width: 5%"/>
+      		<col style="width: 5%"/>
+      		<col style="width: 5%"/>
+      		<col style="width: 5%"/>
+      		<col style="width: 10%"/>
+      		<col style="width: 5%"/>
+   		</colgroup>
+		<thead>
+  			<tr>
+    			<th rowspan="2" class="mdl-data-table__cell--non-numeric">Name</th>
+    			<th rowspan="2" class="mdl-data-table__cell--non-numeric">Host</th>
+    			<th rowspan="2" class="mdl-data-table__cell--non-numeric">Status</th>
+    			<th colspan="2">CPU</th>
+    			<th colspan="3">RAM(M)</th>
+    			<th colspan="3">Disk(M)</th>
+    			<th rowspan="2" class="mdl-data-table__cell--non-numeric">Last update</th>
+    			<th rowspan="2">Operation</th>
+  			</tr>
+  			<tr style="vertical-align: bottom">
+         		<th>count</th>
+         		<th>usage</th>
+         		<th>total</th>
+         		<th>used</th>
+         		<th>free</th>
+         		<th>total</th>
+         		<th>used</th>
+         		<th>free</th>
+      		</tr>
+		</thead>
+		<tbody>
+		{% for compute_node in compute_nodes %}
+			<tr>
+				<td class="mdl-data-table__cell--non-numeric"><a href="{{request.route_path('admin.compute_nodes.show', compute_node_id=compute_node.id)}}">{{compute_node.name}}</a></td>
+				<td class="mdl-data-table__cell--non-numeric">{{compute_node.host}} is VM: {{compute_node.is_vm}}</td>
+				<td class="mdl-data-table__cell--non-numeric">
+				{% if compute_node.online %}
+					<span style="color: red;">Ready</span>
+				{% else %}
+					<span style="color: red;">Disconnect</span>
+				{% endif %}
+				</td>
+				<td>{{compute_node.cpu.count}}</td>
+				<td>{{compute_node.cpu.used}}</td>
+				<td>{{compute_node.memory.total/1000000}}</td>
+				<td>{{compute_node.memory.used/1000000}}</td>
+				<td>{{compute_node.memory.free/1000000}}</td>
+				<td>{{compute_node.disk.total/1000000}}</td>
+				<td>{{compute_node.disk.used/1000000}}</td>
+				<td>{{compute_node.disk.free/1000000}}</td>
+				<td>{{"%.2f"%(datetime.datetime.now() - compute_node.updated_resource_date).total_seconds()}} s</td>
+				<td class="mdl-data-table__cell--non-numeric"><a href="{{request.route_path('admin.compute_nodes.delete', compute_node_id=compute_node.id)}}">Delete</a></td>
+			</tr>
+		{% endfor %}
+		</tbody>
+	</table>
+</section>
+{% endblock contents %}

@@ -66,6 +66,7 @@ def storage_list(request):
     return dict(
                 project_id=processor.project.id,
                 file_list=file_list,
+                urllib=urllib
                 )
 
 @view_config(route_name='storage.delete', permission='authenticated')
@@ -141,4 +142,5 @@ def view(request):
                  file_type=file_type,
                  url=urllib.request.url2pathname(url),
                  delete_url=urllib.request.url2pathname(delete_url),
+                 urllib=urllib
                  )

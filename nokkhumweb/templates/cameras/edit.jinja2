@@ -30,6 +30,9 @@ $(document).ready(function(){
 {% endblock %}
 
 {% block contents %}
+<div class="mdl-grid">
+  <div class="mdl-cell mdl-cell--2-col"></div>
+  <div class="mdl-cell mdl-cell--6-col">
   <form for="form" action="{{request.current_route_path()}}" method="POST">
     {# {{form.name(placeholder="Enter camera name")}} <br/> #}
     {{form.name()}} <br/>
@@ -57,6 +60,7 @@ $(document).ready(function(){
 	    <input type="submit" value="Edit" />
 	</div>
 </form>
-
+</div>
+</div>
 {% endblock %}
 

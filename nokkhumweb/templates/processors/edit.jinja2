@@ -1,50 +1,49 @@
-<%inherit file="/base/panel.mako"/>
-<%block name='title'>Processor Editing</%block>
-<%block name='panel_title'>Processor: ${processor.id}</%block>
+{% extends "/base/mdl-dashboard.jinja2" %}
+{%block title %}Processor Editing{% endblock %}
+{%block layout_title %}Processor: {{processor.id}}{% endblock %}
 
-<%block name="addition_header">
-## codemirror2 for html editor
-<link rel="stylesheet" href="/libs/codemirror/lib/codemirror.css">
-<script src="/libs/codemirror/lib/codemirror.js"></script>
-<script src="/libs/codemirror/addon/runmode/runmode.js"></script>
-<script src="/libs/codemirror/mode/xml/xml.js"></script>
-<script src="/libs/codemirror/mode/javascript/javascript.js"></script>
-<script src="/libs/codemirror/mode/css/css.js"></script>
-<script src="/libs/codemirror/mode/htmlmixed/htmlmixed.js"></script>
+{% block addition_header %}
+{{super()}}
+{# codemirror2 for html editor #}
+<script src="/public/bower_components/jquery/dist/jquery.min.js"></script>
+<link rel="stylesheet" href="/public/bower_components/codemirror/lib/codemirror.css">
+<script src="/public/bower_components/codemirror/lib/codemirror.js"></script>
+<script src="/public/bower_components/codemirror/addon/runmode/runmode.js"></script>
+<script src="/public/bower_components/codemirror/mode/xml/xml.js"></script>
+<script src="/public/bower_components/codemirror/mode/javascript/javascript.js"></script>
+<script src="/public/bower_components/codemirror/mode/css/css.js"></script>
+<script src="/public/bower_components/codemirror/mode/htmlmixed/htmlmixed.js"></script>
 
 <style>. {border-top: 1px solid black; border-bottom: 1px solid black;}</style>
 
-</%block>
+{% endblock %}
 
-<%block name="where_am_i">
+{% block where_am_i %}
 <li><a href="${request.route_path('projects.index', project_id=request.matchdict['project_id'])}">Projects</a></li>
 <li><a href="${request.route_path('processors.index', project_id=request.matchdict['project_id'])}">Processors</a></li>
-</%block>
+{% endblock %}
 
-<form role="form" action="${request.current_route_path()}" method="POST">
+{% block contents %}
+<form role="form" action="{{request.current_route_path()}}" method="POST">
 	<div class="form-group">
 		<label for="processor_name">Name</label>
-		${form.name(class_='form-control', id='processor_name', placeholder='Enter processor name')}
-		${form.get_error('name')}
+		{{form.name(class_='form-control', id='processor_name', placeholder='Enter processor name')}}
 	</div>
  	<div class="form-group">
 		<label for="camera">Camera</label>
-		${form.camera(class_='form-control')}
-		${form.get_error('camera')}
+		{{form.camera(class_='form-control')}}
 	</div>
 	<div class="form-group">
 		<label for="storage_period">Storage period (days)</label>
-		${form.storage_period(class_='form-control', id='storage_period', min='0', max='360')}
-		${form.get_error('storage_period')}
+		{{form.storage_period(class_='form-control', id='storage_period', min='0', max='360')}}
 	</div>
 	<div class="form-group">
 		<label for="image_processors">Image Processor Configuration</label>
-		${form.image_processors(class_='form-control')}
-		${form.get_error('image_processors')}
+		{{form.image_processors(class_='form-control')}}
 	</div>
  	<button type="submit" class="btn btn-default">Submit</button>
 </form>
-<%include file="/base/image_processor.mako"/>
+{% include "/base/image_processor.jinja2" %}
 
 <script>
       var editor = CodeMirror.fromTextArea(document.getElementById("image_processors"), {mode: "javascript", tabMode: "indent", lineNumbers: true});
@@ -54,3 +53,5 @@
           CodeMirror.runMode($(e).text(), "javascript", $(e)[0]);
       });
 </script>
+
+{% endblock %}

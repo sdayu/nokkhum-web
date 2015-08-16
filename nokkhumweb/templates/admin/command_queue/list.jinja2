@@ -1,0 +1,59 @@
+{% extends "/base/mdl-dashboard.jinja2" %}
+{% block title %}List Command Queue{% endblock %}
+
+{% block layout_title %}List Command Queue{% endblock %}
+<%block name="where_am_i">
+<li><a href="{{request.route_path('admin.home')}}">Admin</a></li>
+<li><a href="{{request.route_path('admin.command_queue.list')}}">Command Queue</a></li>
+</%block>
+
+{% block contents %}
+<section>
+<span style="font-weight: bold;">Current Date:</span> {{datetime.datetime.now()}}
+</section>
+
+<section>
+	<table class="mdl-data-table mdl-js-data-table">
+		<colgroup>
+      		<col style="width: 10%"/>
+      		<col style="width: 10%"/>
+      		<col style="width: 10%"/>
+      		<col style="width: 10%"/>
+      		<col style="width: 10%"/>
+      		<col style="width: 10%"/>
+      		<col style="width: 20%"/>
+      		<col style="width: 20%"/>
+   		</colgroup>
+		<thead>
+  			<tr>
+    			<th class="mdl-data-table__cell--non-numeric">ID</th>
+    			<th class="mdl-data-table__cell--non-numeric">Processor Name</th>
+    			<th class="mdl-data-table__cell--non-numeric">Owner</th>
+    			<th class="mdl-data-table__cell--non-numeric">Action</th>
+    			<th class="mdl-data-table__cell--non-numeric">Status</th>
+    			<th class="mdl-data-table__cell--non-numeric">Date</th>
+    			<th class="mdl-data-table__cell--non-numeric">Update Date</th>
+    			<th>Diff Time</th>
+  			</tr>
+		</thead>
+		<tbody>
+      {% for command in camera_command_queue %}
+			<tr>
+        <td class="mdl-data-table__cell--non-numeric"><a href="{{request.route_path('admin.command_queue.show', command_queue_id=command.id)}}">{{command.id}}</a></td>
+        <td class="mdl-data-table__cell--non-numeric"><a href="{{request.route_path('admin.processors.show', processor_id=command.processor_command.processor.id)}}">{{command.processor_command.processor.name}}</a></td>
+        {% if command.processor_command.command_type == "user" %}
+        <td class="mdl-data-table__cell--non-numeric"><a href="{{request.route_path('admin.users.show', user_id=command.processor_command.owner.id)}}">{{command.processor_command.owner.email}}</a></td>
+        {% else %}
+				<td class="mdl-data-table__cell--non-numeric">system</td>
+        {% endif %}
+        <td class="mdl-data-table__cell--non-numeric">{{command.processor_command.action}}</td>
+        <td class="mdl-data-table__cell--non-numeric">{{command.processor_command.status}}</td>
+				<td class="mdl-data-table__cell--non-numeric">{{command.processor_command.commanded_date}}</td>
+        <td class="mdl-data-table__cell--non-numeric">{{command.processor_command.updated_date}}</td>
+				<td>{{(datetime.datetime.now()-command.processor_command.updated_date).total_seconds()}} s</td>
+			</tr>
+      {% endfor %}
+		</tbody>
+	</table>
+</section>
+{% endblock %}
