@@ -36,7 +36,7 @@
     			<td>{{processor.operating.status}}</td>
     			<td>{{(datetime.datetime.now()-processor.operating.updated_date).seconds}} s</td>
     			<td>
-    				{% if processor.operating.compute_node is not None %}
+    				{% if processor.operating.compute_node %}
 					  <a href="{{request.route_path('admin.compute_nodes.show', compute_node_id=processor.operating.compute_node.id)}}">{{processor.operating.compute_node.host}}</a>
 					  {% else %}
 					  Waiting
