@@ -21,3 +21,16 @@ def show(request):
                 processor=processor,
                 datetime=datetime
                 )
+
+@view_config(route_name='admin.processors.operating', permission='role:admin')
+def operating(request):
+    matchdict = request.matchdict
+    processor_id = matchdict['processor_id']
+    action = matchdict['action']
+
+    processor = request.nokkhum_client.admin.processors.get(processor_id)
+    request.nokkhum_client.admin.processor_operating.update(processor, action)
+    return HTTPFound(
+            location=request.route_path('admin.processors.show',
+                                        processor_id=processor_id))
+

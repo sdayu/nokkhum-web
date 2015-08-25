@@ -73,6 +73,7 @@ def add_routes(config):
 
     config.add_route('admin.processors.list', '/admin/processors/list')
     config.add_route('admin.processors.show', '/admin/processors/show/{processor_id}')
+    config.add_route('admin.processors.operating', '/admin/processors/{processor_id}/operating/{action}')
 
     config.add_route('admin.processor_commands.show', '/admin/processor_commands/{processor_command_id}')
 
