@@ -1,10 +1,10 @@
 {% extends "/base/mdl-dashboard.jinja2" %}
-{% block title %}List All processors{% endblock %}
-{% block layout_title %}List All processors{% endblock %}
+{% block title %}List All cameras{% endblock %}
+{% block layout_title %}List All cameras{% endblock %}
 
 {% block where_am_i %}
 <li><a href="{{ request.route_path('admin.home') }}">Admin</a></li>
-<li><a href="{{ request.route_path('admin.processors.list') }}">processors</a></li>
+<li><a href="{{ request.route_path('admin.cameras.list') }}">cameras</a></li>
 {% endblock %}
 
 {% block contents %}
@@ -19,15 +19,16 @@
   			</tr>
 		</thead>
 		<tbody>
-		{% for fail in run_fail_status %}
-        {% set processor = fail.processor %}
+		{% for camera in cameras %}
   			<tr>
     			<td class="mdl-data-table__cell--non-numeric">
-    				<a href="{{ request.route_path('admin.processors.show', processor_id=processor.id) }}">{{ processor.id }}
+            <a href="{{ request.route_path('admin.cameras.show', camera_id=camera.id) }}">{{ camera.id }}<br/>
+              {{ camera.name }}
+            </a>
     			</td>
-    			<td class="mdl-data-table__cell--non-numeric">{{ processor.updated_date }}</td>
-    			<td class="mdl-data-table__cell--non-numeric">{{ processor.owner.email }}</td>
-    			<td class="mdl-data-table__cell--non-numeric">{{ processor.status }}</td>
+    			<td class="mdl-data-table__cell--non-numeric">{{ camera.updated_date }}</td>
+    			<td class="mdl-data-table__cell--non-numeric">{{ camera.owner.email }}</td>
+    			<td class="mdl-data-table__cell--non-numeric">{{ camera.status }}</td>
   			</tr>
   		{% endfor %}
 		</tbody>
