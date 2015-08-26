@@ -44,12 +44,10 @@
 				</div>
 			</td>
 			<td>
-        <a href="{{request.route_path('cameras.index', project_id=project.id)}}">manage</a>
-        ({{project.camera_number}})
+        <span class="material-icons mdl-badge" data-badge="{{project.camera_number}}"><a href="{{request.route_path('cameras.index', project_id=project.id)}}">settings</a></span>
 			</td>
 			<td>
-        <a href="{{request.route_path('processors.index', project_id=project.id)}}">manage</a>
-        ({{project.processor_number}})
+        <span class="material-icons mdl-badge" data-badge="{{project.processor_number}}"><a href="{{request.route_path('processors.index', project_id=project.id)}}">settings</a></span>
 			</td>
 		</tr>
     {% endfor %}

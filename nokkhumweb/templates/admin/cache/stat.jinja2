@@ -1,12 +1,14 @@
-<%inherit file="/base/base.mako"/>
-<%block name='title'>Cache File Atatistic</%block>
-<%! import datetime %>
+{% extends "/base/mdl-dashboard.jinja2" %}
+{% block title %}Cache File Atatistic{% endblock %}
+
+{% block contents %}
 <h1>Show Cache File Statistic</h1>
 <section>
-% if not cache.cache_dir:
+{% if not cache.cache_dir %}
 	<article>Not cache directory found</article>
-% else:
-	<article>There are <strong>${cache.file_count}</strong> files in cache.</article>
-	<a href="${request.route_path('admin.cache.clear')}">Clear</a>
-% endif
+{% else %}
+	<article>There are <strong>{{ cache.file_count }}</strong> files in cache.</article>
+	<a href="{{ request.route_path('admin.cache.clear') }}">Clear</a>
+{% endif %}
 </section>
+{% endblock %}

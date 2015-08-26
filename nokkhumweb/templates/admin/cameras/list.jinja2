@@ -1,34 +1,36 @@
-<%inherit file="/base/panel.mako"/>
-<%block name='title'>List All Cameras</%block>
-<%! import datetime %>
+{% extends "/base/mdl-dashboard.jinja2" %}
+{% block title %}List All processors{% endblock %}
+{% block layout_title %}List All processors{% endblock %}
 
-<%block name="where_am_i">
-<li><a href="${request.route_path('admin.home')}">Admin</a></li>
-<li><a href="${request.route_path('admin.cameras.list')}">Cameras</a></li>
-</%block>
-<%block name='panel_title'>List All Cameras</%block>
+{% block where_am_i %}
+<li><a href="{{ request.route_path('admin.home') }}">Admin</a></li>
+<li><a href="{{ request.route_path('admin.processors.list') }}">processors</a></li>
+{% endblock %}
 
+{% block contents %}
 <section>
-	<table class="table table-striped table-bordered table-condensed table-hover">
+	<table class="mdl-data-table mdl-js-data-table">
 		<thead>
   			<tr>
-    			<th>ID</th>
-    			<th>Update</th>
-    			<th>Owner</th>
-    			<th>Status</th>
+    			<th class="mdl-data-table__cell--non-numeric">ID</th>
+    			<th class="mdl-data-table__cell--non-numeric">Update</th>
+    			<th class="mdl-data-table__cell--non-numeric">Owner</th>
+    			<th class="mdl-data-table__cell--non-numeric">Status</th>
   			</tr>
 		</thead>
 		<tbody>
-		% for camera in cameras:
+		{% for fail in run_fail_status %}
+        {% set processor = fail.processor %}
   			<tr>
-    			<td>
-    				<a href="${request.route_path('admin.cameras.show', camera_id=camera.id)}">${camera.id}
+    			<td class="mdl-data-table__cell--non-numeric">
+    				<a href="{{ request.route_path('admin.processors.show', processor_id=processor.id) }}">{{ processor.id }}
     			</td>
-    			<td>${camera.updated_date}</td>
-    			<td>${camera.owner.email}</td>
-    			<td>${camera.status}</td>
+    			<td class="mdl-data-table__cell--non-numeric">{{ processor.updated_date }}</td>
+    			<td class="mdl-data-table__cell--non-numeric">{{ processor.owner.email }}</td>
+    			<td class="mdl-data-table__cell--non-numeric">{{ processor.status }}</td>
   			</tr>
-  		% endfor
+  		{% endfor %}
 		</tbody>
 	</table>
 </section>
+{% endblock %}
