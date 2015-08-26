@@ -11,48 +11,50 @@
 <span style="font-weight: bold;">Current Date:</span> {{ datetime.datetime.now() }}
 </section>
 
+{% block contents %}
 <section>
-	<table class="table table-striped table-bordered table-condensed table-hover">
+	<table class="mdl-data-table mdl-js-data-table">
 		<thead>
   			<tr>
-    			<th>ID</th>
-    			<th>Processor Name</th>
-    			<th>Owner</th>
-    			<th>Action</th>
-    			<th>Date</th>
-    			<th>Complete Date</th>
-    			<th>Compute Node</th>
-    			<th>Status</th>
-    			<th>Message</th>
+    			<th class="mdl-data-table__cell--non-numeric">ID</th>
+    			<th class="mdl-data-table__cell--non-numeric">Processor Name</th>
+    			<th class="mdl-data-table__cell--non-numeric">Owner</th>
+    			<th class="mdl-data-table__cell--non-numeric">Action</th>
+    			<th class="mdl-data-table__cell--non-numeric">Date</th>
+    			<th class="mdl-data-table__cell--non-numeric">Complete Date</th>
+    			<th class="mdl-data-table__cell--non-numeric">Compute Node</th>
+    			<th class="mdl-data-table__cell--non-numeric">Status</th>
+    			<th class="mdl-data-table__cell--non-numeric">Message</th>
   			</tr>
 		</thead>
 		<tbody>
 			{% for command in processor_commands %}
 			<tr>
-				<td>
+				<td class="mdl-data-table__cell--non-numeric">
 					<a href="{{ request.route_path('admin.processor_commands.show', processor_command_id=command.id)}}">{{ command.id }}</a>
 				</td>
-				<td>
+				<td class="mdl-data-table__cell--non-numeric">
 				<a href="{{ request.route_path('admin.processors.show', processor_id=command.processor.id)}}">{{ command.processor.id }}</a>
-				: {{ command.processor.name}}
+        <br/>{{ command.processor.name}}
 				</td>
 				{% if command.owner %}
-				<td><a href="{{ request.route_path('admin.users.show', user_id=command.owner.id)}}">{{ command.owner.email }}</a></td>
+				<td class="mdl-data-table__cell--non-numeric"><a href="{{ request.route_path('admin.users.show', user_id=command.owner.id)}}">{{ command.owner.email }}</a></td>
 				{% else %}
-				<td>{{ command.command_type }}</td>
+				<td class="mdl-data-table__cell--non-numeric">{{ command.command_type }}</td>
 				{% endif %}
-				<td>{{ command.action }}</td>
-				<td>{{ command.commanded_date }}</td>
-				<td>{{ command.completed_date }}</td>
+				<td class="mdl-data-table__cell--non-numeric">{{ command.action }}</td>
+				<td class="mdl-data-table__cell--non-numeric">{{ command.commanded_date }}</td>
+				<td class="mdl-data-table__cell--non-numeric">{{ command.completed_date }}</td>
 				{% if command.compute_node %}
-				<td><a href="{{ request.route_path('admin.compute_nodes.show', compute_node_id=command.compute_node.id)}}">{{ command.compute_node.name }}</a></td>
+				<td class="mdl-data-table__cell--non-numeric"><a href="{{ request.route_path('admin.compute_nodes.show', compute_node_id=command.compute_node.id)}}">{{ command.compute_node.name }}</a></td>
 				{% else %}
-				<td>None</td>
+				<td class="mdl-data-table__cell--non-numeric">None</td>
 				{% endif %}
-				<td>{{ command.status }}</td>
-				<td>{{ command.message.replace("\n", "<br/>") | e }}</td>
+				<td class="mdl-data-table__cell--non-numeric">{{ command.status }}</td>
+				<td class="mdl-data-table__cell--non-numeric">{{ command.message.replace("\n", "<br/>") | e }}</td>
 			</tr>
 			{% endfor %}
 		</tbody>
 	</table>
 </section>
+{% endblock %}
