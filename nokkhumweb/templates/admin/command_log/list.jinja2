@@ -1,15 +1,14 @@
-<%inherit file="/base/panel.mako"/>
-<%block name='title'>List Command Log</%block>
-<%! import datetime %>
+{% extends "/base/mdl-dashboard.jinja2" %}
+{% block title %}List Command Log{% endblock %}
+{% block layout_title %}List Command Log{% endblock %}
 
-<%block name="where_am_i">
-<li><a href="${request.route_path('admin.home')}">Admin</a></li>
-<li><a href="${request.route_path('admin.command_log.list')}">Command Log</a></li>
-</%block>
+{% block where_am_i %}
+<li><a href="{{ request.route_path('admin.home')}}">Admin</a></li>
+<li><a href="{{ request.route_path('admin.command_log.list')}}">Command Log</a></li>
+{% endblock %}
 
-<%block name="panel_title">List Command Log</%block>
 <section>
-<span style="font-weight: bold;">Current Date:</span> ${datetime.datetime.now()}
+<span style="font-weight: bold;">Current Date:</span> {{ datetime.datetime.now() }}
 </section>
 
 <section>
@@ -28,32 +27,32 @@
   			</tr>
 		</thead>
 		<tbody>
-			% for command in processor_commands:
+			{% for command in processor_commands %}
 			<tr>
 				<td>
-					<a href="${request.route_path('admin.processor_commands.show', processor_command_id=command.id)}">${command.id}</a>
+					<a href="{{ request.route_path('admin.processor_commands.show', processor_command_id=command.id)}}">{{ command.id }}</a>
 				</td>
 				<td>
-				<a href="${request.route_path('admin.processors.show', processor_id=command.processor.id)}">${command.processor.id}</a>
-				: ${command.processor.name}
+				<a href="{{ request.route_path('admin.processors.show', processor_id=command.processor.id)}}">{{ command.processor.id }}</a>
+				: {{ command.processor.name}}
 				</td>
-				% if command.owner:
-				<td><a href="${request.route_path('admin.users.show', user_id=command.owner.id)}">${command.owner.email}</a></td>
-				% else:
-				<td>${command.command_type}</td>
-				% endif
-				<td>${command.action}</td>
-				<td>${command.commanded_date}</td>
-				<td>${command.completed_date}</td>
-				% if command.compute_node:
-				<td><a href="${request.route_path('admin.compute_nodes.show', compute_node_id=command.compute_node.id)}">${command.compute_node.name}</a></td>
-				% else:
+				{% if command.owner %}
+				<td><a href="{{ request.route_path('admin.users.show', user_id=command.owner.id)}}">{{ command.owner.email }}</a></td>
+				{% else %}
+				<td>{{ command.command_type }}</td>
+				{% endif %}
+				<td>{{ command.action }}</td>
+				<td>{{ command.commanded_date }}</td>
+				<td>{{ command.completed_date }}</td>
+				{% if command.compute_node %}
+				<td><a href="{{ request.route_path('admin.compute_nodes.show', compute_node_id=command.compute_node.id)}}">{{ command.compute_node.name }}</a></td>
+				{% else %}
 				<td>None</td>
-				% endif
-				<td>${command.status}</td>
-				<td>${command.message.replace("\n", "<br/>") | n}</td>
+				{% endif %}
+				<td>{{ command.status }}</td>
+				<td>{{ command.message.replace("\n", "<br/>") | e }}</td>
 			</tr>
-			% endfor
+			{% endfor %}
 		</tbody>
 	</table>
 </section>
