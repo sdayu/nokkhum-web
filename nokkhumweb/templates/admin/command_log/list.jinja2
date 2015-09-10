@@ -51,7 +51,7 @@
 				<td class="mdl-data-table__cell--non-numeric">None</td>
 				{% endif %}
 				<td class="mdl-data-table__cell--non-numeric">{{ command.status }}</td>
-				<td class="mdl-data-table__cell--non-numeric">{{ command.message.replace("\n", "<br/>") | e }}</td>
+				<td class="mdl-data-table__cell--non-numeric">{{ command.message.replace("\n", "<br/>") | safe }}</td>
 			</tr>
 			{% endfor %}
 		</tbody>

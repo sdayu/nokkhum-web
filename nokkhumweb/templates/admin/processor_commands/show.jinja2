@@ -31,7 +31,7 @@
 		<li><b>message: </b>
 		{% if command.message %}
 		<p>
-			{{ command.message.replace('\n', '<br/>') | e }}
+			{{ command.message.replace('\n', '<br/>') | safe }}
 		</p>
 		{% endif %}
 		</li>
