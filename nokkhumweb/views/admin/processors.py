@@ -85,7 +85,7 @@ def edit(request):
     processor.storage_period = int(storage_period)
     processor.cameras = [new_camera]
 
-    request.nokkhum_client.processors.update(
+    request.nokkhum_client.admin.processors.update(
             processor
             )
 
