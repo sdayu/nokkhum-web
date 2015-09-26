@@ -1,6 +1,6 @@
 {% extends "/base/mdl-dashboard.jinja2" %}
 {% block title %}List Compute Node{% endblock %}
-{% block layout_title %}Show Processor{% endblock %}
+{% block layout_title %}View Processor{% endblock %}
 
 {% block addition_header %}
 
@@ -176,7 +176,7 @@
 		<li><b>Camera Name: </b>
 			<ul>
 				{% for camera in processor.cameras %}
-				<li><b>{{camera.name}}:</b> <a href="{{request.route_path('admin.cameras.show', camera_id=camera.id)}}">{{camera.id}}</a></li>
+				<li><b>{{camera.name}}:</b> <a href="{{request.route_path('admin.cameras.view', camera_id=camera.id)}}">{{camera.id}}</a></li>
 				{% endfor %}
 			</ul>
 		</li>
@@ -184,7 +184,7 @@
 		<li><b>Last Update: </b>{{processor.updated_date}}</li>
 		<li>
 			<b>Owner: </b> {{processor.owner.email}}
-			<b>id:</b> <a href="{{request.route_path('admin.users.show', user_id=processor.owner.id)}}">{{processor.owner.id}}</a>
+			<b>id:</b> <a href="{{request.route_path('admin.users.view', user_id=processor.owner.id)}}">{{processor.owner.id}}</a>
 			<b>status:</b> {{processor.owner.status}}
 		</li>
 		<li>
@@ -202,7 +202,7 @@
 			<li><b>Diff time:</b> <span style="color: red;">{{(datetime.datetime.now()-processor.operating.updated_date).seconds}}</span> seconds ago</li>
 			<li><b>Compute node:</b>
 			{% if processor.operating.compute_node %}
-			<a href="{{request.route_path('admin.compute_nodes.show', compute_node_id=processor.operating.compute_node.id)}}">{{processor.operating.compute_node.host}}</a>
+			<a href="{{request.route_path('admin.compute_nodes.view', compute_node_id=processor.operating.compute_node.id)}}">{{processor.operating.compute_node.host}}</a>
 			{% else %}
 			Waiting
 			{% endif %}
@@ -215,6 +215,7 @@
 		<div class="panel-body">
 	    	<a class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored{{' disabled' if processor.operating.user_command == 'run' else ''}}" href="{{request.route_path('admin.processors.operating', project_id=processor.project.id, processor_id=processor.id, action='start')}}"><span class="glyphicon glyphicon-play"></span> Start</a>
 	    	<a class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored{{' disabled' if processor.operating.user_command != 'run' else ''}}" href="{{request.route_path('admin.processors.operating', project_id=processor.project.id, processor_id=processor.id, action='stop')}}"><span class="glyphicon glyphicon-stop"></span> Stop</a>
+	    	<a class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored{{' disabled' if processor.operating.user_command != 'run' else ''}}" href="{{request.route_path('admin.processors.edit', processor_id=processor.id)}}"><span class="glyphicon glyphicon-stop"></span>Edit</a>
 		</div>
 	</div>
 

@@ -25,7 +25,7 @@
 			{% for fail_status in run_fail_status %}
 			<tr>
 				<td class="mdl-data-table__cell--non-numeric">{{ fail_status.processor.id }}: {{ fail_status.processor.name }}</td>
-				<td class="mdl-data-table__cell--non-numeric"><a href="{{ request.route_path('admin.compute_nodes.show', compute_node_id=fail_status.compute_node.id) }}">{{ fail_status.compute_node.name }}</a></td>
+				<td class="mdl-data-table__cell--non-numeric"><a href="{{ request.route_path('admin.compute_nodes.view', compute_node_id=fail_status.compute_node.id) }}">{{ fail_status.compute_node.name }}</a></td>
 				<td class="mdl-data-table__cell--non-numeric">{{ fail_status.reported_date }}</td>
 				<td class="mdl-data-table__cell--non-numeric">{{ fail_status.processed_date }}</td>
 				<td class="mdl-data-table__cell--non-numeric">{{ fail_status.message.replace("\n", "<br/>") | safe }}</td>

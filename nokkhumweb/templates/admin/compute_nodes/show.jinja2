@@ -292,7 +292,7 @@
 			{% if processors|count > 0 %}
 				<ul>
 					{% for processor in processors %}
-					<li>{{processor.name}}:<a href="{{request.route_path('admin.processors.show', processor_id=processor.id)}}">{{processor.id}}</a></li>
+					<li>{{processor.name}}:<a href="{{request.route_path('admin.processors.view', processor_id=processor.id)}}">{{processor.id}}</a></li>
 					{% endfor %}
 				</ul>
 			{% endif %}

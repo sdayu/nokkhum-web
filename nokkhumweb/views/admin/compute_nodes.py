@@ -13,7 +13,7 @@ def list_compute_node(request):
                 json=json
                 )
 
-@view_config(route_name='admin.compute_nodes.show', permission='role:admin', renderer='/admin/compute_nodes/show.jinja2')
+@view_config(route_name='admin.compute_nodes.view', permission='role:admin', renderer='/admin/compute_nodes/show.jinja2')
 def show(request):
     matchdict = request.matchdict
     compute_node_id = matchdict['compute_node_id']

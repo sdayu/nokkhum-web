@@ -47,7 +47,7 @@
 		<tbody>
 		{% for compute_node in compute_nodes %}
 			<tr>
-				<td class="mdl-data-table__cell--non-numeric"><a href="{{request.route_path('admin.compute_nodes.show', compute_node_id=compute_node.id)}}">{{compute_node.name}}</a></td>
+				<td class="mdl-data-table__cell--non-numeric"><a href="{{request.route_path('admin.compute_nodes.view', compute_node_id=compute_node.id)}}">{{compute_node.name}}</a></td>
 				<td class="mdl-data-table__cell--non-numeric">{{compute_node.host}} is VM: {{compute_node.is_vm}}</td>
 				<td class="mdl-data-table__cell--non-numeric">
 				{% if compute_node.online %}

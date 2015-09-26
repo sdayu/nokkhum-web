@@ -56,26 +56,27 @@ def add_routes(config):
     config.add_route('admin.home', '/admin')
 
     config.add_route('admin.command_queue.list', '/admin/command_queue/list')
-    config.add_route('admin.command_queue.show', '/admin/command_queue/show/{command_queue_id}')
+    config.add_route('admin.command_queue.view', '/admin/command_queue/view/{command_queue_id}')
 
     config.add_route('admin.users.list', '/admin/users/list')
-    config.add_route('admin.users.show', '/admin/users/show/{user_id}')
+    config.add_route('admin.users.view', '/admin/users/view/{user_id}')
 
     config.add_route('admin.command_log.list', '/admin/command_log/list')
-    config.add_route('admin.command_log.show', '/admin/command_log/show/{command_log_id}')
+    config.add_route('admin.command_log.view', '/admin/command_log/view/{command_log_id}')
 
     config.add_route('admin.compute_nodes.list', '/admin/compute_nodes/list')
-    config.add_route('admin.compute_nodes.show', '/admin/compute_nodes/show/{compute_node_id}')
+    config.add_route('admin.compute_nodes.view', '/admin/compute_nodes/view/{compute_node_id}')
     config.add_route('admin.compute_nodes.delete', '/admin/compute_nodes/delete/{compute_node_id}')
 
     config.add_route('admin.cameras.list', '/admin/cameras/list')
-    config.add_route('admin.cameras.show', '/admin/cameras/show/{camera_id}')
+    config.add_route('admin.cameras.view', '/admin/cameras/view/{camera_id}')
 
     config.add_route('admin.processors.list', '/admin/processors/list')
-    config.add_route('admin.processors.show', '/admin/processors/show/{processor_id}')
+    config.add_route('admin.processors.view', '/admin/processors/{processor_id}/view')
+    config.add_route('admin.processors.edit', '/admin/processors/{processor_id}/edit')
     config.add_route('admin.processors.operating', '/admin/processors/{processor_id}/operating/{action}')
 
-    config.add_route('admin.processor_commands.show', '/admin/processor_commands/{processor_command_id}')
+    config.add_route('admin.processor_commands.view', '/admin/processor_commands/{processor_command_id}')
 
     config.add_route('admin.processor_running_fail.list', '/admin/processors/fail/list')
 

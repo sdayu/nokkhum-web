@@ -9,7 +9,7 @@ def list_camera(request):
                 cameras= request.nokkhum_client.admin.cameras.list()
                 )
 
-@view_config(route_name='admin.cameras.show', permission='role:admin', renderer='/admin/cameras/show.jinja2')
+@view_config(route_name='admin.cameras.view', permission='role:admin', renderer='/admin/cameras/show.jinja2')
 def show(request):
     matchdict = request.matchdict
     camera_id = matchdict['camera_id']

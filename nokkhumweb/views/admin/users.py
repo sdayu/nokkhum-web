@@ -10,7 +10,7 @@ def list(request):
                 )
 
 
-@view_config(route_name='admin.users.show', permission='role:admin', renderer='/admin/users/show.jinja2')
+@view_config(route_name='admin.users.view', permission='role:admin', renderer='/admin/users/show.jinja2')
 def show(request):
     matchdict = request.matchdict
     user_id = matchdict['user_id']

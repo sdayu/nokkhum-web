@@ -13,15 +13,15 @@
 	<ul>
 		<li><b>command id: </b>{{command.id}}</li>
 		<li><b>processor name: </b>
-			<a href="{{request.route_path('admin.processors.show', processor_id=command.processor_command.processor.id)}}">{{command.processor_command.processor.name}}</a>
+			<a href="{{request.route_path('admin.processors.view', processor_id=command.processor_command.processor.id)}}">{{command.processor_command.processor.name}}</a>
 		</li>
 		<li><b>camera name: </b>
 			{% for camera in command.processor_command.processor.cameras %}
-			<a href="{{request.route_path('admin.cameras.show', camera_id=camera.id)}}">{{camera.name}}</a>
+			<a href="{{request.route_path('admin.cameras.view', camera_id=camera.id)}}">{{camera.name}}</a>
 			{% endfor %}
 		</li>
 		{% if command.processor_command.owner %}
-		<li><b>owner: </b><a href="{{request.route_path('admin.users.show', user_id=command.processor_command.owner.id)}}">{{command.processor_command.owner.email}}</a></li>
+		<li><b>owner: </b><a href="{{request.route_path('admin.users.view', user_id=command.processor_command.owner.id)}}">{{command.processor_command.owner.email}}</a></li>
 		{% endif %}
 		<li><b>Command Type: </b>{{command.processor_command.command_type}}</li>
 		<li><b>action: </b>{{command.processor_command.action}}</li>

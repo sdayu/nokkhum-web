@@ -39,10 +39,10 @@
 		<tbody>
       {% for command in camera_command_queue %}
 			<tr>
-        <td class="mdl-data-table__cell--non-numeric"><a href="{{request.route_path('admin.command_queue.show', command_queue_id=command.id)}}">{{command.id}}</a></td>
-        <td class="mdl-data-table__cell--non-numeric"><a href="{{request.route_path('admin.processors.show', processor_id=command.processor_command.processor.id)}}">{{command.processor_command.processor.name}}</a></td>
+        <td class="mdl-data-table__cell--non-numeric"><a href="{{request.route_path('admin.command_queue.view', command_queue_id=command.id)}}">{{command.id}}</a></td>
+        <td class="mdl-data-table__cell--non-numeric"><a href="{{request.route_path('admin.processors.view', processor_id=command.processor_command.processor.id)}}">{{command.processor_command.processor.name}}</a></td>
         {% if command.processor_command.command_type == "user" %}
-        <td class="mdl-data-table__cell--non-numeric"><a href="{{request.route_path('admin.users.show', user_id=command.processor_command.owner.id)}}">{{command.processor_command.owner.email}}</a></td>
+        <td class="mdl-data-table__cell--non-numeric"><a href="{{request.route_path('admin.users.view', user_id=command.processor_command.owner.id)}}">{{command.processor_command.owner.email}}</a></td>
         {% else %}
 				<td class="mdl-data-table__cell--non-numeric">system</td>
         {% endif %}

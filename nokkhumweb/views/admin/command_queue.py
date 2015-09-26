@@ -14,8 +14,8 @@ def list_command(request):
                 )
 
 
-@view_config(route_name='admin.command_queue.show', permission='role:admin', renderer='/admin/command_queue/show.jinja2')
-def show(request):
+@view_config(route_name='admin.command_queue.view', permission='role:admin', renderer='/admin/command_queue/show.jinja2')
+def view(request):
     matchdict = request.matchdict
     command_id = matchdict['command_queue_id']
     command = request.nokkhum_client.admin.processor_command_queue.get(command_id)

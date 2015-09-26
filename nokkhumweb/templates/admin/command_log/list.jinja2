@@ -31,14 +31,14 @@
 			{% for command in processor_commands %}
 			<tr>
 				<td class="mdl-data-table__cell--non-numeric">
-					<a href="{{ request.route_path('admin.processor_commands.show', processor_command_id=command.id)}}">{{ command.id }}</a>
+					<a href="{{ request.route_path('admin.processor_commands.view', processor_command_id=command.id)}}">{{ command.id }}</a>
 				</td>
 				<td class="mdl-data-table__cell--non-numeric">
-				<a href="{{ request.route_path('admin.processors.show', processor_id=command.processor.id)}}">{{ command.processor.id }}</a>
+				<a href="{{ request.route_path('admin.processors.view', processor_id=command.processor.id)}}">{{ command.processor.id }}</a>
         <br/>{{ command.processor.name}}
 				</td>
 				{% if command.owner %}
-				<td class="mdl-data-table__cell--non-numeric"><a href="{{ request.route_path('admin.users.show', user_id=command.owner.id)}}">{{ command.owner.email }}</a></td>
+				<td class="mdl-data-table__cell--non-numeric"><a href="{{ request.route_path('admin.users.view', user_id=command.owner.id)}}">{{ command.owner.email }}</a></td>
 				{% else %}
 				<td class="mdl-data-table__cell--non-numeric">{{ command.command_type }}</td>
 				{% endif %}
@@ -46,7 +46,7 @@
 				<td class="mdl-data-table__cell--non-numeric">{{ command.commanded_date }}</td>
 				<td class="mdl-data-table__cell--non-numeric">{{ command.completed_date }}</td>
 				{% if command.compute_node %}
-				<td class="mdl-data-table__cell--non-numeric"><a href="{{ request.route_path('admin.compute_nodes.show', compute_node_id=command.compute_node.id)}}">{{ command.compute_node.name }}</a></td>
+				<td class="mdl-data-table__cell--non-numeric"><a href="{{ request.route_path('admin.compute_nodes.view', compute_node_id=command.compute_node.id)}}">{{ command.compute_node.name }}</a></td>
 				{% else %}
 				<td class="mdl-data-table__cell--non-numeric">None</td>
 				{% endif %}

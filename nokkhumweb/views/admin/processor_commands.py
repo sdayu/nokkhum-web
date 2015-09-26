@@ -5,7 +5,7 @@ from pyramid.security import authenticated_userid
 
 import datetime
 
-@view_config(route_name='admin.processor_commands.show', permission='role:admin', renderer='/admin/processor_commands/show.jinja2')
+@view_config(route_name='admin.processor_commands.view', permission='role:admin', renderer='/admin/processor_commands/show.jinja2')
 def show(request):
     matchdict = request.matchdict
     processor_command_id = matchdict['processor_command_id']

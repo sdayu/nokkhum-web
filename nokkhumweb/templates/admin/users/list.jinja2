@@ -24,7 +24,7 @@
 		<tbody>
 			{% for user in users %}
 			<tr>
-				<td class="mdl-data-table__cell--non-numeric"><a href="{{ request.route_path('admin.users.show', user_id=user.id) }}">{{ user.id }}</a></td>
+				<td class="mdl-data-table__cell--non-numeric"><a href="{{ request.route_path('admin.users.view', user_id=user.id) }}">{{ user.id }}</a></td>
 				<td class="mdl-data-table__cell--non-numeric">{{ user.first_name }} {{ user.last_name }}</td>
 				<td class="mdl-data-table__cell--non-numeric">{{ user.email }}</td>
 				<td class="mdl-data-table__cell--non-numeric">{{ user.status }}</td>

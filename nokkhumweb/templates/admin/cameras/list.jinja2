@@ -22,7 +22,7 @@
 		{% for camera in cameras %}
   			<tr>
     			<td class="mdl-data-table__cell--non-numeric">
-            <a href="{{ request.route_path('admin.cameras.show', camera_id=camera.id) }}">{{ camera.id }}<br/>
+            <a href="{{ request.route_path('admin.cameras.view', camera_id=camera.id) }}">{{ camera.id }}<br/>
               {{ camera.name }}
             </a>
     			</td>
