@@ -49,4 +49,9 @@
 				{% else %}
 				No processors available.
 				{% endif %}
+
+        <a class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored" href="{{ request.route_path('processors.add', project_id=project.id) }}">
+            <i class="material-icons">add</i>
+        </a>
+
 {% endblock %}

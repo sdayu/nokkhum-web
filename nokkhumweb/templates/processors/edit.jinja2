@@ -25,29 +25,18 @@
 
 {% block contents %}
 <form role="form" action="{{request.current_route_path()}}" method="POST">
-	<div class="form-group">
-		<label for="processor_name">Name</label>
-		{{form.name(class_='form-control', id='processor_name', placeholder='Enter processor name')}}
-	</div>
- 	<div class="form-group">
-		<label for="camera">Camera</label>
-		{{form.camera(class_='form-control')}}
-	</div>
-	<div class="form-group">
-		<label for="storage_period">Storage period (days)</label>
-		{{form.storage_period(class_='form-control', id='storage_period', min='0', max='360')}}
-	</div>
-	<div class="form-group">
-		<label for="image_processors">Image Processor Configuration</label>
-		{{form.image_processors(class_='form-control')}}
-	</div>
+  {{form.name(class_='form-control')}}<br/>
+    {{form.camera(class_='form-control')}}<br/>
+    {{form.storage_period(class_='form-control', min='0', max='360')}}<br/>
+    {{form.image_processors(class_='form-control')}}<br/>
+
  	<button type="submit" class="btn btn-default">Submit</button>
 </form>
 {% include "/base/image_processor.jinja2" %}
 
 <script>
       var editor = CodeMirror.fromTextArea(document.getElementById("image_processors"), {mode: "javascript", tabMode: "indent", lineNumbers: true});
-	
+
       $('#avialable_image_processors').each(function(index, e) {
           $(e).addClass('cm-s-default'); // apply a theme class
           CodeMirror.runMode($(e).text(), "javascript", $(e)[0]);

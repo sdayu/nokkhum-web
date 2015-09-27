@@ -41,6 +41,16 @@ class MdlInput(widgets.TextInput):
         html = get_bootstrap(field) % super().__call__(field, **kwargs)
         return core.HTMLString(html)
 
+class MdlTextArea(widgets.TextArea):
+
+    def __init__(self):
+        super().__init__()
+
+    def __call__(self, field, **kwargs):
+        kwargs['class_'] = "mdl-textfield__input"
+
+        html = get_bootstrap(field) % super().__call__(field, **kwargs)
+        return core.HTMLString(html)
 
 class MdlPassword(widgets.PasswordInput):
 
@@ -69,12 +79,12 @@ class MdlCheckbox(widgets.CheckboxInput):
         str_io.close()
 
         return core.HTMLString(html)
-    
+
 
 class MdlRadio(widgets.RadioInput):
     def __init__(self):
         super().__init__()
-        
+
     def __call__(self, field, **kwargs):
         kwargs['class_'] = "form-control"
 

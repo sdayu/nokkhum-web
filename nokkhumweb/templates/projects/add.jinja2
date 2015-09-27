@@ -9,13 +9,13 @@
 
 <form role="form" action="${request.current_route_path()}" method="POST">
 <div class="field">
-    
+
     <div class="form-group">
     	<label for="name">Name: </label>
     	${form.name(class_='form-control', id='project_name', placeholder='Enter project name')}
     	${form.get_error("name")}
     </div>
-    
+
     <div class="form-group">
     	<label for="description">Description: </label>
     	${form.description(class_='form-control', placeholder='Enter description')}
