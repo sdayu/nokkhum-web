@@ -45,7 +45,7 @@
 		</ul>
 	</li>
 	{% if request.has_permission('admin') %}
-	<li><b>Process Status: </b><a href="{{request.route_path('admin.processors.show', processor_id=processor.id)}}">view</a></li>
+	<li><b>Process Status: </b><a href="{{request.route_path('admin.processors.view', processor_id=processor.id)}}">view</a></li>
 	{% endif %}
 </ul>
 <section>
