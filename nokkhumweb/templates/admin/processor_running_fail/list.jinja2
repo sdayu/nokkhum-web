@@ -14,7 +14,7 @@
 	<table class="mdl-data-table mdl-js-data-table">
 		<thead>
   			<tr>
-    			<th class="mdl-data-table__cell--non-numeric">Camera Name</th>
+    			<th class="mdl-data-table__cell--non-numeric">Processor Name</th>
     			<th class="mdl-data-table__cell--non-numeric">Compute Node</th>
     			<th class="mdl-data-table__cell--non-numeric">Report Time</th>
     			<th class="mdl-data-table__cell--non-numeric">Process Time</th>
@@ -24,7 +24,7 @@
 		<tbody>
 			{% for fail_status in run_fail_status %}
 			<tr>
-				<td class="mdl-data-table__cell--non-numeric">{{ fail_status.processor.id }}: {{ fail_status.processor.name }}</td>
+        <td class="mdl-data-table__cell--non-numeric"><a href="{{ request.route_path('admin.processors.view', processor_id=fail_status.processor.id) }}">{{ fail_status.processor.id }}</a>: <br/>{{ fail_status.processor.name }}</td>
 				<td class="mdl-data-table__cell--non-numeric"><a href="{{ request.route_path('admin.compute_nodes.view', compute_node_id=fail_status.compute_node.id) }}">{{ fail_status.compute_node.name }}</a></td>
 				<td class="mdl-data-table__cell--non-numeric">{{ fail_status.reported_date }}</td>
 				<td class="mdl-data-table__cell--non-numeric">{{ fail_status.processed_date }}</td>
