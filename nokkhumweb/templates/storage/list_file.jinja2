@@ -27,25 +27,34 @@
   {% if file_list | count > 0 %}
 				{% set url = urllib.parse.unquote(request.current_route_path()) %}
 				{% set back = url[:url.rfind('/')] %}
+        <div>
 				{% if back[back.rfind('/')+1:] != 'list' %}
 				<a href="{{back}}">Back</a>
 				{% endif %}
-				<ul>
-				{% for item in file_list %}
-					<li style="display:block; width:100%; clear:both;">
-						<span style="float: left; width:50%;">
+        </div>
+        {% for item in file_list %}
+          <div style="float:left; padding:10px">
+              <div>
 							{% if ".png" in item[0] %}
-							<img src="{{item[3]}}" width="200px" />
+							  <img src="{{item[3]}}" width="200px" />
 							{% else %}
-							<a href="{{item[1]}}">{{item[0]}}</a> 
+              {# <a href="{{item[1]}}">{{item[0]}}</a> #}
+                 <a href="{{item[1]}}" title="view: {{item[0]}}">
+                   <span style="font-size:150pt;" class="material-icons">perm_media</span>
+                </a>
 							{% endif %}
-						</span>
-						<span style="display: inline-block; text-align: left; width:100px">
-							<a href="{{item[1]}}" title="view">view</a> : 
-							<a href="{{item[2]}}" title="delete">delete</a> 
-						</span>
-					</li>
+              </div>
+              <div>
+                <div style="width:200px">
+                {{item[0]}} <br/>
+                </div>
+                <div>
+							  <a href="{{item[1]}}" title="view"><span class="material-icons">visibility</span></a>
+							  <a href="{{item[2]}}" title="delete"><span class="material-icons">delete</span></a>
+                </div>
+              </div>
+          </div>
 				{% endfor %}
-				</ul>
+
 		{% endif %}
 {% endblock %}
